@@ -14,14 +14,14 @@ To provide the dependency, you need to create 2 files. In the `.cpp` file you cr
 #include <io_di.h>
 #include "leds/leds.h"
 
-IO_PROVIDE_EXTERN(LEDPlatform);
+IO_PROVIDE_EXTERN(LightPlatform);
 ```
 
 #### platform.cpp
 ```cpp
 #include "platform.h"
 
-IO_PROVIDE(LEDPlatform);
+IO_PROVIDE(LightPlatform);
 ```
 
 ### Inject
@@ -35,6 +35,6 @@ The `IO_INJECT` macro is used for injection. It returns a pointer to an instance
 
 class ClockCapability {
   private:
-    LEDPlatform* leds_ = IO_INJECT(LEDPlatform):
+    LightPlatform* leds_ = IO_INJECT(LightPlatform):
 }
 ```

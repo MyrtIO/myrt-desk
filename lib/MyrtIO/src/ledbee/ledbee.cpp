@@ -36,6 +36,10 @@ uint8_t LEDBee::fps() {
   return kRendererFPS;
 }
 
+// EffectState *LEDBee::state() {
+//   return pixels_->state();
+// }
+
 void LEDBee::requestFrame_() {
   frame_.set(kFrameTime);
 }

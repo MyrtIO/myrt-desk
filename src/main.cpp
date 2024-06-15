@@ -60,7 +60,7 @@ void setup() {
         &light
       )
       ->platforms(
-        IO_INJECT_INSTANCE(LEDPlatform)
+        IO_INJECT_INSTANCE(LightPlatform)
       );
     multicore_launch_core1(udp_server_task);
 }

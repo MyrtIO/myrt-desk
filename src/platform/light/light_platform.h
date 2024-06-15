@@ -4,9 +4,9 @@
 #include <FastLED.h>
 #include "interfaces/platform.h"
 #include "brightness.h"
-#include "renderer.h"
+#include "pixel_renderer.h"
 
-class LEDPlatform : public IOPlatform, public ILEDPlatform {
+class LightPlatform : public IOPlatform, public ILightPlatform {
   public:
     // Setup function to initialize the LED platform.
     void setup();
@@ -32,6 +32,7 @@ class LEDPlatform : public IOPlatform, public ILEDPlatform {
 
   private:
     LEDBee leds_;
+    EffectState state_;
     SmoothBrightness brightness_;
-    LEDRenderer pixels_;
+    PixelRenderer pixels_;
 };

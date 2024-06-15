@@ -4,7 +4,7 @@
 #include <FastLED.h>
 // #include <stored.h>
 
-class ILEDPlatform {
+class ILightPlatform {
   public:
     virtual CRGB getColor() = 0;
     virtual void setColor(CRGB color) = 0;

@@ -16,7 +16,7 @@ public:
 
 private:
   // Stored stateDescriptor_ = Stored(state_, FeatureCode::Indicators);
-  ILEDPlatform* leds_ = IO_INJECT(ILEDPlatform);
+  ILightPlatform* leds_ = IO_INJECT(ILightPlatform);
   // IStoragePlatform* storage_ = IO_INJECT(IStoragePlatform);
 
   bool handleSetColor_(IOActionRequest* request);

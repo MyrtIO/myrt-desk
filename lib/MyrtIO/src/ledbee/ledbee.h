@@ -23,6 +23,9 @@ public:
   // Get the frames per second (FPS)
   uint8_t fps();
 
+  // // Get current LEDs state
+  // EffectState *state();
+
 private:
   Timer frame_;
   IRenderer* brightness_;

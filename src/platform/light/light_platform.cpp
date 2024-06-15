@@ -2,48 +2,51 @@
 #include "effects/static/static.h"
 // #include "interfaces/effects.h"
 
-
 // Implementation of the setup function to initialize the LED platform.
-void LEDPlatform::setup() {
-  pixels_.setup(&StaticFx);
+void LightPlatform::setup() {
+  state_.transitionTime = 500;
+  pixels_.setup(&StaticFx, &state_);
+  brightness_.setup(&state_);
   leds_.init()
     ->pixels(&pixels_)
     ->brightness(&brightness_);
 }
 
 // Implementation of the function called at the start of each loop iteration.
-void LEDPlatform::onLoop() {
+void LightPlatform::onLoop() {
   leds_.handle();
 }
 
-CRGB LEDPlatform::getColor() {
-  return pixels_.state()->currentColor;
+CRGB LightPlatform::getColor() {
+  return state_.currentColor;
 }
 
-uint8_t LEDPlatform::brightness() {
-  return brightness_.current();
+uint8_t LightPlatform::brightness() {
+  return state_.currentBrightness;
 }
 
 // Implementation of the public method to set the overall brightness of the LEDs.
-void LEDPlatform::setBrightness(uint8_t brightness) {
-  brightness_.setBrightness(brightness);
+void LightPlatform::setBrightness(uint8_t brightness) {
+  state_.targetBrightness = brightness;
+  brightness_.handleStateUpdate();
 }
 
 // Implementation of the public method to set power status of the LEDs.
-void LEDPlatform::setPower(bool enabled) {
-  pixels_.setPower(enabled);
+void LightPlatform::setPower(bool enabled) {
+  state_.enabled = enabled;
+  pixels_.handleStateUpdate();
 }
 
-bool LEDPlatform::getPower() {
-  return pixels_.state()->enabled;
+bool LightPlatform::getPower() {
+  return state_.enabled;
 }
 
-void LEDPlatform::setColor(CRGB color) {
-  Serial.println("LEDPlatform::setColor");
-  pixels_.setColor(color.r, color.g, color.b);
+void LightPlatform::setColor(CRGB color) {
+  state_.targetColor = color;
+  pixels_.handleStateUpdate();
 }
 
-void LEDPlatform::setEffect(uint8_t effectCode) {
+void LightPlatform::setEffect(uint8_t effectCode) {
   switch (effectCode) {
   case 0:
     pixels_.setEffect(&StaticFx);

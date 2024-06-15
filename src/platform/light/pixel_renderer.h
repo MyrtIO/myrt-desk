@@ -11,10 +11,10 @@
 #define STRIP_PIN 6
 #define STRIP_COLOR_CORRECTION 0xFF7A60
 
-class LEDRenderer : public IRenderer {
+class PixelRenderer : public IRenderer {
   public:
     // Setup function to initialize the LED matrix and set the rendering effect.
-    void setup(LEDEffect *effect);
+    void setup(LEDEffect *effect, EffectState *state);
 
     // Public method to handle a frame of animation and rendering.
     // Returns true if rendering is needed.
@@ -24,11 +24,7 @@ class LEDRenderer : public IRenderer {
     void setEffect(LEDEffect *effect);
 
     // Set the color for the LED matrix.
-    void setColor(uint8_t r, uint8_t g, uint8_t b);
-
-    void setPower(bool state);
-
-    EffectState *state();
+    void handleStateUpdate();
 
   private:
     LEDEffect *effect_ = nullptr;
@@ -36,5 +32,5 @@ class LEDRenderer : public IRenderer {
       STRIP_COLOR_CORRECTION
     );
     CRGB pixels_[STRIP_LENGTH];
-    EffectState state_;
+    EffectState *state_;
 };
