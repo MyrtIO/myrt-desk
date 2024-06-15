@@ -4,14 +4,14 @@
 #include <FastLED.h>
 #include <MyrtIO.h>
 #include <MyrtIO/udp_provider.h>
-#include "platform/platform.h"
-#include "features/features.h"
+#include <platform.h>
+#include <handlers.h>
 #include <secrets.h>
 
 UDPRequestProvider udpProvider;
 IODispatcher io;
 
-LightFeature lightFeature;
+LightHandler light;
 
 #define UDP_PORT 11011
 
@@ -44,8 +44,6 @@ void udp_server_task() {
     }
 }
 
-CRGB leds[92];
-
 void setup() {
     LEDS.show();
     Serial.begin(115200);
@@ -58,8 +56,8 @@ void setup() {
     }
     Serial.println("Connected!");
     io.setup()
-      ->features(
-        &lightFeature
+      ->handlers(
+        &light
       )
       ->platforms(
         IO_INJECT_INSTANCE(LEDPlatform)

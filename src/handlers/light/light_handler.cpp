@@ -1,20 +1,20 @@
-#include "light_feature.h"
+#include "light_handler.h"
 
-uint8_t LightFeature::code() {
+uint8_t LightHandler::code() {
   return FeatureCode::Light;
 }
 
-void LightFeature::setup() {
+void LightHandler::setup() {
   // storage_->append(&stateDescriptor_);
   // leds_->setDigitsColor(state_.color[0], state_.color[1], state_.color[2]);
   // leds_->setBrightness(state_.brightness);
   // leds_->setEffect(state_.effect);
 }
 
-LightFeature::LightFeature() {}
+LightHandler::LightHandler() {}
 
 // Handles action requests and performs actions based on the request.
-bool LightFeature::onAction(IOActionRequest* request) {
+bool LightHandler::onAction(IOActionRequest* request) {
   switch (request->action) {
     case LightAction::SetColor:
       return handleSetColor_(request);
@@ -37,21 +37,16 @@ bool LightFeature::onAction(IOActionRequest* request) {
 }
 
 // Private method to handle setting LED color based on the request.
-bool LightFeature::handleSetColor_(IOActionRequest* request) {
-  Serial.println("handleSetColor_");
+bool LightHandler::handleSetColor_(IOActionRequest* request) {
   if (request->length != 3) {
-    Serial.println("handleSetColor_::invalid length");
     return false; // Invalid payload length
   }
-  // request->payload[0], request->payload[1], request->payload[2]
   leds_->setColor(CRGB(request->payload[0], request->payload[1], request->payload[2]));
-  // copyColor(request->payload, state_.color);
-  // stateDescriptor_.update();
   return true;
 }
 
 // Private method to handle setting LED brightness based on the request.
-bool LightFeature::handleSetBrightness_(IOActionRequest* request) {
+bool LightHandler::handleSetBrightness_(IOActionRequest* request) {
   if (request->length != 1) {
     return false; // Invalid payload length
   }
@@ -61,7 +56,7 @@ bool LightFeature::handleSetBrightness_(IOActionRequest* request) {
   return true; // Successfully set brightness
 }
 
-// bool LightFeature::handleGetColor_(IOActionRequest* request) {
+// bool LightHandler::handleGetColor_(IOActionRequest* request) {
 //   if (request->length != 0) {
 //     return false;
 //   }
@@ -74,7 +69,7 @@ bool LightFeature::handleSetBrightness_(IOActionRequest* request) {
 //   return true;
 // }
 
-// bool LightFeature::handleGetBrightness_(IOActionRequest* request) {
+// bool LightHandler::handleGetBrightness_(IOActionRequest* request) {
 //   if (request->length != 0) {
 //     return false;
 //   }
@@ -85,7 +80,7 @@ bool LightFeature::handleSetBrightness_(IOActionRequest* request) {
 //   return true;
 // }
 
-// bool LightFeature::handleSetPower_(IOActionRequest* request) {
+// bool LightHandler::handleSetPower_(IOActionRequest* request) {
 //   if (request->length != 1 || request->payload[0] > 1) {
 //     return false;
 //   }
@@ -93,7 +88,7 @@ bool LightFeature::handleSetBrightness_(IOActionRequest* request) {
 //   return true;
 // }
 
-// bool LightFeature::handleGetPower_(IOActionRequest* request) {
+// bool LightHandler::handleGetPower_(IOActionRequest* request) {
 //   if (request->length != 0) {
 //     return false;
 //   }
@@ -104,7 +99,7 @@ bool LightFeature::handleSetBrightness_(IOActionRequest* request) {
 //   return true;
 // }
 
-// bool LightFeature::handleGetEffect_(IOActionRequest* request) {
+// bool LightHandler::handleGetEffect_(IOActionRequest* request) {
 //   if (request->length != 0) {
 //     return false;
 //   }
@@ -115,7 +110,7 @@ bool LightFeature::handleSetBrightness_(IOActionRequest* request) {
 //   return true;
 // }
 
-// bool LightFeature::handleSetEffect_(IOActionRequest* request) {
+// bool LightHandler::handleSetEffect_(IOActionRequest* request) {
 //   if (request->length != 1) {
 //     return false;
 //   }

@@ -2,7 +2,9 @@
 
 #include "Timing.h"
 #include "interfaces.h"
-#include "helpers.h"
+#include "color_utils.h"
+#include "effect.h"
+#include "ws2812.h"
 
 class LEDBee {
 public:

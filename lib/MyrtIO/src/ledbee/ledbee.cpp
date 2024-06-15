@@ -21,14 +21,12 @@ LEDBee* LEDBee::pixels(IRenderer* render) {
 
 void LEDBee::handle() {
   if (!shouldRenderFrame_()) {
-    // Serial.println("Skipping frame");
     return;
   }
   bool hasChanges = false;
   hasChanges |= pixels_->handleFrame();
   hasChanges |= brightness_->handleFrame();
   if (hasChanges) {
-    // Serial.println("Updating LEDs");
     LEDS.show();
   }
   requestFrame_();

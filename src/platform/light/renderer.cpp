@@ -2,7 +2,7 @@
 #include "pixeltypes.h"
 
 // Implementation of the setup function to initialize the LED matrix and set the rendering effect.
-void LEDRenderer::setup(StripEffect *effect) {
+void LEDRenderer::setup(LEDEffect *effect) {
   // LEDS.addLeds<WS2812B, STRIP_PIN, GRB>(pixels_, STRIP_LENGTH);
   // LEDS.setCorrection(TypicalPixelString);
   state_.currentColor = CRGB::Black;
@@ -19,11 +19,8 @@ bool LEDRenderer::handleFrame() {
 }
 
 // Implementation of the public method to set the rendering effect for the LED matrix.
-void LEDRenderer::setEffect(StripEffect *effect) {
-  if (effect_ != nullptr) {
-    effect_->finalize(&state_);
-  }
-  // effect_->finalize(&state_);
+void LEDRenderer::setEffect(LEDEffect *effect) {
+  // TODO: add brightness up down animation
   effect_ = effect;
 }
 

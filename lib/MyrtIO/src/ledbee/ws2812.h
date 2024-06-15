@@ -6,10 +6,10 @@
 #pragma once
 
 #include <Arduino.h>
-#include <MyrtIO.h>
+#include "led_strip.h"
 
 template <uint8_t DATA_PIN, uint8_t LENGTH>
-class WS2812Strip : public Strip {
+class WS2812Strip : public LEDStrip {
  public:
   explicit WS2812Strip(const struct CRGB & correction) {
     this->leds = new struct CRGB[LENGTH];

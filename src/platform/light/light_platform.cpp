@@ -5,7 +5,7 @@
 
 // Implementation of the setup function to initialize the LED platform.
 void LEDPlatform::setup() {
-  pixels_.setup(&Static);
+  pixels_.setup(&StaticFx);
   leds_.init()
     ->pixels(&pixels_)
     ->brightness(&brightness_);
@@ -46,7 +46,7 @@ void LEDPlatform::setColor(CRGB color) {
 void LEDPlatform::setEffect(uint8_t effectCode) {
   switch (effectCode) {
   case 0:
-    pixels_.setEffect(&Static);
+    pixels_.setEffect(&StaticFx);
     break;
   // case LEDEffect::EffectSmooth:
   //   pixels_.setEffect(renderSmoothEffect);

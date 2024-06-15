@@ -16,5 +16,5 @@ class IODispatcher : public IORequestListener {
   private:
       IODevice* device_ = nullptr;
 
-      void runAction_(IORequest* request, IOFeature* target);
+      void runAction_(IORequest* request, IOHandler* target);
 };

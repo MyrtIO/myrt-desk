@@ -6,11 +6,11 @@
 #include "static.h"
 #include <FastLED.h>
 
-bool StaticEffect::handleFrame(EffectState *state, Strip *strip) {
+bool StaticEffect::handleFrame(EffectState *state, LEDStrip *strip) {
   if (_transitioned) {
     return false;
   }
-  CRGB color = blend_colors(
+  CRGB color = blendColors(
     state->currentColor,
     state->targetColor,
     _progress.get()
@@ -37,12 +37,8 @@ bool StaticEffect::setData(EffectState *state, uint8_t *data, uint8_t length) {
 
 void StaticEffect::onColorUpdate(EffectState *state) {
   Serial.println("StaticEffect::onColorUpdate");
-  _progress.start(state->transition);
+  _progress.start(state->transitionTime);
   _transitioned = false;
 }
 
-void StaticEffect::prepare(EffectState *state, Strip *strip) {
-  onColorUpdate(state);
-}
-
-StaticEffect Static;
+StaticEffect StaticFx;

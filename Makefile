@@ -4,7 +4,7 @@ BAUD_RATE = 115200
 .PHONY: configure
 configure:
 	pio init --ide vscode
-  pio run
+	pio run
 
 .PHONY: deploy
 flash:

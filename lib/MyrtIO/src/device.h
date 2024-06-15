@@ -13,7 +13,7 @@ class IOPlatform {
     virtual void onLoop() = 0;
 };
 
-class IOFeature {
+class IOHandler {
   public:
     virtual void setup() = 0;
     virtual uint8_t code() = 0;
@@ -22,20 +22,20 @@ class IOFeature {
 
 class IODevice {
   public:
-    uint8_t featuresCount = 0;
+    uint8_t handlersCount = 0;
     uint8_t platformsCount = 0;
-    IOFeature* featureList[IO_DEVICE_MAX_FEATURES];
+    IOHandler* handlerList[IO_DEVICE_MAX_FEATURES];
     IOPlatform* platformList[IO_DEVICE_MAX_PLATFORMS];
 
     template<typename... Args>
-    IODevice* features(IOFeature *last) {
-      addFeature_(last);
+    IODevice* handlers(IOHandler *last) {
+      addHandler_(last);
       return this;
     }
 
     template<typename... Args>
-    IODevice* features(IOFeature* first, Args... args) {
-      addFeature_(first);
+    IODevice* handlers(IOHandler* first, Args... args) {
+      addHandler_(first);
       return features(args...);
     }
 
@@ -52,14 +52,14 @@ class IODevice {
     }
 
   private:
-    bool addFeature_(IOFeature* c) {
+    bool addHandler_(IOHandler* c) {
       c->setup();
-      if (featuresCount >= IO_DEVICE_MAX_FEATURES) {
+      if (handlersCount >= IO_DEVICE_MAX_FEATURES) {
         // TODO: add handling
         return false;
       }
-      featureList[featuresCount] = c;
-      featuresCount++;
+      handlerList[handlersCount] = c;
+      handlersCount++;
       return true;
     }
 

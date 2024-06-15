@@ -9,14 +9,12 @@ bool SmoothBrightness::handleFrame() {
     return false;
   }
   current_ = lerp8by8(previous_, target_, transition_.get());
-  // Serial.printf("Update brightness: %u\n", current_);
   LEDS.setBrightness(current_);
   return true;
 }
 
 // Implementation of the public method to set the target brightness level and initiate a gradual transition.
 void SmoothBrightness::setBrightness(uint8_t value) {
-  Serial.printf("Set brightness: %u\n", value);
   if (value == current_) {
     return;
   }

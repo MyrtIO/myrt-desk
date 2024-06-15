@@ -1,6 +1,7 @@
 #pragma once
 
 #include <MyrtIO.h>
+#include <MyrtIO/ledbee.h>
 
 class SmoothBrightness : public IRenderer {
   public:

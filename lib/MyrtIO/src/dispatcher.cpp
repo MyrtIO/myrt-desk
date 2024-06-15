@@ -13,10 +13,10 @@ void IODispatcher::onRequest(IORequest* request) {
     return;
   }
   Serial.println("IODispatcher::onRequest");
-  for (uint8_t i = 0; i < device_->featuresCount; i++) {
-    if (device_->featureList[i]->code() == payload[0]) {
+  for (uint8_t i = 0; i < device_->handlersCount; i++) {
+    if (device_->handlerList[i]->code() == payload[0]) {
       Serial.println("IODispatcher::onRequest::found");
-      runAction_(request, device_->featureList[i]);
+      runAction_(request, device_->handlerList[i]);
       return;
     }
   }
@@ -29,11 +29,8 @@ void IODispatcher::handle() {
   }
 }
 
- void IODispatcher::runAction_(IORequest* request, IOFeature* target) {
+ void IODispatcher::runAction_(IORequest* request, IOHandler* target) {
   IOActionRequest* action = new IOActionRequest(request);
-  Serial.println("IODispatcher::runAction_");
-  Serial.printf("Action: %d %d\n", action->capability, action->action);
-  Serial.printf("Payload: %d\n", action->length);
   bool success = target->onAction(action);
   if (!action->sent()) {
     action->replyStatus(success);

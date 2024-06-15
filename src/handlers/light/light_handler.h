@@ -6,9 +6,9 @@
 // #include "state.h"
 // #include "stored.h"
 
-class LightFeature : public IOFeature {
+class LightHandler : public IOHandler {
 public:
-  LightFeature();
+  LightHandler();
   void setup() override;
 
   uint8_t code();
