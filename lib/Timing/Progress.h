@@ -21,6 +21,10 @@ class Progress {
       max_ = max;
     }
 
+    bool finished() {
+      return now_ >= end_;
+    }
+
   private:
     uint32_t start_ = 0;
     uint32_t end_ = 0;

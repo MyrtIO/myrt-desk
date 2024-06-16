@@ -21,10 +21,10 @@ private:
 
   bool handleSetColor_(IOActionRequest* request);
   bool handleSetBrightness_(IOActionRequest* request);
-  // bool handleGetColor_(IOActionRequest* request);
-  // bool handleGetBrightness_(IOActionRequest* request);
-  // bool handleSetPower_(IOActionRequest* request);
-  // bool handleGetPower_(IOActionRequest* request);
+  bool handleGetColor_(IOActionRequest* request);
+  bool handleGetBrightness_(IOActionRequest* request);
+  bool handleSetPower_(IOActionRequest* request);
+  bool handleGetPower_(IOActionRequest* request);
   // bool handleSetEffect_(IOActionRequest* request);
   // bool handleGetEffect_(IOActionRequest* request);
 };

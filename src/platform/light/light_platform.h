@@ -18,10 +18,10 @@ class LightPlatform : public IOPlatform, public ILightPlatform {
 
     void setColor(CRGB color);
 
-    uint8_t brightness();
-
     // Set the overall brightness of the LEDs.
     void setBrightness(uint8_t brightness);
+
+    uint8_t getBrightness();
 
     // Set power status of the LEDs.
     void setPower(bool enabled);

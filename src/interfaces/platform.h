@@ -8,10 +8,10 @@ class ILightPlatform {
   public:
     virtual CRGB getColor() = 0;
     virtual void setColor(CRGB color) = 0;
-    virtual uint8_t brightness() = 0;
     virtual void setPower(bool enabled) = 0;
     virtual bool getPower() = 0;
     virtual void setBrightness(uint8_t brightness) = 0;
+    virtual uint8_t getBrightness() = 0;
     virtual void setEffect(uint8_t effectCode) = 0;
 };
 

@@ -18,16 +18,16 @@ bool LightHandler::onAction(IOActionRequest* request) {
   switch (request->action) {
     case LightAction::SetColor:
       return handleSetColor_(request);
+    case LightAction::GetColor:
+      return handleGetColor_(request);
     case LightAction::SetBrightness:
       return handleSetBrightness_(request);
-    // case LightAction::GetColor:
-    //   return handleGetColor_(request);
-    // case LightAction::GetBrightness:
-    //   return handleGetBrightness_(request);
-    // case LightAction::SetPower:
-    //   return handleSetPower_(request);
-    // case LightAction::GetPower:
-    //   return handleGetPower_(request);
+    case LightAction::GetBrightness:
+      return handleGetBrightness_(request);
+    case LightAction::SetPower:
+      return handleSetPower_(request);
+    case LightAction::GetPower:
+      return handleGetPower_(request);
     // case LightAction::SetEffect:
     //   return handleSetEffect_(request);
     // case LightAction::GetEffect:
@@ -56,48 +56,49 @@ bool LightHandler::handleSetBrightness_(IOActionRequest* request) {
   return true; // Successfully set brightness
 }
 
-// bool LightHandler::handleGetColor_(IOActionRequest* request) {
-//   if (request->length != 0) {
-//     return false;
-//   }
-//   request
-//     ->startReply(true)
-//     ->append(state_.color[0])
-//     ->append(state_.color[1])
-//     ->append(state_.color[2])
-//     ->flush();
-//   return true;
-// }
+bool LightHandler::handleGetColor_(IOActionRequest* request) {
+  if (request->length != 0) {
+    return false;
+  }
+  CRGB color = leds_->getColor();
+  request
+    ->startReply(true)
+    ->append(color.r)
+    ->append(color.g)
+    ->append(color.b)
+    ->flush();
+  return true;
+}
 
-// bool LightHandler::handleGetBrightness_(IOActionRequest* request) {
-//   if (request->length != 0) {
-//     return false;
-//   }
-//   request
-//     ->startReply(true)
-//     ->append(state_.brightness)
-//     ->flush();
-//   return true;
-// }
+bool LightHandler::handleGetBrightness_(IOActionRequest* request) {
+  if (request->length != 0) {
+    return false;
+  }
+  request
+    ->startReply(true)
+    ->append(leds_->getBrightness())
+    ->flush();
+  return true;
+}
 
-// bool LightHandler::handleSetPower_(IOActionRequest* request) {
-//   if (request->length != 1 || request->payload[0] > 1) {
-//     return false;
-//   }
-//   leds_->setPower(request->payload[0]);
-//   return true;
-// }
+bool LightHandler::handleSetPower_(IOActionRequest* request) {
+  if (request->length != 1 || request->payload[0] > 1) {
+    return false;
+  }
+  leds_->setPower(request->payload[0]);
+  return true;
+}
 
-// bool LightHandler::handleGetPower_(IOActionRequest* request) {
-//   if (request->length != 0) {
-//     return false;
-//   }
-//   request
-//     ->startReply(true)
-//     ->append(leds_->getPower() ? 1 : 0)
-//     ->flush();
-//   return true;
-// }
+bool LightHandler::handleGetPower_(IOActionRequest* request) {
+  if (request->length != 0) {
+    return false;
+  }
+  request
+    ->startReply(true)
+    ->append(leds_->getPower())
+    ->flush();
+  return true;
+}
 
 // bool LightHandler::handleGetEffect_(IOActionRequest* request) {
 //   if (request->length != 0) {
