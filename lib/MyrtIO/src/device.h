@@ -64,7 +64,6 @@ class IODevice {
     }
 
     bool addPlatform_(IOPlatform* c) {
-      Serial.println("IODevice::addPlatform_");
       c->setup();
       if (platformsCount >= IO_DEVICE_MAX_PLATFORMS) {
         // TODO: add handling

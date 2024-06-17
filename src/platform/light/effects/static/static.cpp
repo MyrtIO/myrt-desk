@@ -15,7 +15,6 @@ bool StaticEffect::handleFrame(EffectState *state, LEDStrip *strip) {
     state->currentColor = state->targetColor;
     _transitioned = true;
   }
-  // Serial.printf("Color: %02X%02X%02X\n", color.r, color.g, color.b);
   return true;
 }
 
@@ -31,7 +30,6 @@ bool StaticEffect::setData(EffectState *state, uint8_t *data, uint8_t length) {
 }
 
 void StaticEffect::onColorUpdate(EffectState *state) {
-  Serial.println("StaticEffect::onColorUpdate");
   _progress.start(state->transitionTime);
   _transitioned = false;
 }

@@ -1,7 +1,6 @@
 #include "dispatcher.h"
 
 IODevice* IODispatcher::setup() {
-  Serial.println("IODispatcher::setup");
   device_ = new IODevice();
   return device_;
 }
@@ -12,15 +11,12 @@ void IODispatcher::onRequest(IORequest* request) {
   if (length < 2) {
     return;
   }
-  Serial.println("IODispatcher::onRequest");
   for (uint8_t i = 0; i < device_->handlersCount; i++) {
     if (device_->handlerList[i]->code() == payload[0]) {
-      Serial.println("IODispatcher::onRequest::found");
       runAction_(request, device_->handlerList[i]);
       return;
     }
   }
-  Serial.println("IODispatcher::onRequest::unknown");
 }
 
 void IODispatcher::handle() {
