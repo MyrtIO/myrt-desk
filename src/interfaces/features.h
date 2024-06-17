@@ -5,6 +5,7 @@
 enum FeatureCode : uint8_t {
   System = 0,
   Light = 1,
+  Height = 2,
 };
 
 enum SystemAction : uint8_t {
@@ -21,6 +22,11 @@ enum LightAction : uint8_t {
   GetPower = 5,
   SetEffect = 6,
   GetEffect = 7,
+};
+
+enum HeightAction : uint8_t {
+  SetHeight = 0,
+  GetHeight = 1,
 };
 
 // #define COMMAND_BACKLIGHT_READ 0

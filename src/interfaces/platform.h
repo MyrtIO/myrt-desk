@@ -15,6 +15,12 @@ class ILightPlatform {
     virtual void setEffect(uint8_t effectCode) = 0;
 };
 
+class IHeightPlatform {
+  public:
+    virtual uint16_t getHeight() = 0;
+    virtual bool setHeight(uint16_t height) = 0;
+};
+
 // class IRTCPlatform {
 //   public:
 //     virtual uint8_t getHours() = 0;

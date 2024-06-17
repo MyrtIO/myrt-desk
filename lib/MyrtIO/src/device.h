@@ -36,7 +36,7 @@ class IODevice {
     template<typename... Args>
     IODevice* handlers(IOHandler* first, Args... args) {
       addHandler_(first);
-      return features(args...);
+      return handlers(args...);
     }
 
     template<typename... Args>

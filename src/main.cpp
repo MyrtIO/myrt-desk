@@ -4,14 +4,19 @@
 #include <FastLED.h>
 #include <MyrtIO.h>
 #include <MyrtIO/udp_provider.h>
-#include <platform.h>
-#include <handlers.h>
+#include <BekantLIN.h>
+
 #include <secrets.h>
+#include <handlers.h>
+#include <platform.h>
+#include <pins.h>
 
 UDPRequestProvider udpProvider;
 IODispatcher io;
+BekantReader heightReader;
 
 LightHandler light;
+HeightHandler height;
 
 #define UDP_PORT 11011
 
@@ -45,24 +50,52 @@ void udp_server_task() {
 }
 
 void setup() {
+    // Clear LED strip
     LEDS.show();
-    Serial.begin(115200);
+
+    // Setup logging
+    Serial.begin();
+
+    // Setup height related stuff
+    Serial2.setTX(PIN_TX_LIN);
+    Serial2.setRX(PIN_RX_LIN);
+    Serial2.begin(LIN_BAUD_RATE);
+    pinMode(PIN_TX_UP, OUTPUT);
+    pinMode(PIN_TX_DOWN, OUTPUT);
+    heightReader.setup(&Serial2);
+    auto heightPlatform = IO_INJECT_INSTANCE(HeightPlatform);
+    heightPlatform->setReader(&heightReader);
+
+    // Setup UDP server
     udpProvider.setListener(&io);
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
     WiFi.setHostname("MyrtDesk");
     Serial.println("Connecting to WiFi...");
     while (WiFi.status() != WL_CONNECTED) {
-        Serial.println("Still not...");
+      delay(100);
     }
-    Serial.println("Connected!");
     io.setup()
       ->handlers(
-        &light
+        &light,
+        &height
       )
       ->platforms(
-        IO_INJECT_INSTANCE(LightPlatform)
+        IO_INJECT_INSTANCE(LightPlatform),
+        IO_INJECT_INSTANCE(HeightPlatform)
       );
     multicore_launch_core1(udp_server_task);
+
+    Serial.println("Setup is done");
+}
+
+uint8_t counter = 0;
+uint8_t buffer[16];
+
+void clear() {
+    counter = 0;
+    for (int i = 0; i < 16; i++) {
+        buffer[i] = 0;
+    }
 }
 
 void loop() {
