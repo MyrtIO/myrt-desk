@@ -50,6 +50,9 @@ class HeightPlatform : public IOPlatform, public IHeightPlatform {
       if (reader_ == nullptr || state_ != DeskState::Chill) {
         return false;
       }
+      if (height > HEIGHT_MAX || height < HEIGHT_MIN) {
+        return false;
+      }
       uint16_t currentHeight = reader_->getHeight();
       if (targetHeight_ == currentHeight) {
         return true;
