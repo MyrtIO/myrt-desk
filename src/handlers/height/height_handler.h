@@ -3,8 +3,6 @@
 #include <MyrtIO.h>
 #include <platform.h>
 #include "interfaces/features.h"
-// #include "state.h"
-// #include "stored.h"
 
 class HeightHandler : public IOHandler {
 public:

@@ -20,7 +20,13 @@ HeightHandler height;
 
 #define UDP_PORT 11011
 
-void udp_receive(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, u16_t port) {
+void udp_receive(
+  void *arg,
+  struct udp_pcb *pcb,
+  struct pbuf *p,
+  const ip_addr_t *addr,
+  uint16_t port
+) {
   if (p != NULL) {
     udpProvider.handleMessage(pcb, p, addr, port);
     pbuf_free(p);
@@ -60,20 +66,11 @@ void setup() {
     Serial2.setTX(PIN_TX_LIN);
     Serial2.setRX(PIN_RX_LIN);
     Serial2.begin(LIN_BAUD_RATE);
-    pinMode(PIN_TX_UP, OUTPUT);
-    pinMode(PIN_TX_DOWN, OUTPUT);
     heightReader.setup(&Serial2);
     auto heightPlatform = IO_INJECT_INSTANCE(HeightPlatform);
     heightPlatform->setReader(&heightReader);
 
-    // Setup UDP server
-    udpProvider.setListener(&io);
-    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-    WiFi.setHostname("MyrtDesk");
-    Serial.println("Connecting to WiFi...");
-    while (WiFi.status() != WL_CONNECTED) {
-      delay(100);
-    }
+    // Setup MyrtIO
     io.setup()
       ->handlers(
         &light,
@@ -83,19 +80,18 @@ void setup() {
         IO_INJECT_INSTANCE(LightPlatform),
         IO_INJECT_INSTANCE(HeightPlatform)
       );
+
+    // Setup UDP server
+    udpProvider.setListener(&io);
+    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    WiFi.setHostname("MyrtDesk");
+    Serial.println("Connecting to WiFi...");
+    while (WiFi.status() != WL_CONNECTED) {
+      delay(100);
+    }
     multicore_launch_core1(udp_server_task);
 
     Serial.println("Setup is done");
-}
-
-uint8_t counter = 0;
-uint8_t buffer[16];
-
-void clear() {
-    counter = 0;
-    for (int i = 0; i < 16; i++) {
-        buffer[i] = 0;
-    }
 }
 
 void loop() {

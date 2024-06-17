@@ -5,8 +5,6 @@ uint8_t HeightHandler::code() {
 }
 
 void HeightHandler::setup() {}
-
-
 HeightHandler::HeightHandler() {}
 
 // Handles action requests and performs actions based on the request.
