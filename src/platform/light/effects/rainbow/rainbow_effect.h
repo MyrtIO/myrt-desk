@@ -2,7 +2,7 @@
 
 #include <MyrtIO.h>
 #include <MyrtIO/ledbee.h>
-#include <PicoTime.h>
+#include <Attotime.h>
 
 class RainbowEffect : public LEDEffect {
   public:
