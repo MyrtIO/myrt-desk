@@ -1,6 +1,6 @@
 #include "light_platform.h"
-#include "effects/static/static.h"
-// #include "interfaces/effects.h"
+#include "effects/effects.h"
+#include "interfaces/effects.h"
 
 // Implementation of the setup function to initialize the LED platform.
 void LightPlatform::setup() {
@@ -51,19 +51,26 @@ void LightPlatform::setColor(CRGB color) {
   pixels_.handleStateUpdate();
 }
 
-void LightPlatform::setEffect(uint8_t effectCode) {
+bool LightPlatform::setEffect(uint8_t effectCode) {
   switch (effectCode) {
-  case 0:
+  case LightEffect::Static:
     pixels_.setEffect(&StaticFx);
     break;
-  // case LEDEffect::EffectSmooth:
-  //   pixels_.setEffect(renderSmoothEffect);
-  //   break;
-  // case LEDEffect::EffectZoom:
-  //   pixels_.setEffect(renderZoomEffect);
-  //   break;
+  case LightEffect::Rainbow:
+    pixels_.setEffect(&RainbowFx);
   default:
+    return false;
     break;
   }
+  return true;
 }
 
+uint8_t LightPlatform::getEffect() {
+  LEDEffect *current = pixels_.getEffect();
+  if (current == &StaticFx) {
+    return LightEffect::Static;
+  } else if (current == &RainbowFx) {
+    return LightEffect::Rainbow;
+  }
+  return 0;
+}

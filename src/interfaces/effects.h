@@ -2,8 +2,7 @@
 
 #include <stdint.h>
 
-enum LEDEffect : uint8_t {
-  EffectStatic = 0,
-  EffectSmooth = 1,
-  EffectZoom = 2,
+enum LightEffect : uint8_t {
+  Static = 1,
+  Rainbow = 2,
 };

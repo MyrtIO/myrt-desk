@@ -17,4 +17,5 @@ class LEDEffect {
  public:
   virtual bool handleFrame(EffectState *state, LEDStrip *strip) = 0;
   virtual void onColorUpdate(EffectState *state) = 0;
+  virtual void onEffectUpdate(EffectState *state) = 0;
 };

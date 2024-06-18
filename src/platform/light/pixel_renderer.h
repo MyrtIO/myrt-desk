@@ -22,6 +22,10 @@ class PixelRenderer : public IRenderer {
     // Set the rendering effect for the LED matrix.
     void setEffect(LEDEffect *effect);
 
+    LEDEffect *getEffect() {
+      return effect_;
+    }
+
     // Set the color for the LED matrix.
     void handleStateUpdate();
 

@@ -8,27 +8,20 @@
 
 class LightPlatform : public IOPlatform, public ILightPlatform {
   public:
-    // Setup function to initialize the LED platform.
     void setup();
-
-    // Function called at the start of each loop iteration.
     void onLoop();
 
     CRGB getColor();
-
     void setColor(CRGB color);
 
-    // Set the overall brightness of the LEDs.
     void setBrightness(uint8_t brightness);
-
     uint8_t getBrightness();
 
-    // Set power status of the LEDs.
     void setPower(bool enabled);
-
-    void setEffect(uint8_t effectCode);
-
     bool getPower();
+
+    bool setEffect(uint8_t effectCode);
+    uint8_t getEffect();
 
   private:
     LEDBee leds_;

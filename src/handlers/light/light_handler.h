@@ -25,6 +25,6 @@ private:
   bool handleGetBrightness_(IOActionRequest* request);
   bool handleSetPower_(IOActionRequest* request);
   bool handleGetPower_(IOActionRequest* request);
-  // bool handleSetEffect_(IOActionRequest* request);
-  // bool handleGetEffect_(IOActionRequest* request);
+  bool handleSetEffect_(IOActionRequest* request);
+  bool handleGetEffect_(IOActionRequest* request);
 };

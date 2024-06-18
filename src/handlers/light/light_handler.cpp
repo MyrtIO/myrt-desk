@@ -28,10 +28,10 @@ bool LightHandler::onAction(IOActionRequest* request) {
       return handleSetPower_(request);
     case LightAction::GetPower:
       return handleGetPower_(request);
-    // case LightAction::SetEffect:
-    //   return handleSetEffect_(request);
-    // case LightAction::GetEffect:
-    //   return handleGetEffect_(request);
+    case LightAction::SetEffect:
+      return handleSetEffect_(request);
+    case LightAction::GetEffect:
+      return handleGetEffect_(request);
   }
   return false; // Unknown action
 }
@@ -39,7 +39,7 @@ bool LightHandler::onAction(IOActionRequest* request) {
 // Private method to handle setting LED color based on the request.
 bool LightHandler::handleSetColor_(IOActionRequest* request) {
   if (request->length != 3) {
-    return false; // Invalid payload length
+    return false;
   }
   leds_->setColor(CRGB(request->payload[0], request->payload[1], request->payload[2]));
   return true;
@@ -48,12 +48,10 @@ bool LightHandler::handleSetColor_(IOActionRequest* request) {
 // Private method to handle setting LED brightness based on the request.
 bool LightHandler::handleSetBrightness_(IOActionRequest* request) {
   if (request->length != 1) {
-    return false; // Invalid payload length
+    return false;
   }
   leds_->setBrightness(request->payload[0]);
-  // state_.brightness = request->payload[0];
-  // stateDescriptor_.update();
-  return true; // Successfully set brightness
+  return true;
 }
 
 bool LightHandler::handleGetColor_(IOActionRequest* request) {
@@ -100,22 +98,25 @@ bool LightHandler::handleGetPower_(IOActionRequest* request) {
   return true;
 }
 
-// bool LightHandler::handleGetEffect_(IOActionRequest* request) {
-//   if (request->length != 0) {
-//     return false;
-//   }
-//   request
-//     ->startReply(true)
-//     ->append(state_.effect)
-//     ->flush();
-//   return true;
-// }
+bool LightHandler::handleGetEffect_(IOActionRequest* request) {
+  if (request->length != 0) {
+    return false;
+  }
+  uint8_t effectCode = leds_->getEffect();
+  if (effectCode == 0) {
+    return false;
+  }
+  request
+    ->startReply(true)
+    ->append(effectCode)
+    ->flush();
+  return true;
+}
 
-// bool LightHandler::handleSetEffect_(IOActionRequest* request) {
-//   if (request->length != 1) {
-//     return false;
-//   }
-//   state_.effect = request->payload[0];
-//   leds_->setEffect(request->payload[0]);
-//   return true;
-// }
+bool LightHandler::handleSetEffect_(IOActionRequest* request) {
+  if (request->length != 1) {
+    return false;
+  }
+  leds_->setEffect(request->payload[0]);
+  return true;
+}
