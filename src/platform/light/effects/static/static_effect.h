@@ -2,7 +2,7 @@
 
 #include <MyrtIO.h>
 #include <MyrtIO/ledbee.h>
-#include <Timing.h>
+#include <PicoTime.h>
 
 class StaticEffect : public LEDEffect {
   public:

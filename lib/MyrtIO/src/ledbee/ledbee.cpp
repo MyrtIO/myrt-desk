@@ -41,9 +41,9 @@ uint8_t LEDBee::fps() {
 // }
 
 void LEDBee::requestFrame_() {
-  frame_.set(kFrameTime);
+  frame_.start(kFrameTime);
 }
 
 bool LEDBee::shouldRenderFrame_() {
-  return frame_.isDone();
+  return frame_.finished();
 }
