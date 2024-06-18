@@ -4,6 +4,10 @@ BAUD_RATE = 115200
 .PHONY: configure
 configure:
 	pio init --ide vscode
+	make build
+
+.PHONY: build
+build:
 	pio run
 
 .PHONY: deploy
