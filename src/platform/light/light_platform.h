@@ -6,26 +6,36 @@
 #include "brightness.h"
 #include "pixel_renderer.h"
 
-class LightPlatform : public IOPlatform, public ILightPlatform {
-  public:
-    void setup();
-    void onLoop();
+enum LightPlatformState {
+  Off,
+  On
+};
 
-    CRGB getColor();
-    void setColor(CRGB color);
+class LightPlatform :
+  public IOPlatform,
+  public ILightPlatform,
+  public EffectSwitcher {
+public:
+  void setup();
+  void onLoop();
 
-    void setBrightness(uint8_t brightness);
-    uint8_t getBrightness();
+  CRGB getColor();
+  void setColor(CRGB color);
 
-    void setPower(bool enabled);
-    bool getPower();
+  void setBrightness(uint8_t brightness);
+  uint8_t getBrightness();
 
-    bool setEffect(uint8_t effectCode);
-    uint8_t getEffect();
+  void setPower(bool enabled);
+  bool getPower();
 
-  private:
-    LEDBee leds_;
-    EffectState state_;
-    SmoothBrightness brightness_;
-    PixelRenderer pixels_;
+  void onEffectSwitch();
+  bool setEffect(uint8_t effectCode);
+  uint8_t getEffect();
+
+private:
+  LEDBee leds_;
+  EffectState state_;
+  SmoothBrightness brightness_;
+  PixelRenderer pixels_;
+  LEDEffect *nextEffect_;
 };

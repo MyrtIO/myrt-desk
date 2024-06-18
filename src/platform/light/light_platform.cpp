@@ -9,7 +9,7 @@ void LightPlatform::setup() {
   state_.targetBrightness = 255;
   state_.enabled = true;
   pixels_.setup(&StaticFx, &state_);
-  brightness_.setup(&state_);
+  brightness_.setup(&state_, this);
   leds_.init()
     ->pixels(&pixels_)
     ->brightness(&brightness_);
@@ -54,15 +54,25 @@ void LightPlatform::setColor(CRGB color) {
 bool LightPlatform::setEffect(uint8_t effectCode) {
   switch (effectCode) {
   case LightEffect::Static:
-    pixels_.setEffect(&StaticFx);
+    nextEffect_ = &StaticFx;
     break;
   case LightEffect::Rainbow:
-    pixels_.setEffect(&RainbowFx);
+    nextEffect_ = &RainbowFx;
+    break;
   default:
     return false;
     break;
   }
+  brightness_.handleEffectUpdate();
   return true;
+}
+
+void LightPlatform::onEffectSwitch() {
+  if (nextEffect_ != nullptr) {
+    pixels_.setEffect(nextEffect_);
+    nextEffect_->onEffectUpdate(&state_);
+    nextEffect_ = nullptr;
+  }
 }
 
 uint8_t LightPlatform::getEffect() {

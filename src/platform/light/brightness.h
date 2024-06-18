@@ -5,12 +5,18 @@
 
 enum class BrightnessChangeReason {
   Brightness,
-  Power
+  Power,
+  Effect,
+};
+
+class EffectSwitcher {
+  public:
+    virtual void onEffectSwitch() = 0;
 };
 
 class SmoothBrightness : public IRenderer {
   public:
-    void setup(EffectState *state);
+    void setup(EffectState *state, EffectSwitcher *switcher);
 
     // Public method to handle frame and update brightness gradually.
     // Returns true if the brightness needs to be updated, false otherwise.
@@ -18,6 +24,7 @@ class SmoothBrightness : public IRenderer {
 
     void handleBrightnessUpdate();
     void handlePowerUpdate();
+    void handleEffectUpdate();
 
   private:
     bool enabled_ = true;
@@ -27,4 +34,8 @@ class SmoothBrightness : public IRenderer {
     EffectState *state_;
     Progress transition_;
     BrightnessChangeReason reason_;
+    bool effectSwitched_ = false;
+    EffectSwitcher *switcher_ = nullptr;
+
+    bool handleEffectChangeFrame_();
 };
