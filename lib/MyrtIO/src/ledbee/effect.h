@@ -7,7 +7,8 @@ struct EffectState {
   bool enabled = false;
   uint8_t currentBrightness = 0;
   uint8_t targetBrightness = 255;
-  CRGB currentColor = CRGB::Black;
+  CRGB selectedColor = CRGB::Black;
+  CRGB currentColor = CRGB::Blue;
   CRGB targetColor = CRGB::Blue;
 
   size_t transitionTime = 0;

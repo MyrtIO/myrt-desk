@@ -4,7 +4,7 @@
 
 // Implementation of the setup function to initialize the LED platform.
 void LightPlatform::setup() {
-  state_.transitionTime = 800;
+  state_.transitionTime = 600;
   state_.currentBrightness = 255;
   state_.targetBrightness = 255;
   state_.enabled = true;
@@ -23,11 +23,11 @@ void LightPlatform::onLoop() {
 }
 
 CRGB LightPlatform::getColor() {
-  return state_.currentColor;
+  return state_.targetColor;
 }
 
 uint8_t LightPlatform::getBrightness() {
-  return state_.currentBrightness;
+  return state_.targetBrightness;
 }
 
 // Implementation of the public method to set the overall brightness of the LEDs.
