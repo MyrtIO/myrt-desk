@@ -2,6 +2,7 @@
 
 #include <MyrtIO.h>
 #include <platform.h>
+#include <io_di.h>
 #include "interfaces/features.h"
 
 class HeightHandler : public IOHandler {

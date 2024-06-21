@@ -1,6 +1,7 @@
 #pragma once
 
 #include <MyrtIO.h>
+#include <io_di.h>
 #include <platform.h>
 #include "interfaces/features.h"
 // #include "state.h"
