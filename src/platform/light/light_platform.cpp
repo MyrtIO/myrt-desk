@@ -1,25 +1,37 @@
 #include "light_platform.h"
+#include <FastLED.h>
 #include "effects/effects.h"
 #include "interfaces/effects.h"
 
+const uint8_t kFramesPerSecond = 50;
+
 // Implementation of the setup function to initialize the LED platform.
 void LightPlatform::setup() {
-  state_.transitionTime = 600;
+  state_.colorTransitionMs = 600;
+  state_.effectTransitionMs = 1000;
+  state_.currentColor = CRGB::Black;
+  state_.selectedColor = CRGB::Black;
+  state_.targetColor = CRGB::Blue;
   state_.currentBrightness = 255;
   state_.targetBrightness = 255;
   state_.enabled = true;
-  pixels_.setup(&StaticFx, &state_);
-  brightness_.setup(&state_, this);
-  leds_.init()
-    ->pixels(&pixels_)
-    ->brightness(&brightness_);
 
-  brightness_.handleBrightnessUpdate();
+  FastLED.addLeds<WS2811, PIN_LED_STRIP, GRB>(pixels_.colors(), pixels_.length());
+  pixelHandler_.setup(&StaticFx, &state_, &pixels_);
+  brightnessHandler_.setup(&state_, this);
+  brightnessHandler_.handleBrightnessUpdate();
+
+  coordinator_->addHandlers(&pixelHandler_, &brightnessHandler_);
+  coordinator_->start(&FastLEDRenderer, kFramesPerSecond);
+}
+
+void LightPlatform::setCoordinator(LEDCoordinator* coordinator) {
+  coordinator_ = coordinator;
 }
 
 // Implementation of the function called at the start of each loop iteration.
 void LightPlatform::onLoop() {
-  leds_.handle();
+  coordinator_->handle();
 }
 
 CRGB LightPlatform::getColor() {
@@ -33,13 +45,13 @@ uint8_t LightPlatform::getBrightness() {
 // Implementation of the public method to set the overall brightness of the LEDs.
 void LightPlatform::setBrightness(uint8_t brightness) {
   state_.targetBrightness = brightness;
-  brightness_.handleBrightnessUpdate();
+  brightnessHandler_.handleBrightnessUpdate();
 }
 
 // Implementation of the public method to set power status of the LEDs.
 void LightPlatform::setPower(bool enabled) {
   state_.enabled = enabled;
-  brightness_.handlePowerUpdate();
+  brightnessHandler_.handlePowerUpdate();
 }
 
 bool LightPlatform::getPower() {
@@ -48,7 +60,7 @@ bool LightPlatform::getPower() {
 
 void LightPlatform::setColor(CRGB color) {
   state_.targetColor = color;
-  pixels_.handleStateUpdate();
+  pixelHandler_.handleStateUpdate();
 }
 
 bool LightPlatform::setEffect(uint8_t effectCode) {
@@ -63,20 +75,20 @@ bool LightPlatform::setEffect(uint8_t effectCode) {
     return false;
     break;
   }
-  brightness_.handleEffectUpdate();
+  brightnessHandler_.handleEffectUpdate();
   return true;
 }
 
 void LightPlatform::onEffectSwitch() {
   if (nextEffect_ != nullptr) {
-    pixels_.setEffect(nextEffect_);
+    pixelHandler_.setEffect(nextEffect_);
     nextEffect_->onEffectUpdate(&state_);
     nextEffect_ = nullptr;
   }
 }
 
 uint8_t LightPlatform::getEffect() {
-  LEDEffect *current = pixels_.getEffect();
+  ILightEffect *current = pixelHandler_.getEffect();
   if (current == &StaticFx) {
     return LightEffect::Static;
   } else if (current == &RainbowFx) {

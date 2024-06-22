@@ -1,15 +1,12 @@
 #pragma once
 
 #include <MyrtIO.h>
-#include <FastLED.h>
+#include <FastLEDCoordinator.h>
 #include "interfaces/platform.h"
-#include "brightness.h"
-#include "pixel_renderer.h"
+#include "brightness_handler.h"
+#include "pixel_handler.h"
 
-enum LightPlatformState {
-  Off,
-  On
-};
+#define STRIP_LENGTH 92
 
 class LightPlatform :
   public IOPlatform,
@@ -18,6 +15,7 @@ class LightPlatform :
 public:
   void setup();
   void onLoop();
+  void setCoordinator(LEDCoordinator *coordinator);
 
   CRGB getColor();
   void setColor(CRGB color);
@@ -33,9 +31,10 @@ public:
   uint8_t getEffect();
 
 private:
-  LEDBee leds_;
-  EffectState state_;
-  SmoothBrightness brightness_;
-  PixelRenderer pixels_;
-  LEDEffect *nextEffect_;
+  LEDCoordinator* coordinator_ = nullptr;
+  ILightEffect* nextEffect_ = nullptr;
+  LightState state_;
+  SmoothBrightness brightnessHandler_;
+  PixelHandler pixelHandler_;
+  Pixels pixels_ = Pixels(STRIP_LENGTH);
 };

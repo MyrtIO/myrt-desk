@@ -1,9 +1,8 @@
-#include "brightness.h"
-#include <FastLED.h>
+#include "brightness_handler.h"
 
 constexpr size_t kBrightnessTransitionDuration = 300;
 
-void SmoothBrightness::setup(EffectState *state, EffectSwitcher *switcher) {
+void SmoothBrightness::setup(LightState *state, EffectSwitcher *switcher) {
   state_ = state;
   switcher_ = switcher;
   enabled_ = state_->enabled;
@@ -32,7 +31,7 @@ bool SmoothBrightness::handleFrame() {
         break;
     }
   }
-  LEDS.setBrightness(current_);
+  FastLED.setBrightness(current_);
   return true;
 }
 
@@ -43,7 +42,7 @@ void SmoothBrightness::handleBrightnessUpdate() {
   previous_ = state_->currentBrightness;
   target_ = state_->targetBrightness;
   reason_ = BrightnessChangeReason::Brightness;
-  transition_.start(state_->transitionTime);
+  transition_.start(state_->colorTransitionMs);
 }
 
 void SmoothBrightness::handlePowerUpdate() {
@@ -53,7 +52,7 @@ void SmoothBrightness::handlePowerUpdate() {
   previous_ = current_;
   target_ = state_->enabled ? state_->currentBrightness : 0;
   reason_ = BrightnessChangeReason::Power;
-  transition_.start(state_->transitionTime);
+  transition_.start(state_->colorTransitionMs);
 }
 
 void SmoothBrightness::handleEffectUpdate() {
@@ -61,7 +60,7 @@ void SmoothBrightness::handleEffectUpdate() {
   target_ = state_->currentBrightness;
   reason_ = BrightnessChangeReason::Effect;
   effectSwitched_ = false;
-  transition_.start(state_->transitionTime);
+  transition_.start(state_->effectTransitionMs);
 }
 
 bool SmoothBrightness::handleEffectChangeFrame_() {
@@ -84,6 +83,6 @@ bool SmoothBrightness::handleEffectChangeFrame_() {
     target_,
     progress
   );
-  LEDS.setBrightness(current_);
+  FastLED.setBrightness(current_);
   return true;
 }

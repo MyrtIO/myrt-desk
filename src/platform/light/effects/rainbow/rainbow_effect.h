@@ -1,14 +1,11 @@
 #pragma once
 
 #include <MyrtIO.h>
-#include <MyrtIO/ledbee.h>
-#include <Attotime.h>
+#include "platform/light/light_effect.h"
 
-class RainbowEffect : public LEDEffect {
+class RainbowEffect : public ILightEffect  {
   public:
-    bool handleFrame(EffectState *state, LEDStrip *strip);
-    void onColorUpdate(EffectState *state);
-    void onEffectUpdate(EffectState *state);
+    bool handleFrame(LightState *state, Pixels *pixels);
 
   private:
     Progress progress_ = Progress();

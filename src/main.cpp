@@ -1,22 +1,24 @@
 #include <WiFi.h>
 #include <pico/multicore.h>
 #include <pico/cyw43_arch.h>
-#include <FastLED.h>
 #include <MyrtIO.h>
 #include <MyrtIO/udp_provider.h>
 #include <BekantLIN.h>
+#include <LEDCoordinator.h>
 
 #include <secrets.h>
 #include <handlers.h>
 #include <platform.h>
 #include <pins.h>
 
-UDPRequestProvider udpProvider;
 IODispatcher io;
-BekantReader heightReader;
+UDPRequestProvider udpProvider;
 
-LightHandler light;
 HeightHandler height;
+LightHandler light;
+
+BekantReader heightReader;
+LEDCoordinator coordinator;
 
 #define UDP_PORT 11011
 
@@ -56,11 +58,12 @@ void udp_server_task() {
 }
 
 void setup() {
-    // Clear LED strip
-    LEDS.show();
-
     // Setup logging
     Serial.begin();
+
+    // Setup LED related stuff
+    auto lightPlatform = IO_INJECT_INSTANCE(LightPlatform);
+    lightPlatform->setCoordinator(&coordinator);
 
     // Setup height related stuff
     Serial2.setTX(PIN_TX_LIN);
@@ -77,8 +80,8 @@ void setup() {
         &height
       )
       ->platforms(
-        IO_INJECT_INSTANCE(LightPlatform),
-        IO_INJECT_INSTANCE(HeightPlatform)
+        heightPlatform,
+        lightPlatform
       );
 
     // Setup UDP server

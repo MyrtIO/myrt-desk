@@ -1,7 +1,8 @@
 #pragma once
 
 #include <MyrtIO.h>
-#include <MyrtIO/ledbee.h>
+#include <LEDCoordinator.h>
+#include "light_effect.h"
 
 enum class BrightnessChangeReason {
   Brightness,
@@ -14,9 +15,9 @@ class EffectSwitcher {
     virtual void onEffectSwitch() = 0;
 };
 
-class SmoothBrightness : public IRenderer {
+class SmoothBrightness : public ILEDHandler {
   public:
-    void setup(EffectState *state, EffectSwitcher *switcher);
+    void setup(LightState *state, EffectSwitcher *switcher);
 
     // Public method to handle frame and update brightness gradually.
     // Returns true if the brightness needs to be updated, false otherwise.
@@ -31,7 +32,7 @@ class SmoothBrightness : public IRenderer {
     uint8_t previous_ = 0;
     uint8_t current_ = 254;
     uint8_t target_ = 255;
-    EffectState *state_;
+    LightState *state_;
     Progress transition_;
     BrightnessChangeReason reason_;
     bool effectSwitched_ = false;
