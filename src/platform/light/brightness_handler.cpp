@@ -10,7 +10,7 @@ void SmoothBrightness::setup(LightState *state, EffectSwitcher *switcher) {
 
 // Implementation of the public method to handle frame and update brightness gradually.
 bool SmoothBrightness::handleFrame() {
-  if (transition_.finished()) {
+  if (!transitioning_) {
     return false;
   }
   if (reason_ == BrightnessChangeReason::Effect) {
@@ -30,6 +30,7 @@ bool SmoothBrightness::handleFrame() {
         enabled_ = state_->enabled;
         break;
     }
+    transitioning_ = false;
   }
   FastLED.setBrightness(current_);
   return true;
@@ -39,6 +40,7 @@ void SmoothBrightness::handleBrightnessUpdate() {
   if (state_->targetBrightness == current_) {
     return;
   }
+  transitioning_ = true;
   previous_ = state_->currentBrightness;
   target_ = state_->targetBrightness;
   reason_ = BrightnessChangeReason::Brightness;
@@ -49,6 +51,7 @@ void SmoothBrightness::handlePowerUpdate() {
   if (state_->enabled == current_) {
     return;
   }
+  transitioning_ = true;
   previous_ = current_;
   target_ = state_->enabled ? state_->currentBrightness : 0;
   reason_ = BrightnessChangeReason::Power;
@@ -60,6 +63,7 @@ void SmoothBrightness::handleEffectUpdate() {
   target_ = state_->currentBrightness;
   reason_ = BrightnessChangeReason::Effect;
   effectSwitched_ = false;
+  transitioning_ = true;
   transition_.start(state_->effectTransitionMs);
 }
 

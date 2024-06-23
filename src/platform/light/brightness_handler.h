@@ -29,13 +29,15 @@ class SmoothBrightness : public ILEDHandler {
 
   private:
     bool enabled_ = true;
+    bool transitioning_ = false;
+    bool effectSwitched_ = false;
     uint8_t previous_ = 0;
     uint8_t current_ = 254;
     uint8_t target_ = 255;
     LightState *state_;
     Progress transition_;
     BrightnessChangeReason reason_;
-    bool effectSwitched_ = false;
+
     EffectSwitcher *switcher_ = nullptr;
 
     bool handleEffectChangeFrame_();
