@@ -1,14 +1,14 @@
 #pragma once
 
-#include <FastLEDCoordinator.h>
+#include <NeoPixelCoordinator.h>
 
 struct LightState {
   bool enabled;
   uint8_t currentBrightness;
   uint8_t targetBrightness;
-  CRGB selectedColor;
-  CRGB currentColor;
-  CRGB targetColor;
+  RGB selectedColor;
+  RGB currentColor;
+  RGB targetColor;
 
   size_t colorTransitionMs  = 0;
   size_t effectTransitionMs = 0;

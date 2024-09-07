@@ -1,28 +1,35 @@
 #include "light_platform.h"
-#include <FastLED.h>
 #include "effects/effects.h"
 #include "interfaces/effects.h"
 
 const uint8_t kFramesPerSecond = 50;
 
+const uint8_t asd = 6;
+
 // Implementation of the setup function to initialize the LED platform.
 void LightPlatform::setup() {
   state_.colorTransitionMs = 600;
   state_.effectTransitionMs = 1000;
-  state_.currentColor = CRGB::Black;
-  state_.selectedColor = CRGB::Black;
-  state_.targetColor = CRGB::Blue;
+  state_.currentColor = RGB::Black;
+  state_.selectedColor = RGB::Black;
+  state_.targetColor = RGB::Blue;
   state_.currentBrightness = 255;
   state_.targetBrightness = 255;
   state_.enabled = true;
 
-  FastLED.addLeds<WS2811, PIN_LED_STRIP, GRB>(pixels_.colors(), pixels_.length());
+  Serial.println("Setup pixels");
+
+  pixels_.setup(&ws2812_, STRIP_LENGTH);
+
+  Serial.println("Setup pixel handler");
   pixelHandler_.setup(&StaticFx, &state_, &pixels_);
-  brightnessHandler_.setup(&state_, this);
+
+  Serial.println("Setup brightness handler");
+  brightnessHandler_.setup(&ws2812_, &state_, this);
   brightnessHandler_.handleBrightnessUpdate();
 
   coordinator_->addHandlers(&pixelHandler_, &brightnessHandler_);
-  coordinator_->start(&FastLEDRenderer, kFramesPerSecond);
+  coordinator_->start(&renderer_, kFramesPerSecond);
 }
 
 void LightPlatform::setCoordinator(LEDCoordinator* coordinator) {
@@ -30,11 +37,12 @@ void LightPlatform::setCoordinator(LEDCoordinator* coordinator) {
 }
 
 // Implementation of the function called at the start of each loop iteration.
-void LightPlatform::onLoop() {
+void LightPlatform::loop() {
+  // Serial.println("Light loop");
   coordinator_->handle();
 }
 
-CRGB LightPlatform::getColor() {
+RGB LightPlatform::getColor() {
   return state_.targetColor;
 }
 
@@ -58,7 +66,7 @@ bool LightPlatform::getPower() {
   return state_.enabled;
 }
 
-void LightPlatform::setColor(CRGB color) {
+void LightPlatform::setColor(RGB color) {
   state_.targetColor = color;
   pixelHandler_.handleStateUpdate();
 }

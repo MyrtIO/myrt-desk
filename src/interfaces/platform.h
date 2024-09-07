@@ -1,13 +1,12 @@
 #pragma once
 
 #include <stdint.h>
-#include <FastLED.h>
-// #include <stored.h>
+#include "NeoPixelCoordinator.h"
 
 class ILightPlatform {
   public:
-    virtual CRGB getColor() = 0;
-    virtual void setColor(CRGB color) = 0;
+    virtual RGB getColor() = 0;
+    virtual void setColor(RGB color) = 0;
     virtual void setPower(bool enabled) = 0;
     virtual bool getPower() = 0;
     virtual void setBrightness(uint8_t brightness) = 0;

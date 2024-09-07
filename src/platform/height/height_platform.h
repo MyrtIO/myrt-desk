@@ -15,7 +15,7 @@ class HeightPlatform : public IOPlatform, public IHeightPlatform {
   public:
     void setup();
     void setReader(BekantReader *reader);
-    void onLoop();
+    void loop();
 
     uint16_t getHeight();
     bool setHeight(uint16_t height);

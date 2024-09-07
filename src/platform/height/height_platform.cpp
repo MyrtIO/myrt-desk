@@ -3,13 +3,18 @@
 void HeightPlatform::setup() {
   pinMode(PIN_TX_UP, OUTPUT);
   pinMode(PIN_TX_DOWN, OUTPUT);
+  if (reader_ == nullptr) {
+    Serial.println("No bekant reader set");
+    return;
+  }
+  reader_->handle();
 }
 
 void HeightPlatform::setReader(BekantReader *reader) {
   reader_ = reader;
 }
 
-void HeightPlatform::onLoop() {
+void HeightPlatform::loop() {
   if (reader_ == nullptr) {
     Serial.println("No bekant reader set");
     return;

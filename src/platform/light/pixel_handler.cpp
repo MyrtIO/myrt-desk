@@ -1,5 +1,4 @@
 #include "pixel_handler.h"
-#include "pixeltypes.h"
 
 // Implementation of the setup function to initialize the LED matrix and set the rendering effect.
 void PixelHandler::setup(ILightEffect *effect, LightState *state, Pixels* pixels) {

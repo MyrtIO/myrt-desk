@@ -2,7 +2,7 @@
 
 #include <MyrtIO.h>
 #include <LEDCoordinator.h>
-#include <FastLEDCoordinator.h>
+#include <NeoPixelCoordinator.h>
 #include <pins.h>
 #include "light_effect.h"
 

@@ -10,9 +10,9 @@ class RainbowEffect : public ILightEffect  {
   private:
     Progress progress_ = Progress();
     uint8_t hueProgress_ = 0;
-    CHSV firstColor_ = CHSV(0, 255, 255);
-    CHSV secondColor_ = CHSV(0, 255, 255);
-    CHSV thirdColor_ = CHSV(0, 255, 255);
+    // CHSV firstColor_ = CHSV(0, 255, 255);
+    // CHSV secondColor_ = CHSV(0, 255, 255);
+    // CHSV thirdColor_ = CHSV(0, 255, 255);
 
     uint8_t hueShift_(uint8_t shift);
     void restart_();

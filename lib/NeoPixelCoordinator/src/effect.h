@@ -1,6 +1,5 @@
 #pragma once
 
-#include <FastLED.h>
 #include "pixels.h"
 
 template <class State>

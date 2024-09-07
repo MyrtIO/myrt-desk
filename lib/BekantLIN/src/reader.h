@@ -39,6 +39,9 @@ class BekantReader {
     }
 
     uint16_t getHeight() {
+      if (position_ == 0) {
+        return 0;
+      }
       float height = POSITION_TO_HEIGHT_SLOPE * static_cast<float>(position_) + POSITION_TO_HEIGHT_BIAS;
       return static_cast<uint16_t>(round(height));
     }
