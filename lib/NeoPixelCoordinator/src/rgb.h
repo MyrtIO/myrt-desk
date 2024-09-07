@@ -49,6 +49,14 @@ struct RGB {
             (uint32_t)(b);
   }
 
+  inline void applyBrightness(uint8_t brightness) {
+    uint16_t scale_fixed;
+    scale_fixed = brightness + 1;
+    r = (((uint16_t)r) * scale_fixed) >> 8;
+    g = (((uint16_t)g) * scale_fixed) >> 8;
+    b = (((uint16_t)b) * scale_fixed) >> 8;
+  }
+
   typedef enum {
     Black = 0x000000,
     Red = 0xFF0000,
