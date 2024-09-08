@@ -1,10 +1,6 @@
 #include "myrt_qtt.h"
 #include <WiFi.h>
 
-const char *kMQTTName = "MQTT";
-
-IOLogger mqttLog(kMQTTName, &Serial);
-
 MyrtQTT::MyrtQTT(PubSubClient *client, const char* clientID) {
   client_ = client;
   clientID_ = clientID;
@@ -18,9 +14,6 @@ void MyrtQTT::setServer(char* host, uint16_t port) {
 
 
 void MyrtQTT::loop() {
-  if (!connected_()) {
-    return;
-  }
   client_->loop();
   handleReports_();
 }
@@ -56,24 +49,9 @@ MyrtQTT* MyrtQTT::reportConfig(ReportCallback callback) {
   return report(callback, 60000);
 }
 
-bool MyrtQTT::connected_() {
-  if (client_->connected()) {
-    return true;
-  }
-
-  if (WiFi.status() != WL_CONNECTED) {
-    return false;
-  }
-
-  if (client_->connect(clientID_)) {
-    reportAll_();
-    subscribe_();
-    mqttLog.print("connected to broker");
-    return true;
-  }
-
-  mqttLog.debug("failed to connect");
-  return false;
+void MyrtQTT::onConnect() {
+  reportAll_();
+  subscribe_();
 }
 
 void MyrtQTT::subscribe_() {

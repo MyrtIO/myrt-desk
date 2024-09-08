@@ -9,11 +9,10 @@ IODevice desk;
 void setup() {
   Serial.begin();
   #ifdef CONFIG_DEBUG
-  // Wait for serial port to connect. Needed for native USB
+  // Wait for serial port to connect
   while (!Serial) {}
   #endif
   IOLog.print("starting desk...");
-
   desk.setup()
     ->platform(
       IO_INJECT_INSTANCE(HeightPlatform),
@@ -24,7 +23,6 @@ void setup() {
       &ConnectionController,
       &MQTTController
     );
-
   IOLog.print("desk is initialized");
 }
 

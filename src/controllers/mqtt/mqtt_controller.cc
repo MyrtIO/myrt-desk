@@ -2,6 +2,10 @@
 #include "mqtt_controller.h"
 #include "topics.h"
 
+const char *kMQTTName = "MQTT";
+
+IOLogger mqttLog(kMQTTName, &Serial);
+
 MQTTController_ MQTTController = MQTTController_();
 
 void handleTopicMessage(char* topic, byte* payload, unsigned int length) {
@@ -25,4 +29,22 @@ void MQTTController_::loop() {
 
 void MQTTController_::handleMessage(char* topic, byte* payload, unsigned int length) {
   mqtt_.handleMessage(topic, payload, length);
+}
+
+bool MQTTController_::connected_() {
+  if (client_.connected()) {
+    return true;
+  }
+
+  if (!wifi_->connected()) {
+    return false;
+  }
+
+  if (client_.connect(CONFIG_DEVICE_NAME)) {
+    mqttLog.debug("connected to broker");
+    mqtt_.onConnect();
+  }
+
+  mqttLog.debug("failed to connect");
+  return false;
 }

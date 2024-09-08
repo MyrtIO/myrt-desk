@@ -2,6 +2,7 @@
 
 #include <MyrtIO.h>
 #include <WiFi.h>
+#include <platform.h>
 #include "myrt_qtt.h"
 
 typedef void (*TopicRegisterer)(MyrtQTT* mqtt);
@@ -17,11 +18,8 @@ class MQTTController_: public IOUnit {
     WiFiClient wifiClient_ = WiFiClient();
     PubSubClient client_ = PubSubClient(wifiClient_);
     MyrtQTT mqtt_ = MyrtQTT(&client_, CONFIG_DEVICE_NAME);
-
+    IWiFiPlatform* wifi_ = IO_INJECT(IWiFiPlatform);
     bool connected_();
-    void subscribe_();
-    void handleReports_();
-    void reportAll_();
 };
 
 extern MQTTController_ MQTTController;
