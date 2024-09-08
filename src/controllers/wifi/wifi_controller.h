@@ -2,6 +2,8 @@
 
 #include <MyrtIO.h>
 #include <Attotime.h>
+#include <platform.h>
+#include <interfaces/effects.h>
 
 class WiFiController_: public IOUnit {
   public:
@@ -12,7 +14,9 @@ class WiFiController_: public IOUnit {
   private:
     bool isConnecting_ = false;
     bool wereConnected_ = false;
+    ILightPlatform* light_ = IO_INJECT(ILightPlatform);
     Timer timeout_;
+    effect_t previousEffect_ = LightEffect::Static;
 
     bool connected_();
 };

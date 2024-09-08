@@ -18,7 +18,7 @@ const char *kLightConfig = R"(
   "brightness": true,
   "effect": true,
   "schema": "json",
-  "effect_list": ["static", "rainbow"],
+  "effect_list": ["static", "rainbow", "loading"],
   "supported_color_modes": ["rgb"],
   "device": {
     "name": "MyrtDesk",
@@ -40,12 +40,13 @@ const char *kJsonStringB = "b";
 const char *kJsonStringEffect = "effect";
 const char *kJsonStringStatic = "static";
 const char *kJsonStringRainbow = "rainbow";
+const char *kJsonStringLoading = "loading";
 const char *kJsonStringColorMode = "color_mode";
 
 JsonDocument lightStateDoc;
 char lightStateBuffer[256];
 
-const char *effectNames[2] = { kJsonStringStatic, kJsonStringRainbow };
+const char *effectNames[3] = { kJsonStringStatic, kJsonStringRainbow, kJsonStringLoading };
 
 void reportLightState(PubSubClient* client) {
   auto platform = IO_INJECT(ILightPlatform);
@@ -86,7 +87,7 @@ void updateLightState(PubSubClient* client, byte* payload, unsigned int length) 
   const char* effectValue = lightStateDoc[kJsonStringEffect];
   uint8_t reqEffect = 255;
   if (effectValue != nullptr) {
-    for (uint8_t i = 0; i < 2; i++) {
+    for (uint8_t i = 0; i < 3; i++) {
       if (strcmp(effectValue, effectNames[i]) == 0) {
         reqEffect = i;
         break;

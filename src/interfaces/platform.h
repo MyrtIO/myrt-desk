@@ -22,3 +22,9 @@ class IHeightPlatform {
     virtual uint16_t getHeight() = 0;
     virtual bool setHeight(uint16_t height) = 0;
 };
+
+class IWiFiPlatform {
+  public:
+    virtual bool connected() = 0;
+    virtual void connect() = 0;
+};

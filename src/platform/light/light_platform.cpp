@@ -18,7 +18,7 @@ void LightPlatform::setup() {
   state_.effectTransitionMs = 1000;
   state_.currentColor = RGB::Black;
   state_.selectedColor = RGB::Black;
-  state_.targetColor = RGB::Blue;
+  state_.targetColor = RGB::Black;
   state_.currentBrightness = 255;
   state_.targetBrightness = 255;
   state_.enabled = true;
@@ -31,6 +31,7 @@ void LightPlatform::setup() {
   brightnessHandler_.setup(&ws2812_, &state_, this);
   brightnessHandler_.handleBrightnessUpdate();
   coordinator_.addHandlers(&pixelHandler_, &brightnessHandler_);
+  coordinator_.setFPS(15);
   coordinator_.start(&renderer_, kFramesPerSecond);
 }
 
@@ -79,10 +80,14 @@ bool LightPlatform::setEffect(uint8_t effectCode) {
   case LightEffect::Rainbow:
     nextEffect_ = &RainbowFx;
     break;
+  case LightEffect::Loading:
+    nextEffect_ = &LoadingFx;
+    break;
   default:
     return false;
     break;
   }
+  nextEffect_->onActivate(&state_, &pixels_);
   brightnessHandler_.handleEffectUpdate();
   return true;
 }
@@ -101,6 +106,8 @@ uint8_t LightPlatform::getEffect() {
     return LightEffect::Static;
   } else if (current == &RainbowFx) {
     return LightEffect::Rainbow;
+  } else if (current == &LoadingFx) {
+    return LightEffect::Loading;
   }
   return 0;
 }

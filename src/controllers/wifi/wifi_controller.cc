@@ -11,6 +11,8 @@ WiFiController_ WiFiController;
 void WiFiController_::setup() {
   isConnecting_ = false;
   WiFi.setHostname(CONFIG_DEVICE_NAME);
+  light_->setEffect(LightEffect::Loading);
+  light_->setColor(RGB(255, 74, 51));
 }
 
 void WiFiController_::loop() {
@@ -19,6 +21,7 @@ void WiFiController_::loop() {
       wifiLog.print("connected");
       wereConnected_ = true;
       isConnecting_ = false;
+      light_->setEffect(previousEffect_);
     }
     return;
   }
@@ -26,6 +29,8 @@ void WiFiController_::loop() {
   if (wereConnected_) {
     wifiLog.print("disconnected");
     wereConnected_ = false;
+    previousEffect_ = light_->getEffect();
+    light_->setEffect(LightEffect::Loading);
   }
 
   if (isConnecting_) {
