@@ -1,5 +1,5 @@
 #include "brightness_handler.h"
-#include <color_utils.h>
+#include <color_rgb.h>
 
 constexpr size_t kBrightnessTransitionDuration = 300;
 

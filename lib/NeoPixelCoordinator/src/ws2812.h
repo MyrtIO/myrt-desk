@@ -9,7 +9,7 @@
 #include "hardware/clocks.h"
 #include "hardware/gpio.h"
 
-#include "rgb.h"
+#include "color_rgb.h"
 #include "ws2812.pio.h"
 
 
