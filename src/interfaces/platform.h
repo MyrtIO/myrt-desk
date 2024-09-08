@@ -26,5 +26,4 @@ class IHeightPlatform {
 class IWiFiPlatform {
   public:
     virtual bool connected() = 0;
-    virtual void connect() = 0;
 };

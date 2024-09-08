@@ -2,7 +2,7 @@
 
 // Common parameters
 #define CONFIG_DEVICE_NAME "MyrtDesk"
-#define CONFIG_DEBUG true
+// #define CONFIG_DEBUG true
 // Wi-Fi parameters
 #define CONFIG_WIFI_SSID "Your SSID" // REPLACE: Your SSID
 #define CONFIG_WIFI_PASSWORD "Your password" // REPLACE: Your password

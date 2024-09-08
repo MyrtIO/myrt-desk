@@ -1,9 +1,7 @@
 #pragma once
 
 #include <stdint.h>
-#include <Arduino.h>
-
-#include "IOLogger.h"
+#include "logger.h"
 
 #define IO_DEVICE_MAX_FEATURES 8
 #define IO_DEVICE_MAX_PLATFORMS 8

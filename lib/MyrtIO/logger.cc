@@ -1,4 +1,4 @@
-#include "IOLogger.h"
+#include "logger.h"
 
 void IOLogger::print(const char* message) {
   printPrefix_();
