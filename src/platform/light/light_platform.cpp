@@ -1,6 +1,5 @@
 #include "light_platform.h"
 #include "effects/effects.h"
-#include "interfaces/effects.h"
 
 const uint8_t kFramesPerSecond = 50;
 
@@ -24,7 +23,7 @@ void LightPlatform::setup() {
   state_.enabled = true;
 
   lightLog.print("setup ws2812");
-  pixels_.setup(&ws2812_, STRIP_LENGTH);
+  pixels_.setup(&ws2812_, CONFIG_LIGHT_LED_COUNT);
   lightLog.print("setup pixel handler");
   pixelHandler_.setup(&StaticFx, &state_, &pixels_);
   lightLog.print("setup brightness handler");

@@ -1,6 +1,13 @@
 #pragma once
 
 #include <NeoPixelCoordinator.h>
+#include <interfaces/platform.h>
+
+enum LightEffect : effect_t {
+  Static = 0,
+  Rainbow = 1,
+  Loading = 2,
+};
 
 struct LightState {
   bool enabled = true;
@@ -8,7 +15,7 @@ struct LightState {
   uint8_t targetBrightness = 255;
   RGB selectedColor = RGB::Black;
   RGB currentColor = RGB::Black;
-  RGB targetColor = RGB::Blue;
+  RGB targetColor = RGB::Black;
 
   size_t colorTransitionMs  = 0;
   size_t effectTransitionMs = 0;

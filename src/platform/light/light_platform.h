@@ -3,11 +3,10 @@
 #include <MyrtIO.h>
 #include <NeoPixelCoordinator.h>
 #include <config.h>
-#include "interfaces/platform.h"
+#include <interfaces/platform.h>
+#include "light_effect.h"
 #include "brightness_handler.h"
 #include "pixel_handler.h"
-
-#define STRIP_LENGTH 92
 
 class LightPlatform :
   public IOUnit,

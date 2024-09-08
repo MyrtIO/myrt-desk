@@ -3,7 +3,6 @@
 #include <MyrtIO.h>
 #include <Attotime.h>
 #include <platform.h>
-#include <interfaces/effects.h>
 
 class WiFiController_: public IOUnit {
   public:
