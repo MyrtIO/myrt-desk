@@ -15,6 +15,7 @@ void ConnectionController_::loop() {
     if (!wereConnected_) {
       connLog.print("connected!");
       wereConnected_ = true;
+      light_->setEffect(previousEffect_);
     }
   } else {
     if (wereConnected_) {

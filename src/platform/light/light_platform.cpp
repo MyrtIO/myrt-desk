@@ -17,7 +17,7 @@ void LightPlatform::setup() {
   state_.effectTransitionMs = 1000;
   state_.currentColor = RGB::Black;
   state_.selectedColor = RGB::Black;
-  state_.targetColor = RGB::Black;
+  state_.targetColor = RGB(255, 74, 51);
   state_.currentBrightness = 255;
   state_.targetBrightness = 255;
   state_.enabled = true;

@@ -24,6 +24,9 @@ void MQTTController_::setup() {
 }
 
 void MQTTController_::loop() {
+  if (!connected_()) {
+    return;
+  }
   mqtt_.loop();
 }
 
