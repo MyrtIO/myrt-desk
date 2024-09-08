@@ -1,3 +1,5 @@
 .pio
 .vscode/
 src/config.h
+src/controllers/mqtt/topics/config_data.cc
+src/controllers/mqtt/topics/config_data.h

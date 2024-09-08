@@ -4,7 +4,7 @@ Firmware for Ikea Bekant based smart desk using Raspberry Pi Pico W.
 
 ## Features
 
-- Control using [MyrtIO Protocol](https://github.com/MyrtIO/myrt_desk/tree/main/lib/MyrtIO) via UDP.
+- Control using MQTT.
 - Customizable backlight, various effects and animations.
 - Adjusting the height of the desk.
 

@@ -4,6 +4,7 @@ BAUD_RATE = 115200
 .PHONY: generate
 generate:
 	@python scripts/generate_config_example.py
+	@python scripts/generate_file_strings.py
 
 .PHONY: configure
 configure:
@@ -12,6 +13,7 @@ configure:
 
 .PHONY: build
 build:
+	@make generate
 	pio run
 
 .PHONY: deploy

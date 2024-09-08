@@ -1,6 +1,6 @@
 #include <config.h>
 #include "mqtt_controller.h"
-#include "topics.h"
+#include "topics/topics.h"
 
 const char *kMQTTName = "MQTT";
 

@@ -1,5 +1,6 @@
 #include <platform.h>
 #include <ArduinoJson.h>
+#include "config_data.h"
 
 #include "topics.h"
 
@@ -7,27 +8,6 @@ const char *kLightOutTopic = "myrt/desk/light";
 const char *kLightInTopic  = "myrt/desk/light/set";
 const char *kLightConfigTopic = "homeassistant/light/myrt_desk_light/config";
 const size_t kLightReportInterval = 60000;
-
-const char *kLightConfig = R"(
-{
-  "name": "light",
-  "icon": "mdi:lightbulb",
-  "state_topic": "myrt/desk/light",
-  "command_topic": "myrt/desk/light/set",
-  "unique_id": "myrt_desk_light",
-  "brightness": true,
-  "effect": true,
-  "schema": "json",
-  "effect_list": ["static", "rainbow", "loading"],
-  "supported_color_modes": ["rgb"],
-  "device": {
-    "name": "MyrtDesk",
-    "identifiers": [
-      "myrt_desk"
-    ]
-  }
-}
-)";
 
 const char *kJsonStringState = "state";
 const char *kJsonStringOn  = "ON";
