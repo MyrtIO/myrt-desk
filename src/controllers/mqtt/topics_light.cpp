@@ -120,7 +120,7 @@ void reportLightConfig(PubSubClient* client) {
   client->publish(kLightConfigTopic, kLightConfig);
 }
 
-void setupLightTopics(MyrtQTT* server) {
+void registerLightTopics(MyrtQTT* server) {
   server
     ->reportConfig(reportLightConfig)
     ->report(reportLightState, kLightReportInterval)

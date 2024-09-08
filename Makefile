@@ -1,6 +1,10 @@
 BOARD_TTY = /dev/tty.usbmodem11301
 BAUD_RATE = 115200
 
+.PHONY: generate
+generate:
+	@python scripts/generate_config_example.py
+
 .PHONY: configure
 configure:
 	pio init --ide vscode

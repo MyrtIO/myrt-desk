@@ -3,83 +3,53 @@
 #include <stdint.h>
 #include <Arduino.h>
 
+#include "IOLogger.h"
+
 #define IO_DEVICE_MAX_FEATURES 8
 #define IO_DEVICE_MAX_PLATFORMS 8
 
-class IOPlatform {
+class IOUnit {
   public:
+    virtual const char* name() = 0;
     virtual void setup() = 0;
-    virtual void loop() = 0;
-};
-
-class IOController {
-  public:
     virtual void loop() = 0;
 };
 
 class IODevice {
   public:
-    IODevice* setup() {
-      return this;
-    }
+    IODevice* setup();
+    void loop();
 
-    void loop() {
-      for (uint8_t i = 0; i < controllersCount_; i++) {
-        controllers_[i]->loop();
-      }
-      for (uint8_t i = 0; i < platformsCount_; i++) {
-        platforms_[i]->loop();
-      }
-    }
-
-    template<typename... Args>
-    IODevice* withControllers(IOController *last) {
+     template<typename... Args>
+    IODevice* controllers(IOUnit *last) {
       addController_(last);
       return this;
     }
 
     template<typename... Args>
-    IODevice* withControllers(IOController* first, Args... args) {
+    IODevice* controllers(IOUnit* first, Args... args) {
       addController_(first);
-      return withControllers(args...);
+      return controllers(args...);
     }
 
     template<typename... Args>
-    IODevice* withPlatforms(IOPlatform *last) {
+    IODevice* platform(IOUnit *last) {
       addPlatform_(last);
       return this;
     }
 
     template<typename... Args>
-    IODevice* withPlatforms(IOPlatform* first, Args... args) {
+    IODevice* platform(IOUnit* first, Args... args) {
       addPlatform_(first);
-      return withPlatforms(args...);
+      return platform(args...);
     }
 
   private:
     uint8_t controllersCount_ = 0;
     uint8_t platformsCount_ = 0;
-    IOController* controllers_[IO_DEVICE_MAX_FEATURES];
-    IOPlatform* platforms_[IO_DEVICE_MAX_PLATFORMS];
+    IOUnit* controllers_[IO_DEVICE_MAX_FEATURES];
+    IOUnit* platforms_[IO_DEVICE_MAX_PLATFORMS];
 
-    bool addController_(IOController* c) {
-      if (controllersCount_ >= IO_DEVICE_MAX_FEATURES) {
-        // TODO: add handling
-        return false;
-      }
-      controllers_[controllersCount_] = c;
-      controllersCount_++;
-      return true;
-    }
-
-    bool addPlatform_(IOPlatform* p) {
-      p->setup();
-      if (platformsCount_ >= IO_DEVICE_MAX_PLATFORMS) {
-        // TODO: add handling
-        return false;
-      }
-      platforms_[platformsCount_] = p;
-      platformsCount_++;
-      return true;
-    }
+    bool addController_(IOUnit* c);
+    bool addPlatform_(IOUnit* p);
 };

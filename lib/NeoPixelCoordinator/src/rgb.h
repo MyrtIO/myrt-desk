@@ -57,7 +57,7 @@ struct RGB {
     b = (((uint16_t)b) * scale_fixed) >> 8;
   }
 
-  typedef enum {
+  enum {
     Black = 0x000000,
     Red = 0xFF0000,
     Green = 0x00FF00,

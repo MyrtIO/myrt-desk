@@ -2,43 +2,49 @@
 
 #include <PubSubClient.h>
 #include <MyrtIO.h>
+#include <Attotime.h>
 
-#define MQTT_MAX_TOPICS 20
-#define MQTT_CONNECTION_TIMEOUT 5000
+#define MYRTQTT_MAX_TOPICS 20
+#define MYRTQTT_CONNECTION_TIMEOUT 5000
+#define MYRTQTT_BUFFER_SIZE 1024
 
 typedef void (*DataCallback)(PubSubClient* client, byte* payload, unsigned int length);
 typedef void (*ReportCallback)(PubSubClient* client);
 
 struct TopicHandler {
-  const char* topic;
-  DataCallback callback;
+  const char* topic = nullptr;
+  DataCallback callback = nullptr;
 };
 
 struct TopicReporter {
-  ReportCallback callback;
-  unsigned long interval;
+  ReportCallback callback = nullptr;
+  unsigned long interval = 0;
   unsigned long lastExecution = 0;
 };
 
-class MyrtQTT: public IOController {
+class MyrtQTT {
   public:
-    MyrtQTT(PubSubClient* client, const char* clientID);
+    MyrtQTT(PubSubClient *client, const char* clientID);
+    ~MyrtQTT();
 
-    void setup(const char *host, uint16_t port);
+    void setBufferSize(size_t size);
     void loop();
     void handleMessage(char* topic, byte* payload, unsigned int length);
+    void setServer(char* host, uint16_t port);
 
     MyrtQTT* on(const char *topic, DataCallback callback);
     MyrtQTT* report(ReportCallback callback, size_t interval);
     MyrtQTT* reportConfig(ReportCallback callback);
 
-  private:
-    const char* clientID_;
-    PubSubClient* client_;
-    TopicHandler handlers_[MQTT_MAX_TOPICS];
+  private:;
+    bool isConnecting_ = false;
+    PubSubClient* client_ = nullptr;
+    const char* clientID_ = nullptr;
+    TopicHandler handlers_[MYRTQTT_MAX_TOPICS];
     uint8_t handlersCount_ = 0;
-    TopicReporter reporters_[MQTT_MAX_TOPICS];
+    TopicReporter reporters_[MYRTQTT_MAX_TOPICS];
     uint8_t reportersCount_ = 0;
+    Timer connectionTimer_;
 
     bool connected_();
     void subscribe_();

@@ -3,12 +3,12 @@
 #include <NeoPixelCoordinator.h>
 
 struct LightState {
-  bool enabled;
-  uint8_t currentBrightness;
-  uint8_t targetBrightness;
-  RGB selectedColor;
-  RGB currentColor;
-  RGB targetColor;
+  bool enabled = true;
+  uint8_t currentBrightness = 255;
+  uint8_t targetBrightness = 255;
+  RGB selectedColor = RGB::Black;
+  RGB currentColor = RGB::Black;
+  RGB targetColor = RGB::Blue;
 
   size_t colorTransitionMs  = 0;
   size_t effectTransitionMs = 0;

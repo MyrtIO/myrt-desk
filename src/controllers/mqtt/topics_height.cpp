@@ -1,4 +1,3 @@
-#pragma once
 #include <platform.h>
 #include "topics.h"
 
@@ -47,7 +46,7 @@ void reportHeightConfig(PubSubClient* client) {
   client->publish(kHeightConfigTopic, kHeightConfig);
 }
 
-void setupHeightTopics(MyrtQTT* server) {
+void registerHeightTopics(MyrtQTT* server) {
   server
     ->reportConfig(reportHeightConfig)
     ->report(reportHeightState, kHeightReportInterval)

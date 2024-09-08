@@ -3,7 +3,6 @@
 #include <MyrtIO.h>
 #include <LEDCoordinator.h>
 #include <NeoPixelCoordinator.h>
-#include <pins.h>
 #include "light_effect.h"
 
 class PixelHandler : public ILEDHandler {

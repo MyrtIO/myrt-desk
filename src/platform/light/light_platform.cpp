@@ -4,7 +4,13 @@
 
 const uint8_t kFramesPerSecond = 50;
 
-const uint8_t asd = 6;
+const char* kLightPlatformName = "Light";
+
+IOLogger lightLog(kLightPlatformName, &Serial);
+
+const char *LightPlatform::name() {
+  return kLightPlatformName;
+}
 
 // Implementation of the setup function to initialize the LED platform.
 void LightPlatform::setup() {
@@ -17,29 +23,20 @@ void LightPlatform::setup() {
   state_.targetBrightness = 255;
   state_.enabled = true;
 
-  Serial.println("Setup pixels");
-
+  lightLog.print("setup ws2812");
   pixels_.setup(&ws2812_, STRIP_LENGTH);
-
-  Serial.println("Setup pixel handler");
+  lightLog.print("setup pixel handler");
   pixelHandler_.setup(&StaticFx, &state_, &pixels_);
-
-  Serial.println("Setup brightness handler");
+  lightLog.print("setup brightness handler");
   brightnessHandler_.setup(&ws2812_, &state_, this);
   brightnessHandler_.handleBrightnessUpdate();
-
-  coordinator_->addHandlers(&pixelHandler_, &brightnessHandler_);
-  coordinator_->start(&renderer_, kFramesPerSecond);
-}
-
-void LightPlatform::setCoordinator(LEDCoordinator* coordinator) {
-  coordinator_ = coordinator;
+  coordinator_.addHandlers(&pixelHandler_, &brightnessHandler_);
+  coordinator_.start(&renderer_, kFramesPerSecond);
 }
 
 // Implementation of the function called at the start of each loop iteration.
 void LightPlatform::loop() {
-  // Serial.println("Light loop");
-  coordinator_->handle();
+  coordinator_.handle();
 }
 
 RGB LightPlatform::getColor() {
@@ -52,12 +49,14 @@ uint8_t LightPlatform::getBrightness() {
 
 // Implementation of the public method to set the overall brightness of the LEDs.
 void LightPlatform::setBrightness(uint8_t brightness) {
+  lightLog.print("update brightness");
   state_.targetBrightness = brightness;
   brightnessHandler_.handleBrightnessUpdate();
 }
 
 // Implementation of the public method to set power status of the LEDs.
 void LightPlatform::setPower(bool enabled) {
+  lightLog.print("update power");
   state_.enabled = enabled;
   brightnessHandler_.handlePowerUpdate();
 }
@@ -67,6 +66,7 @@ bool LightPlatform::getPower() {
 }
 
 void LightPlatform::setColor(RGB color) {
+  lightLog.print("update color");
   state_.targetColor = color;
   pixelHandler_.handleStateUpdate();
 }

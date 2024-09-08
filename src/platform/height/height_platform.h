@@ -1,9 +1,9 @@
 #pragma once
 
-#include <pins.h>
 #include <MyrtIO.h>
 #include <interfaces/platform.h>
-#include <BekantLIN.h>
+#include "bekant_reader.h"
+#include <config.h>
 
 enum class DeskState {
   Chill,
@@ -11,19 +11,21 @@ enum class DeskState {
   MoveDown
 };
 
-class HeightPlatform : public IOPlatform, public IHeightPlatform {
+class HeightPlatform : public IOUnit, public IHeightPlatform {
   public:
     void setup();
-    void setReader(BekantReader *reader);
     void loop();
+
+    const char* name();
 
     uint16_t getHeight();
     bool setHeight(uint16_t height);
 
   private:
-    BekantReader *reader_;
+    BekantReader reader_;
     uint16_t targetHeight_ = 0;
     DeskState state_ = DeskState::Chill;
+    SerialUART *stream_ = &CONFIG_BEKANT_LIN_UART;
 
     void moveUp_();
     void moveDown_();
