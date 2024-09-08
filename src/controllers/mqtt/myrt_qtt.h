@@ -22,6 +22,8 @@ struct TopicReporter {
   unsigned long lastExecution = 0;
 };
 
+extern const char *kMQTTName;
+
 class MyrtQTT {
   public:
     MyrtQTT(PubSubClient *client, const char* clientID);
@@ -36,15 +38,13 @@ class MyrtQTT {
     MyrtQTT* report(ReportCallback callback, size_t interval);
     MyrtQTT* reportConfig(ReportCallback callback);
 
-  private:;
-    bool isConnecting_ = false;
+  private:
     PubSubClient* client_ = nullptr;
     const char* clientID_ = nullptr;
     TopicHandler handlers_[MYRTQTT_MAX_TOPICS];
     uint8_t handlersCount_ = 0;
     TopicReporter reporters_[MYRTQTT_MAX_TOPICS];
     uint8_t reportersCount_ = 0;
-    Timer connectionTimer_;
 
     bool connected_();
     void subscribe_();

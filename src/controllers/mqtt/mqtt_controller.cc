@@ -9,7 +9,7 @@ void handleTopicMessage(char* topic, byte* payload, unsigned int length) {
 }
 
 const char *MQTTController_::name() {
-  return "MQTT";
+  return kMQTTName;
 }
 
 void MQTTController_::setup() {

@@ -17,6 +17,11 @@ class MQTTController_: public IOUnit {
     WiFiClient wifiClient_ = WiFiClient();
     PubSubClient client_ = PubSubClient(wifiClient_);
     MyrtQTT mqtt_ = MyrtQTT(&client_, CONFIG_DEVICE_NAME);
+
+    bool connected_();
+    void subscribe_();
+    void handleReports_();
+    void reportAll_();
 };
 
 extern MQTTController_ MQTTController;
