@@ -26,3 +26,4 @@
 // Light parameters
 #define CONFIG_LIGHT_WORKER_PIO pio1
 #define CONFIG_LIGHT_WORKER_SM 1
+#define CONFIG_LIGHT_LED_COUNT 92
