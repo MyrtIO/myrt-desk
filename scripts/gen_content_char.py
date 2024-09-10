@@ -1,9 +1,9 @@
+#!/usr/bin/env python3
+"""Script to generate C files with the text content of the provided files."""
 import os
+import sys
 
-CONFIG_DIR = 'src/controllers/mqtt/topics'
-OUT_PATH = 'src/controllers/mqtt/topics/config_data'
-CC_OUT = OUT_PATH + '.cc'
-H_OUT = OUT_PATH + '.h'
+USAGE = "Usage: python gen_content_char.py <output_basename> <files...>"
 
 def collect_json_files(path: str) -> list:
     """Collect the json files."""
@@ -32,9 +32,17 @@ def map_contents(paths: list[str]) -> dict:
 
 def generate() -> None:
     """Generate the file strings."""
-    paths = collect_json_files(CONFIG_DIR)
+    if len(sys.argv) < 3:
+        print(USAGE)
+        sys.exit(1)
+
+    out_basename = sys.argv[1]
+    out_cc = out_basename + ".cc"
+    out_h = out_basename + ".h"
+
+    paths = sys.argv[2:]
     contents = map_contents(paths)
-    out_base = os.path.basename(OUT_PATH)
+    out_base = os.path.basename(out_basename)
     cpp_content = f"#include \"{out_base}.h\"\n\n"
     h_content = '#pragma once\n\n'
     for file in paths:
@@ -43,11 +51,13 @@ def generate() -> None:
         cpp_content += format_heading(name)
         cpp_content += " = R\"(\n" + "".join(contents[file]) + ")\";\n\n"
 
-    with open(H_OUT, "w", encoding="utf-8") as f:
+    with open(out_h, "w", encoding="utf-8") as f:
         f.write(h_content)
 
-    with open(CC_OUT, "w", encoding="utf-8") as f:
+    with open(out_cc, "w", encoding="utf-8") as f:
         f.write(cpp_content)
+
+    print(f"Chars available at {out_h}")
 
 if __name__ == "__main__":
     generate()
