@@ -4,11 +4,12 @@
 #define CONFIG_DEVICE_NAME "MyrtDesk"
 // #define CONFIG_DEBUG true
 // Wi-Fi parameters
-#define CONFIG_WIFI_SSID "Your SSID" // REPLACE: Your SSID
-#define CONFIG_WIFI_PASSWORD "Your password" // REPLACE: Your password
+#define CONFIG_WIFI_SSID "Your SSID" // replace: "Your SSID"
+#define CONFIG_WIFI_PASSWORD "Your password" // replace: "Your password"
 #define CONFIG_WIFI_RECONNECT_TIMEOUT 10000
 // MQTT parameters
-#define CONFIG_MQTT_HOST "your.mqtt.server.local" // REPLACE: your.mqtt.server.local
+#define CONFIG_MQTT_HOST \
+    "your.mqtt.server.local" // replace: "your.mqtt.server.local"
 #define CONFIG_MQTT_PORT 1883
 #define CONFIG_MQTT_BUFFER_SIZE 1024
 // GPIO pins

@@ -1,6 +1,6 @@
 {
   "name": "light",
-  "icon": "mdi:lightbulb",
+  "icon": "mdi:led-strip-variant",
   "state_topic": "myrt/desk/light",
   "command_topic": "myrt/desk/light/set",
   "unique_id": "myrt_desk_light",

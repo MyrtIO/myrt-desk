@@ -3,9 +3,9 @@
 // #include <FastLEDCoordinator.h>
 // #include
 
-#include "static/static_effect.h"
-#include "rainbow/rainbow_effect.h"
 #include "loading/loading_effect.h"
+#include "rainbow/rainbow_effect.h"
+#include "static/static_effect.h"
 
 // class LightEffect : public ILEDEffect<LightState> {
 //   public:
@@ -13,6 +13,6 @@
 //     // Lifecycle hooks, called when the state target color changes
 //     virtual void onColorUpdate(LightState* state);
 //     // Lifecycle hooks, called when the effect changes.
-//     // Useful for static effects that need to render even when the color is not changing
-//     virtual void onEffectUpdate(LightState* state);
+//     // Useful for static effects that need to render even when the color is
+//     not changing virtual void onEffectUpdate(LightState* state);
 // };

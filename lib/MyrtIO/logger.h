@@ -4,10 +4,9 @@
 
 class IOLogger {
   public:
-    IOLogger(Stream *stream) : stream_(stream) {};
-    IOLogger(const char* moduleName, Stream *stream):
-      stream_(stream),
-      moduleName_(moduleName) {};
+    IOLogger(Stream* stream) : stream_(stream){};
+    IOLogger(const char* moduleName, Stream* stream)
+    : stream_(stream), moduleName_(moduleName){};
     void print(const char* message);
     void debug(const char* message);
     void append(const char* message);

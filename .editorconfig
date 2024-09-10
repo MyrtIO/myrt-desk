@@ -7,14 +7,6 @@ insert_final_newline = true
 charset = utf-8
 trim_trailing_whitespace = true
 indent_style = space
-indent_size = 2
-
-[*.md,*.mdx]
-indent_size = 4
-trim_trailing_whitespace = true
-
-[Makefile,*.py]
-indent_style = tab
 indent_size = 4
 
 eclint_indent_style = unset

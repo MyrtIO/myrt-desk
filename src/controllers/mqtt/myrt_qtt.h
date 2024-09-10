@@ -1,8 +1,8 @@
 #pragma once
 
-#include <PubSubClient.h>
-#include <MyrtIO.h>
 #include <Attotime.h>
+#include <MyrtIO.h>
+#include <PubSubClient.h>
 
 #define MYRTQTT_MAX_TOPICS 20
 #define MYRTQTT_CONNECTION_TIMEOUT 5000
@@ -12,19 +12,19 @@ typedef void (*DataCallback)(PubSubClient* client, byte* payload, unsigned int l
 typedef void (*ReportCallback)(PubSubClient* client);
 
 struct TopicHandler {
-  const char* topic = nullptr;
-  DataCallback callback = nullptr;
+    const char* topic     = nullptr;
+    DataCallback callback = nullptr;
 };
 
 struct TopicReporter {
-  ReportCallback callback = nullptr;
-  unsigned long interval = 0;
-  unsigned long lastExecution = 0;
+    ReportCallback callback     = nullptr;
+    unsigned long interval      = 0;
+    unsigned long lastExecution = 0;
 };
 
 class MyrtQTT {
   public:
-    MyrtQTT(PubSubClient *client, const char* clientID);
+    MyrtQTT(PubSubClient* client, const char* clientID);
     ~MyrtQTT();
 
     void setBufferSize(size_t size);
@@ -33,7 +33,7 @@ class MyrtQTT {
     void setServer(char* host, uint16_t port);
     void onConnect();
 
-    MyrtQTT* on(const char *topic, DataCallback callback);
+    MyrtQTT* on(const char* topic, DataCallback callback);
     MyrtQTT* report(ReportCallback callback, size_t interval);
     MyrtQTT* reportConfig(ReportCallback callback);
 

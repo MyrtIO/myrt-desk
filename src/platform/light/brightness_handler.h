@@ -1,13 +1,13 @@
 #pragma once
 
+#include "light_effect.h"
 #include <MyrtIO.h>
 #include <NeoPixelCoordinator.h>
-#include "light_effect.h"
 
 enum class BrightnessChangeReason {
-  Brightness,
-  Power,
-  Effect,
+    Brightness,
+    Power,
+    Effect,
 };
 
 class EffectSwitcher {
@@ -17,7 +17,7 @@ class EffectSwitcher {
 
 class SmoothBrightness : public ILEDHandler {
   public:
-    void setup(PioWS2812 *ws2812, LightState *state, EffectSwitcher *switcher);
+    void setup(PioWS2812* ws2812, LightState* state, EffectSwitcher* switcher);
 
     // Public method to handle frame and update brightness gradually.
     // Returns true if the brightness needs to be updated, false otherwise.
@@ -28,18 +28,18 @@ class SmoothBrightness : public ILEDHandler {
     void handleEffectUpdate();
 
   private:
-    bool enabled_ = true;
-    bool transitioning_ = false;
+    bool enabled_        = true;
+    bool transitioning_  = false;
     bool effectSwitched_ = false;
-    uint8_t previous_ = 0;
-    uint8_t current_ = 254;
-    uint8_t target_ = 255;
-    LightState *state_;
+    uint8_t previous_    = 0;
+    uint8_t current_     = 254;
+    uint8_t target_      = 255;
+    LightState* state_;
     Progress transition_;
     BrightnessChangeReason reason_;
     PioWS2812* ws2812_;
 
-    EffectSwitcher *switcher_ = nullptr;
+    EffectSwitcher* switcher_ = nullptr;
 
     bool handleEffectChangeFrame_();
 };

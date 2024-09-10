@@ -4,14 +4,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "hardware/pio.h"
-#include "hardware/dma.h"
 #include "hardware/clocks.h"
+#include "hardware/dma.h"
 #include "hardware/gpio.h"
+#include "hardware/pio.h"
 
 #include "color_rgb.h"
 #include "ws2812.pio.h"
-
 
 class PioWS2812 {
   public:

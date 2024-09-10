@@ -24,3 +24,6 @@ flash:
 monitor:
 	pio device monitor -p $(BOARD_TTY) --baud $(BAUD_RATE)
 
+.PHONY: format
+format:
+	find include src lib -iname '*.cc' -o -iname '*.h' -o -iname '*.cpp' | xargs clang-format -i

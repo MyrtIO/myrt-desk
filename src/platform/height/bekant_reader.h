@@ -8,15 +8,14 @@
 #define POSITION_MIN 170
 #define POSITION_MAX 6400
 
-
 class BekantReader {
   public:
-    void begin(Stream *stream);
+    void begin(Stream* stream);
     void handle();
     uint16_t getHeight();
 
   private:
-    Stream *stream_;
+    Stream* stream_;
     uint16_t position_;
     uint8_t head_ = 0;
     uint8_t buffer_[5];
