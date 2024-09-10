@@ -17,9 +17,10 @@ void IODevice::loop() {
 }
 
 bool IODevice::addController_(IOUnit* c) {
-    deviceLog.append("adding controller: ");
-    deviceLog.append(c->name());
-    deviceLog.flush();
+    deviceLog.builder()
+        ->append("adding controller: ")
+        ->append(c->name())
+        ->flush();
     c->setup();
     if (controllersCount_ >= IO_DEVICE_MAX_CONTROLLERS) {
         deviceLog.print("too many controllers");
@@ -33,9 +34,10 @@ bool IODevice::addController_(IOUnit* c) {
 }
 
 bool IODevice::addPlatform_(IOUnit* p) {
-    deviceLog.append("adding platform: ");
-    deviceLog.append(p->name());
-    deviceLog.flush();
+    deviceLog.builder()
+        ->append("adding platform: ")
+        ->append(p->name())
+        ->flush();
     p->setup();
     if (platformsCount_ >= IO_DEVICE_MAX_PLATFORMS) {
         // TODO: add handling

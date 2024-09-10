@@ -17,13 +17,13 @@ void ConnectionController_::loop() {
             wereConnected_ = true;
             light_->setEffect(previousEffect_);
         }
-    } else {
-        if (wereConnected_) {
-            connLog.print("connecting...");
-            wereConnected_ = false;
-            previousEffect_ = light_->getEffect();
-            light_->setEffect(LightEffect::Loading);
-        }
+        return;
+    }
+    if (wereConnected_) {
+        connLog.print("connecting...");
+        wereConnected_ = false;
+        previousEffect_ = light_->getEffect();
+        light_->setEffect(LightEffect::Loading);
     }
 }
 

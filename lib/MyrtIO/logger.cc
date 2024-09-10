@@ -1,5 +1,32 @@
 #include "logger.h"
 
+IOLogBuilder* IOLogBuilder::append(const char* message) {
+    for (int i = 0; i < strlen(message); i++) {
+        buffer_[size_] = message[i];
+        size_++;
+    }
+    return this;
+}
+
+void IOLogBuilder::clear() {
+    for (int i = 0; i < 256; i++) {
+        buffer_[i] = 0;
+    }
+    size_ = 0;
+}
+
+void IOLogBuilder::flush() {
+    flusher_->flush(buffer_, size_);
+}
+
+char* IOLogBuilder::buffer() {
+    return buffer_;
+}
+
+uint8_t IOLogBuilder::size() {
+    return size_;
+}
+
 void IOLogger::print(const char* message) {
     printPrefix_();
     stream_->print(message);
@@ -10,23 +37,12 @@ void IOLogger::debug(const char* message) {
     this->print(message);
 }
 
-void IOLogger::append(const char* message) {
-    for (int i = 0; i < strlen(message); i++) {
-        buffer_[size_] = message[i];
-        size_++;
-    }
-}
-
-void IOLogger::flush() {
-    if (size_ > 0) {
+void IOLogger::flush(const char* message, uint8_t length) {
+    if (length > 0) {
         printPrefix_();
-        stream_->write(buffer_, size_);
+        stream_->write(message, length);
         stream_->print("\n");
         stream_->flush();
-        for (int i = 0; i < size_; i++) {
-            buffer_[i] = 0;
-        }
-        size_ = 0;
     }
 }
 
@@ -50,6 +66,11 @@ void IOLogger::printPrefix_() {
         stream_->print(moduleName_);
         stream_->print("] ");
     }
+}
+
+IOLogBuilder* IOLogger::builder() {
+    builder_.clear();
+    return &builder_;
 }
 
 IOLogger IOLog = IOLogger(&Serial);

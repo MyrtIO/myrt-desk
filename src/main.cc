@@ -6,20 +6,25 @@
 
 IODevice desk;
 
+#ifdef CONFIG_DEBUG
+#define IO_LOG_DEBUG
+#endif
+
 void setup() {
     Serial.begin();
 #ifdef CONFIG_DEBUG
-    // Wait for serial port to connect
     while (!Serial) {
+        // Wait for serial port to connect
     }
 #endif
     IOLog.print("starting desk...");
-    auto height = IO_INJECT_INSTANCE(HeightPlatform);
-    auto light = IO_INJECT_INSTANCE(LightPlatform);
-    auto wifi = IO_INJECT_INSTANCE(WiFiPlatform);
     // clang-format off
     desk.setup()
-        ->platform(height, light, wifi)
+        ->platform(
+            IO_INJECT_INSTANCE(HeightPlatform),
+            IO_INJECT_INSTANCE(LightPlatform),
+            IO_INJECT_INSTANCE(WiFiPlatform)
+        )
         ->controllers(&ConnectionController, &MQTTController);
     // clang-format on
     IOLog.print("desk is initialized");

@@ -44,6 +44,8 @@ NamespaceIndentation: None
 PenaltyBreakBeforeFirstCallParameter: 85
 PenaltyBreakComment: 85
 PenaltyBreakFirstLessLess: 0
+# IndentAccessModifiers: true
+AccessModifierOffset: -2
 PenaltyBreakString: 85
 PenaltyExcessCharacter: 1
 PenaltyReturnTypeOnItsOwnLine: 20
