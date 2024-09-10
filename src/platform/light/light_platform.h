@@ -1,13 +1,13 @@
 #pragma once
 
 #include "brightness_handler.h"
+#include "fastled/renderer.h"
 #include "light_effect.h"
 #include "pixel_handler.h"
-#include <MyrtIO.h>
 #include <FastLED.h>
+#include <MyrtIO.h>
 #include <config.h>
 #include <interfaces/platform.h>
-#include "fastled/renderer.h"
 
 class LightPlatform : public IOUnit, public ILightPlatform, public EffectSwitcher {
   public:

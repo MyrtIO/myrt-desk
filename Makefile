@@ -26,8 +26,8 @@ format:
 	find include src lib -iname '*.cc' -o -iname '*.h' -o -iname '*.cpp' | xargs clang-format -i
 
 src/config.example.h: src/config.h
-	@python scripts/gen_replace.py
-		src/config.h
+	@python scripts/gen_replace.py \
+		src/config.h \
 		src/config.example.h
 
 $(MQTT_CONFIG_BASENAME).h: $(wildcard $(MQTT_CONFIGS))

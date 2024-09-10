@@ -1,5 +1,9 @@
 #pragma once
 
+// MyrtIO parameters
+#define IO_BENCHMARK 1
+#define IO_DEBUG 1
+
 // Common parameters
 #define CONFIG_DEVICE_NAME "MyrtDesk"
 // #define CONFIG_DEBUG true
@@ -8,8 +12,7 @@
 #define CONFIG_WIFI_PASSWORD "Your password" // replace: "Your password"
 #define CONFIG_WIFI_RECONNECT_TIMEOUT 10000
 // MQTT parameters
-#define CONFIG_MQTT_HOST \
-    "your.mqtt.server.local" // replace: "your.mqtt.server.local"
+#define CONFIG_MQTT_HOST "your.mqtt.server.local" // replace: "your.mqtt.server.local"
 #define CONFIG_MQTT_PORT 1883
 #define CONFIG_MQTT_BUFFER_SIZE 1024
 // GPIO pins

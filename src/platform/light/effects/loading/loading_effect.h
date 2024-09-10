@@ -1,8 +1,8 @@
 #pragma once
 
 #include "platform/light/light_effect.h"
-#include <MyrtIO.h>
 #include <Attotime.h>
+#include <MyrtIO.h>
 
 class LoadingEffect : public ILightEffect {
   public:

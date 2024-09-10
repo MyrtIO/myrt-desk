@@ -1,7 +1,7 @@
 #include "light_platform.h"
 #include "effects/effects.h"
 
-const uint8_t kFramesPerSecond = 50;
+const uint8_t kFramesPerSecond = 100;
 
 const char* kLightPlatformName = "Light";
 

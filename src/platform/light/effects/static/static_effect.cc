@@ -11,7 +11,8 @@ bool StaticEffect::handleFrame(LightState* state, Pixels* pixels) {
     if (state->selectedColor == state->targetColor) {
         return false;
     }
-    state->currentColor = blend(state->selectedColor, state->targetColor, progress_.get());
+    state->currentColor =
+    blend(state->selectedColor, state->targetColor, progress_.get());
     pixels->set(state->currentColor);
     if (progress_.finished()) {
         state->selectedColor = state->targetColor;

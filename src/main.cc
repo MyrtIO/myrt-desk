@@ -1,3 +1,6 @@
+#define IO_BENCHMARK 1
+#define IO_DEBUG 1
+
 #include "config.h"
 #include "controllers/controllers.h"
 #include "platform/platform.h"
@@ -6,9 +9,7 @@
 
 IODevice desk;
 
-#ifdef CONFIG_DEBUG
-#define IO_LOG_DEBUG
-#endif
+
 
 void setup() {
     Serial.begin();

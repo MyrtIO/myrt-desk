@@ -1,7 +1,7 @@
 #pragma once
 
-#include <LEDCoordinator.h>
 #include "light_effect.h"
+#include <LEDCoordinator.h>
 
 class PixelHandler : public ILEDHandler {
   public:
