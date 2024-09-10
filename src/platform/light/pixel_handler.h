@@ -1,9 +1,7 @@
 #pragma once
 
-#include "light_effect.h"
 #include <LEDCoordinator.h>
-#include <MyrtIO.h>
-#include <NeoPixelCoordinator.h>
+#include "light_effect.h"
 
 class PixelHandler : public ILEDHandler {
   public:

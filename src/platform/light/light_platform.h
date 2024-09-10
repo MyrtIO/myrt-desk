@@ -4,9 +4,10 @@
 #include "light_effect.h"
 #include "pixel_handler.h"
 #include <MyrtIO.h>
-#include <NeoPixelCoordinator.h>
+#include <FastLED.h>
 #include <config.h>
 #include <interfaces/platform.h>
+#include "fastled/renderer.h"
 
 class LightPlatform : public IOUnit, public ILightPlatform, public EffectSwitcher {
   public:
@@ -15,8 +16,8 @@ class LightPlatform : public IOUnit, public ILightPlatform, public EffectSwitche
 
     const char* name();
 
-    RGB getColor();
-    void setColor(RGB color);
+    CRGB getColor();
+    void setColor(CRGB color);
 
     void setBrightness(uint8_t brightness);
     uint8_t getBrightness();
@@ -35,7 +36,5 @@ class LightPlatform : public IOUnit, public ILightPlatform, public EffectSwitche
     SmoothBrightness brightnessHandler_;
     PixelHandler pixelHandler_;
     Pixels pixels_;
-    PioWS2812 ws2812_ =
-    PioWS2812(CONFIG_PIN_LED_CTL, CONFIG_LIGHT_WORKER_PIO, CONFIG_LIGHT_WORKER_SM);
-    WS2812Renderer renderer_ = WS2812Renderer(&ws2812_);
+    FastLEDRenderer renderer_;
 };

@@ -2,7 +2,7 @@
 
 #include "platform/light/light_effect.h"
 #include <MyrtIO.h>
-// #include
+#include <Attotime.h>
 
 class StaticEffect : public ILightEffect {
   public:

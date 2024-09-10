@@ -2,6 +2,7 @@
 
 #include "platform/light/light_effect.h"
 #include <MyrtIO.h>
+#include <Attotime.h>
 
 class LoadingEffect : public ILightEffect {
   public:

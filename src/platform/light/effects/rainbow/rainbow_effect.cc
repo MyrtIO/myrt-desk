@@ -1,5 +1,5 @@
 #include "rainbow_effect.h"
-#include <color_rgb.h>
+#include <FastLED.h>
 
 const size_t kRainbowTransitionDuration = 12000;
 

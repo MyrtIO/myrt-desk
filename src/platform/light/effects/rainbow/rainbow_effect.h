@@ -2,6 +2,7 @@
 
 #include "platform/light/light_effect.h"
 #include <MyrtIO.h>
+#include <Attotime.h>
 
 class RainbowEffect : public ILightEffect {
   public:
@@ -10,9 +11,9 @@ class RainbowEffect : public ILightEffect {
   private:
     Progress progress_ = Progress();
     uint8_t hueProgress_ = 0;
-    HSV firstColor_ = HSV(0, 255, 255);
-    HSV secondColor_ = HSV(0, 255, 255);
-    HSV thirdColor_ = HSV(0, 255, 255);
+    CHSV firstColor_ = CHSV(0, 255, 255);
+    CHSV secondColor_ = CHSV(0, 255, 255);
+    CHSV thirdColor_ = CHSV(0, 255, 255);
 
     uint8_t hueShift_(uint8_t shift);
     void restart_();

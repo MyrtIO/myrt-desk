@@ -1,6 +1,6 @@
 #pragma once
 
-#include <NeoPixelCoordinator.h>
+#include "fastled/effect.h"
 #include <interfaces/platform.h>
 
 enum LightEffect : effect_t {
@@ -13,9 +13,9 @@ struct LightState {
     bool enabled = true;
     uint8_t currentBrightness = 255;
     uint8_t targetBrightness = 255;
-    RGB selectedColor = RGB::Black;
-    RGB currentColor = RGB::Black;
-    RGB targetColor = RGB::Black;
+    CRGB selectedColor = CRGB::Black;
+    CRGB currentColor = CRGB::Black;
+    CRGB targetColor = CRGB::Black;
 
     size_t colorTransitionMs = 0;
     size_t effectTransitionMs = 0;

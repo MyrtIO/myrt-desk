@@ -1,10 +1,9 @@
 #include "brightness_handler.h"
-#include <color_rgb.h>
+#include <FastLED.h>
 
 constexpr size_t kBrightnessTransitionDuration = 300;
 
-void SmoothBrightness::setup(PioWS2812* ws2812, LightState* state, EffectSwitcher* switcher) {
-    ws2812_ = ws2812;
+void SmoothBrightness::setup(LightState* state, EffectSwitcher* switcher) {
     state_ = state;
     switcher_ = switcher;
     enabled_ = state_->enabled;
@@ -29,7 +28,7 @@ bool SmoothBrightness::handleFrame() {
         }
         transitioning_ = false;
     }
-    ws2812_->setBrightness(current_);
+    FastLED.setBrightness(current_);
     return true;
 }
 
@@ -80,6 +79,6 @@ bool SmoothBrightness::handleEffectChangeFrame_() {
         target_ = state_->currentBrightness;
     }
     current_ = lerp8by8(previous_, target_, progress);
-    ws2812_->setBrightness(current_);
+    FastLED.setBrightness(current_);
     return true;
 }

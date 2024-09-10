@@ -1,4 +1,5 @@
 #include "pixels.h"
+#include <config.h>
 
 void Pixels::mirror() {
     uint8_t center = count_ / 2;
@@ -10,29 +11,26 @@ void Pixels::mirror() {
     }
 }
 
-void Pixels::setup(PioWS2812* ws2812, uint8_t count) {
-    ws2812_ = ws2812;
+void Pixels::setup(uint8_t count) {
     count_ = count;
-    set(RGB::Black);
-    ws2812_->setup(colors_, count_);
-    ws2812_->show();
+    FastLED.addLeds<WS2812B, CONFIG_PIN_LED_CTL, GRB>(colors_, count_);
 }
 
-void Pixels::set(RGB color, uint8_t idx) {
+void Pixels::set(CRGB color, uint8_t idx) {
     colors_[idx] = color;
 }
 
-void Pixels::set(RGB color, uint8_t from, uint8_t to) {
+void Pixels::set(CRGB color, uint8_t from, uint8_t to) {
     for (uint8_t i = from; i < to; i++) {
         this->set(color, i);
     }
 }
 
-void Pixels::set(RGB color) {
+void Pixels::set(CRGB color) {
     this->set(color, 0, count_);
 }
 
-RGB* Pixels::colors() {
+CRGB* Pixels::colors() {
     return colors_;
 }
 

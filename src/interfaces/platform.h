@@ -1,14 +1,14 @@
 #pragma once
 
-#include "NeoPixelCoordinator.h"
+#include <FastLED.h>
 #include <stdint.h>
 
 typedef uint8_t effect_t;
 
 class ILightPlatform {
   public:
-    virtual RGB getColor() = 0;
-    virtual void setColor(RGB color) = 0;
+    virtual CRGB getColor() = 0;
+    virtual void setColor(CRGB color) = 0;
     virtual void setPower(bool enabled) = 0;
     virtual bool getPower() = 0;
     virtual void setBrightness(uint8_t brightness) = 0;

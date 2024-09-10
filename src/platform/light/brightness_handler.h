@@ -1,8 +1,7 @@
 #pragma once
 
 #include "light_effect.h"
-#include <MyrtIO.h>
-#include <NeoPixelCoordinator.h>
+#include <LEDCoordinator.h>
 
 enum class BrightnessChangeReason {
     Brightness,
@@ -17,7 +16,7 @@ class EffectSwitcher {
 
 class SmoothBrightness : public ILEDHandler {
   public:
-    void setup(PioWS2812* ws2812, LightState* state, EffectSwitcher* switcher);
+    void setup(LightState* state, EffectSwitcher* switcher);
 
     // Public method to handle frame and update brightness gradually.
     // Returns true if the brightness needs to be updated, false otherwise.
@@ -37,7 +36,6 @@ class SmoothBrightness : public ILEDHandler {
     LightState* state_;
     Progress transition_;
     BrightnessChangeReason reason_;
-    PioWS2812* ws2812_;
 
     EffectSwitcher* switcher_ = nullptr;
 

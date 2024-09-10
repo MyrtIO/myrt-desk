@@ -28,7 +28,7 @@ void LoadingEffect::onColorUpdate(LightState* state) {
 }
 
 void LoadingEffect::fill_(Pixels* pixels, LightState* state, uint8_t start, uint8_t length) {
-    pixels->set(RGB::Black);
+    pixels->set(CRGB::Black);
     uint8_t startOffset = isReverse_ ? maxOffset - start : start;
     for (uint8_t i = 0; i < length; i++) {
         pixels->set(state->currentColor, startOffset + i);

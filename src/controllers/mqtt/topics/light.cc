@@ -30,7 +30,7 @@ const char* effectNames[3] = { kJsonStringStatic, kJsonStringRainbow, kJsonStrin
 
 void reportLightState(PubSubClient* client) {
     auto platform = IO_INJECT(ILightPlatform);
-    RGB color = platform->getColor();
+    CRGB color = platform->getColor();
     uint8_t brightness = platform->getBrightness();
     // Set constant properties
     lightStateDoc[kJsonStringColorMode] = "rgb";
@@ -50,15 +50,15 @@ void reportLightState(PubSubClient* client) {
 void updateLightState(PubSubClient* client, byte* payload, unsigned int length) {
     auto platform = IO_INJECT(ILightPlatform);
     bool isEnabled = platform->getPower();
-    RGB color = platform->getColor();
+    CRGB color = platform->getColor();
     uint8_t brightness = platform->getBrightness();
 
     deserializeJson(lightStateDoc, payload);
     bool reqIsEnabled = strcmp(lightStateDoc[kJsonStringState], kJsonStringOn) == 0;
     uint8_t reqBrightness = lightStateDoc[kJsonStringBrightness];
     auto colorProp = lightStateDoc[kJsonStringColor];
-    RGB reqColor =
-    RGB(colorProp[kJsonStringR], colorProp[kJsonStringG], colorProp[kJsonStringB]);
+    CRGB reqColor =
+    CRGB(colorProp[kJsonStringR], colorProp[kJsonStringG], colorProp[kJsonStringB]);
     const char* effectValue = lightStateDoc[kJsonStringEffect];
     uint8_t reqEffect = 255;
     if (effectValue != nullptr) {
@@ -82,7 +82,7 @@ void updateLightState(PubSubClient* client, byte* payload, unsigned int length) 
         platform->setEffect(reqEffect);
         hasChanges = true;
     }
-    if (reqColor != color && reqColor != RGB::Black) {
+    if (reqColor != color && reqColor != CRGB::Black) {
         platform->setColor(reqColor);
         hasChanges = true;
     }

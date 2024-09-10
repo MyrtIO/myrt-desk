@@ -15,19 +15,19 @@ const char* LightPlatform::name() {
 void LightPlatform::setup() {
     state_.colorTransitionMs = 600;
     state_.effectTransitionMs = 1000;
-    state_.currentColor = RGB::Black;
-    state_.selectedColor = RGB::Black;
-    state_.targetColor = RGB(255, 74, 51);
+    state_.currentColor = CRGB::Black;
+    state_.selectedColor = CRGB::Black;
+    state_.targetColor = CRGB(255, 74, 51);
     state_.currentBrightness = 255;
     state_.targetBrightness = 255;
     state_.enabled = true;
 
     lightLog.print("setup ws2812");
-    pixels_.setup(&ws2812_, CONFIG_LIGHT_LED_COUNT);
+    pixels_.setup(CONFIG_LIGHT_LED_COUNT);
     lightLog.print("setup pixel handler");
     pixelHandler_.setup(&StaticFx, &state_, &pixels_);
     lightLog.print("setup brightness handler");
-    brightnessHandler_.setup(&ws2812_, &state_, this);
+    brightnessHandler_.setup(&state_, this);
     brightnessHandler_.handleBrightnessUpdate();
     coordinator_.addHandlers(&pixelHandler_, &brightnessHandler_);
     coordinator_.setFPS(15);
@@ -39,7 +39,7 @@ void LightPlatform::loop() {
     coordinator_.handle();
 }
 
-RGB LightPlatform::getColor() {
+CRGB LightPlatform::getColor() {
     return state_.targetColor;
 }
 
@@ -66,7 +66,7 @@ bool LightPlatform::getPower() {
     return state_.enabled;
 }
 
-void LightPlatform::setColor(RGB color) {
+void LightPlatform::setColor(CRGB color) {
     lightLog.print("update color");
     state_.targetColor = color;
     pixelHandler_.handleStateUpdate();
