@@ -21,7 +21,7 @@ bool IODevice::addController_(IOUnit* c) {
     deviceLog.append(c->name());
     deviceLog.flush();
     c->setup();
-    if (controllersCount_ >= IO_DEVICE_MAX_FEATURES) {
+    if (controllersCount_ >= IO_DEVICE_MAX_CONTROLLERS) {
         deviceLog.print("too many controllers");
         // TODO: add handling
         return false;
