@@ -4,7 +4,7 @@ Standard: Cpp11
 # UseTab: Always
 IndentWidth: 4
 PointerAlignment: Left
-AlignAfterOpenBracket: false
+AlignAfterOpenBracket: BlockIndent
 AlignConsecutiveAssignments: true
 AlignEscapedNewlinesLeft: true
 AlignOperands: true

@@ -36,12 +36,7 @@ uint8_t lerp8by8(uint8_t a, uint8_t b, fract8 frac) {
 void hsv2rgb_rainbow(const HSV& hsv, RGB& rgb) {
 }
 
-void fill_gradient(RGB* targetArray,
-uint16_t startpos,
-HSV startcolor,
-uint16_t endpos,
-HSV endcolor,
-TGradientDirectionCode directionCode) {
+void fill_gradient(RGB* targetArray, uint16_t startpos, HSV startcolor, uint16_t endpos, HSV endcolor, TGradientDirectionCode directionCode) {
     // if the points are in the wrong order, straighten them
     if (endpos < startpos) {
         uint16_t t = endpos;
@@ -143,25 +138,22 @@ void fill_gradient(RGB* targetArray, uint16_t numLeds, const HSV& c1, const HSV&
     fill_gradient(targetArray, 0, c1, last, c2, directionCode);
 }
 
-void fill_gradient(RGB* targetArray,
-uint16_t numLeds,
-const HSV& c1,
-const HSV& c2,
-const HSV& c3,
-TGradientDirectionCode directionCode) {
+void fill_gradient(RGB* targetArray, uint16_t numLeds, const HSV& c1, const HSV& c2, const HSV& c3, TGradientDirectionCode directionCode) {
     uint16_t half = (numLeds / 2);
     uint16_t last = numLeds - 1;
     fill_gradient(targetArray, 0, c1, half, c2, directionCode);
     fill_gradient(targetArray, half, c2, last, c3, directionCode);
 }
 
-void fill_gradient(RGB* targetArray,
+void fill_gradient(
+RGB* targetArray,
 uint16_t numLeds,
 const HSV& c1,
 const HSV& c2,
 const HSV& c3,
 const HSV& c4,
-TGradientDirectionCode directionCode) {
+TGradientDirectionCode directionCode
+) {
     uint16_t onethird  = (numLeds / 3);
     uint16_t twothirds = ((numLeds * 2) / 3);
     uint16_t last      = numLeds - 1;

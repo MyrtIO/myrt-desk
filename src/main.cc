@@ -14,10 +14,10 @@ void setup() {
     }
 #endif
     IOLog.print("starting desk...");
-    desk.setup()
-    ->platform(IO_INJECT_INSTANCE(HeightPlatform),
-    IO_INJECT_INSTANCE(LightPlatform), IO_INJECT_INSTANCE(WiFiPlatform))
-    ->controllers(&ConnectionController, &MQTTController);
+    auto height = IO_INJECT_INSTANCE(HeightPlatform);
+    auto light  = IO_INJECT_INSTANCE(LightPlatform);
+    auto wifi   = IO_INJECT_INSTANCE(WiFiPlatform);
+    desk.setup()->platform(height, light, wifi)->controllers(&ConnectionController, &MQTTController);
     IOLog.print("desk is initialized");
 }
 

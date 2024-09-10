@@ -333,30 +333,32 @@ typedef uint8_t fract8;
 
 RGB blendColors(RGB first, RGB second, uint8_t ratio);
 
-void fill_gradient(RGB* targetArray,
+void fill_gradient(
+RGB* targetArray,
 uint16_t startpos,
 HSV startcolor,
 uint16_t endpos,
 HSV endcolor,
-TGradientDirectionCode directionCode = SHORTEST_HUES);
+TGradientDirectionCode directionCode = SHORTEST_HUES
+);
 
-void fill_gradient(RGB* targetArray,
-uint16_t numLeds,
-const HSV& c1,
-const HSV& c2,
-TGradientDirectionCode directionCode = SHORTEST_HUES);
+void fill_gradient(RGB* targetArray, uint16_t numLeds, const HSV& c1, const HSV& c2, TGradientDirectionCode directionCode = SHORTEST_HUES);
 
-void fill_gradient(RGB* targetArray,
+void fill_gradient(
+RGB* targetArray,
 uint16_t numLeds,
 const HSV& c1,
 const HSV& c2,
 const HSV& c3,
-TGradientDirectionCode directionCode = SHORTEST_HUES);
+TGradientDirectionCode directionCode = SHORTEST_HUES
+);
 
-void fill_gradient(RGB* targetArray,
+void fill_gradient(
+RGB* targetArray,
 uint16_t numLeds,
 const HSV& c1,
 const HSV& c2,
 const HSV& c3,
 const HSV& c4,
-TGradientDirectionCode directionCode = SHORTEST_HUES);
+TGradientDirectionCode directionCode = SHORTEST_HUES
+);
