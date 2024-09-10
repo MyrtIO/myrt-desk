@@ -11,11 +11,13 @@ const char* HeightPlatform::name() {
 void HeightPlatform::setup() {
     pinMode(CONFIG_PIN_BUTTON_UP, OUTPUT);
     pinMode(CONFIG_PIN_BUTTON_DOWN, OUTPUT);
-    heightLog.debug("starting LIN reader...");
+    heightLog.print("starting UART...");
     stream_->setTX(CONFIG_PIN_LIN_TX);
     stream_->setRX(CONFIG_PIN_LIN_RX);
     stream_->begin(LIN_BAUD_RATE);
+    heightLog.print("starting LIN reader...");
     reader_.begin(stream_);
+    heightLog.print("starting state machine...");
 }
 
 void HeightPlatform::loop() {
@@ -39,7 +41,12 @@ uint16_t HeightPlatform::getHeight() {
 }
 
 bool HeightPlatform::setHeight(uint16_t height) {
-    heightLog.print("got update request");
+    // clang-format off
+    heightLog.debugBuilder()
+        ->append("updating to to ")
+        ->append(height)
+        ->flush();
+    // clang-format on
     if (state_ != DeskState::Chill) {
         return false;
     }
@@ -65,7 +72,7 @@ void HeightPlatform::moveUp_() {
     digitalWrite(CONFIG_PIN_BUTTON_DOWN, LOW);
     state_ = DeskState::MoveUp;
 
-    heightLog.print("moving up");
+    heightLog.debug("moving up");
 }
 
 void HeightPlatform::moveDown_() {
@@ -73,7 +80,7 @@ void HeightPlatform::moveDown_() {
     digitalWrite(CONFIG_PIN_BUTTON_DOWN, HIGH);
     state_ = DeskState::MoveDown;
 
-    heightLog.print("moving down");
+    heightLog.debug("moving down");
 }
 
 void HeightPlatform::stop_() {
@@ -81,5 +88,5 @@ void HeightPlatform::stop_() {
     digitalWrite(CONFIG_PIN_BUTTON_DOWN, LOW);
     state_ = DeskState::Chill;
 
-    heightLog.print("stopping");
+    heightLog.debug("stopping");
 }

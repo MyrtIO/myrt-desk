@@ -25,10 +25,10 @@ void WiFiPlatform::loop() {
     }
 
     wifiLog.builder()
-        ->append("connecting to ")
-        ->append(CONFIG_WIFI_SSID)
-        ->append("...")
-        ->flush();
+    ->append("connecting to ")
+    ->append(CONFIG_WIFI_SSID)
+    ->append("...")
+    ->flush();
     state_ = Connecting;
     WiFi.begin(CONFIG_WIFI_SSID, CONFIG_WIFI_PASSWORD);
 }

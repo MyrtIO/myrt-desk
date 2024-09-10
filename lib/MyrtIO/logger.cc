@@ -8,7 +8,26 @@ IOLogBuilder* IOLogBuilder::append(const char* message) {
     return this;
 }
 
-void IOLogBuilder::clear() {
+IOLogBuilder* IOLogBuilder::append(const uint8_t message) {
+    char buffer[4];
+    itoa(message, buffer, 10);
+    return append(buffer);
+}
+
+IOLogBuilder* IOLogBuilder::append(const uint16_t message) {
+    char buffer[10];
+    itoa(message, buffer, 10);
+    return append(buffer);
+}
+
+IOLogBuilder* IOLogBuilder::append(const uint32_t message) {
+    char buffer[10];
+    itoa(message, buffer, 10);
+    return append(buffer);
+}
+
+void IOLogBuilder::prepare(bool debug) {
+    debug_ = debug;
     for (int i = 0; i < 256; i++) {
         buffer_[i] = 0;
     }
@@ -69,7 +88,12 @@ void IOLogger::printPrefix_() {
 }
 
 IOLogBuilder* IOLogger::builder() {
-    builder_.clear();
+    builder_.prepare(false);
+    return &builder_;
+}
+
+IOLogBuilder* IOLogger::debugBuilder() {
+    builder_.prepare(true);
     return &builder_;
 }
 

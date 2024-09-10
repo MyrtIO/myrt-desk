@@ -46,6 +46,7 @@ bool MQTTController_::connected_() {
     if (client_.connect(CONFIG_DEVICE_NAME)) {
         mqttLog.debug("connected to broker");
         mqtt_.onConnect();
+        return true;
     }
 
     mqttLog.debug("failed to connect");
