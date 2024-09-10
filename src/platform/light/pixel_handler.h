@@ -26,6 +26,6 @@ class PixelHandler : public ILEDHandler {
 
   private:
     ILightEffect* effect_ = nullptr;
-    LightState* state_    = nullptr;
+    LightState* state_ = nullptr;
     Pixels* pixels_;
 };

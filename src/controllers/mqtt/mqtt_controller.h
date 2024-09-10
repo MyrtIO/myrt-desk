@@ -16,9 +16,9 @@ class MQTTController_ : public IOUnit {
 
   private:
     WiFiClient wifiClient_ = WiFiClient();
-    PubSubClient client_   = PubSubClient(wifiClient_);
-    MyrtQTT mqtt_          = MyrtQTT(&client_, CONFIG_DEVICE_NAME);
-    IWiFiPlatform* wifi_   = IO_INJECT(IWiFiPlatform);
+    PubSubClient client_ = PubSubClient(wifiClient_);
+    MyrtQTT mqtt_ = MyrtQTT(&client_, CONFIG_DEVICE_NAME);
+    IWiFiPlatform* wifi_ = IO_INJECT(IWiFiPlatform);
     bool connected_();
 };
 

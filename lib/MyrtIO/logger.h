@@ -10,6 +10,7 @@ class IOLogger {
     void print(const char* message);
     void debug(const char* message);
     void append(const char* message);
+
     void flush();
 
   private:

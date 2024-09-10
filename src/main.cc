@@ -15,9 +15,13 @@ void setup() {
 #endif
     IOLog.print("starting desk...");
     auto height = IO_INJECT_INSTANCE(HeightPlatform);
-    auto light  = IO_INJECT_INSTANCE(LightPlatform);
-    auto wifi   = IO_INJECT_INSTANCE(WiFiPlatform);
-    desk.setup()->platform(height, light, wifi)->controllers(&ConnectionController, &MQTTController);
+    auto light = IO_INJECT_INSTANCE(LightPlatform);
+    auto wifi = IO_INJECT_INSTANCE(WiFiPlatform);
+    // clang-format off
+    desk.setup()
+        ->platform(height, light, wifi)
+        ->controllers(&ConnectionController, &MQTTController);
+    // clang-format on
     IOLog.print("desk is initialized");
 }
 

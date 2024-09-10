@@ -4,8 +4,8 @@ bool StaticEffect::handleFrame(LightState* state, Pixels* pixels) {
     if (forceUpdate_) {
         pixels->set(state->targetColor);
         state->selectedColor = state->targetColor;
-        state->currentColor  = state->targetColor;
-        forceUpdate_         = false;
+        state->currentColor = state->targetColor;
+        forceUpdate_ = false;
         return true;
     }
     if (state->selectedColor == state->targetColor) {

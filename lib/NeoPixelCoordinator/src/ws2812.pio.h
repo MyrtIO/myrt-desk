@@ -26,8 +26,8 @@ static const uint16_t ws2812_program_instructions[] = {
 
 static const struct pio_program ws2812_program = {
     .instructions = ws2812_program_instructions,
-    .length       = 4,
-    .origin       = -1,
+    .length = 4,
+    .origin = -1,
 };
 
 static inline pio_sm_config ws2812_program_get_default_config(uint offset) {
@@ -47,7 +47,7 @@ ws2812_program_init(PIO pio, uint sm, uint offset, uint pin, float freq, bool rg
     sm_config_set_out_shift(&c, false, true, rgbw ? 32 : 24);
     sm_config_set_fifo_join(&c, PIO_FIFO_JOIN_TX);
     int cycles_per_bit = ws2812_T1 + ws2812_T2 + ws2812_T3;
-    float div          = clock_get_hz(clk_sys) / (freq * cycles_per_bit);
+    float div = clock_get_hz(clk_sys) / (freq * cycles_per_bit);
     sm_config_set_clkdiv(&c, div);
     pio_sm_init(pio, sm, offset, &c);
     pio_sm_set_enabled(pio, sm, true);

@@ -22,13 +22,13 @@ RGB blendColors(RGB first, RGB second, uint8_t ratio) {
 uint8_t lerp8by8(uint8_t a, uint8_t b, fract8 frac) {
     uint8_t result;
     if (b > a) {
-        uint8_t delta  = b - a;
+        uint8_t delta = b - a;
         uint8_t scaled = scale8(delta, frac);
-        result         = a + scaled;
+        result = a + scaled;
     } else {
-        uint8_t delta  = a - b;
+        uint8_t delta = a - b;
         uint8_t scaled = scale8(delta, frac);
-        result         = a - scaled;
+        result = a - scaled;
     }
     return result;
 }
@@ -40,10 +40,10 @@ void fill_gradient(RGB* targetArray, uint16_t startpos, HSV startcolor, uint16_t
     // if the points are in the wrong order, straighten them
     if (endpos < startpos) {
         uint16_t t = endpos;
-        HSV tc     = endcolor;
-        endcolor   = startcolor;
-        endpos     = startpos;
-        startpos   = t;
+        HSV tc = endcolor;
+        endcolor = startcolor;
+        endpos = startpos;
+        startpos = t;
         startcolor = tc;
     }
 
@@ -90,7 +90,7 @@ void fill_gradient(RGB* targetArray, uint16_t startpos, HSV startcolor, uint16_t
     }
 
     uint16_t pixeldistance = endpos - startpos;
-    int16_t divisor        = pixeldistance ? pixeldistance : 1;
+    int16_t divisor = pixeldistance ? pixeldistance : 1;
 
 // #define FASTLED_USE_32_BIT_GRADIENT_FILL true
 #if FASTLED_USE_32_BIT_GRADIENT_FILL
@@ -154,9 +154,9 @@ const HSV& c3,
 const HSV& c4,
 TGradientDirectionCode directionCode
 ) {
-    uint16_t onethird  = (numLeds / 3);
+    uint16_t onethird = (numLeds / 3);
     uint16_t twothirds = ((numLeds * 2) / 3);
-    uint16_t last      = numLeds - 1;
+    uint16_t last = numLeds - 1;
     fill_gradient(targetArray, 0, c1, onethird, c2, directionCode);
     fill_gradient(targetArray, onethird, c2, twothirds, c3, directionCode);
     fill_gradient(targetArray, twothirds, c3, last, c4, directionCode);

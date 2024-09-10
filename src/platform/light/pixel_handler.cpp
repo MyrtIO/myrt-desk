@@ -3,7 +3,7 @@
 // Implementation of the setup function to initialize the LED matrix and set the
 // rendering effect.
 void PixelHandler::setup(ILightEffect* effect, LightState* state, Pixels* pixels) {
-    state_  = state;
+    state_ = state;
     pixels_ = pixels;
     effect->onColorUpdate(state_);
     setEffect(effect);

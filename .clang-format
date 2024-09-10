@@ -5,10 +5,11 @@ Standard: Cpp11
 IndentWidth: 4
 PointerAlignment: Left
 AlignAfterOpenBracket: BlockIndent
-AlignConsecutiveAssignments: true
+AlignConsecutiveAssignments: false
 AlignEscapedNewlinesLeft: true
 AlignOperands: true
 AlignTrailingComments: false
+AlignConsecutiveDeclarations: false
 AllowAllParametersOfDeclarationOnNextLine: false
 AllowShortBlocksOnASingleLine: false
 AllowShortCaseLabelsOnASingleLine: true

@@ -20,7 +20,7 @@ void ConnectionController_::loop() {
     } else {
         if (wereConnected_) {
             connLog.print("connecting...");
-            wereConnected_  = false;
+            wereConnected_ = false;
             previousEffect_ = light_->getEffect();
             light_->setEffect(LightEffect::Loading);
         }

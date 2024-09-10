@@ -13,14 +13,14 @@ const char* LightPlatform::name() {
 
 // Implementation of the setup function to initialize the LED platform.
 void LightPlatform::setup() {
-    state_.colorTransitionMs  = 600;
+    state_.colorTransitionMs = 600;
     state_.effectTransitionMs = 1000;
-    state_.currentColor       = RGB::Black;
-    state_.selectedColor      = RGB::Black;
-    state_.targetColor        = RGB(255, 74, 51);
-    state_.currentBrightness  = 255;
-    state_.targetBrightness   = 255;
-    state_.enabled            = true;
+    state_.currentColor = RGB::Black;
+    state_.selectedColor = RGB::Black;
+    state_.targetColor = RGB(255, 74, 51);
+    state_.currentBrightness = 255;
+    state_.targetBrightness = 255;
+    state_.enabled = true;
 
     lightLog.print("setup ws2812");
     pixels_.setup(&ws2812_, CONFIG_LIGHT_LED_COUNT);

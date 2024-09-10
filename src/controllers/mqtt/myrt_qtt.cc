@@ -2,7 +2,7 @@
 #include <WiFi.h>
 
 MyrtQTT::MyrtQTT(PubSubClient* client, const char* clientID) {
-    client_   = client;
+    client_ = client;
     clientID_ = clientID;
     client_->setBufferSize(MYRTQTT_BUFFER_SIZE);
 }
@@ -27,7 +27,7 @@ void MyrtQTT::handleMessage(char* topic, byte* payload, unsigned int length) {
 
 MyrtQTT* MyrtQTT::on(const char* topic, DataCallback callback) {
     if (handlersCount_ < MYRTQTT_MAX_TOPICS) {
-        handlers_[handlersCount_].topic    = topic;
+        handlers_[handlersCount_].topic = topic;
         handlers_[handlersCount_].callback = callback;
         handlersCount_++;
     }
@@ -36,8 +36,8 @@ MyrtQTT* MyrtQTT::on(const char* topic, DataCallback callback) {
 
 MyrtQTT* MyrtQTT::report(ReportCallback callback, size_t interval) {
     if (reportersCount_ < MYRTQTT_MAX_TOPICS) {
-        reporters_[reportersCount_].callback      = callback;
-        reporters_[reportersCount_].interval      = interval;
+        reporters_[reportersCount_].callback = callback;
+        reporters_[reportersCount_].interval = interval;
         reporters_[reportersCount_].lastExecution = 0;
         reportersCount_++;
     }
@@ -60,11 +60,11 @@ void MyrtQTT::subscribe_() {
 }
 
 void MyrtQTT::handleReports_() {
-    size_t now      = millis();
+    size_t now = millis();
     bool needReport = false;
     for (int i = 0; i < reportersCount_; i++) {
         if (now - reporters_[i].lastExecution >= reporters_[i].interval) {
-            needReport                  = true;
+            needReport = true;
             reporters_[i].lastExecution = now;
             reporters_[i].callback(client_);
         }

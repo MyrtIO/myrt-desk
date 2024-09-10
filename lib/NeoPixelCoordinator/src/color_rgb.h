@@ -235,7 +235,7 @@ struct RGB {
                 g = 255;
             } else {
                 uint8_t desat = 255 - sat;
-                desat         = scale8_video(desat, desat);
+                desat = scale8_video(desat, desat);
 
                 uint8_t satscale = 255 - desat;
                 if (r)
@@ -294,9 +294,9 @@ struct RGB {
 
     inline RGB& operator=(const HSV& other) __attribute__((always_inline)) {
         RGB c = this->fromHSV(other);
-        r     = c.r;
-        g     = c.g;
-        b     = c.b;
+        r = c.r;
+        g = c.g;
+        b = c.b;
         return *this;
     }
 
@@ -315,16 +315,16 @@ struct RGB {
     inline void applyBrightness(uint8_t brightness) {
         uint16_t scale_fixed;
         scale_fixed = brightness + 1;
-        r           = (((uint16_t)r) * scale_fixed) >> 8;
-        g           = (((uint16_t)g) * scale_fixed) >> 8;
-        b           = (((uint16_t)b) * scale_fixed) >> 8;
+        r = (((uint16_t)r) * scale_fixed) >> 8;
+        g = (((uint16_t)g) * scale_fixed) >> 8;
+        b = (((uint16_t)b) * scale_fixed) >> 8;
     }
 
     enum {
         Black = 0x000000,
-        Red   = 0xFF0000,
+        Red = 0xFF0000,
         Green = 0x00FF00,
-        Blue  = 0x0000FF,
+        Blue = 0x0000FF,
         White = 0xFFFFFF
     };
 };

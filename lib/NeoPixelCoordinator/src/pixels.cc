@@ -12,7 +12,7 @@ void Pixels::mirror() {
 
 void Pixels::setup(PioWS2812* ws2812, uint8_t count) {
     ws2812_ = ws2812;
-    count_  = count;
+    count_ = count;
     set(RGB::Black);
     ws2812_->setup(colors_, count_);
     ws2812_->show();

@@ -11,9 +11,9 @@ class ConnectionController_ : public IOUnit {
     const char* name();
 
   private:
-    bool wereConnected_      = false;
-    ILightPlatform* light_   = IO_INJECT(ILightPlatform);
-    IWiFiPlatform* wifi_     = IO_INJECT(IWiFiPlatform);
+    bool wereConnected_ = false;
+    ILightPlatform* light_ = IO_INJECT(ILightPlatform);
+    IWiFiPlatform* wifi_ = IO_INJECT(IWiFiPlatform);
     effect_t previousEffect_ = LightEffect::Static;
 };
 

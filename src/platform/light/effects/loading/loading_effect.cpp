@@ -1,7 +1,7 @@
 #include "loading_effect.h"
 
 const size_t kLoadingCycleDuration = 1000;
-const fract8 kLoadingFillFract     = 200;
+const fract8 kLoadingFillFract = 200;
 
 void LoadingEffect::onActivate(LightState* state, Pixels* pixels) {
     isReverse_ = false;
@@ -11,7 +11,7 @@ void LoadingEffect::onActivate(LightState* state, Pixels* pixels) {
 }
 
 bool LoadingEffect::handleFrame(LightState* state, Pixels* pixels) {
-    uint8_t shift       = scale8(maxOffset, progress_.get());
+    uint8_t shift = scale8(maxOffset, progress_.get());
     state->currentColor = state->targetColor;
     fill_(pixels, state, shift, fillSize_);
     if (progress_.finished()) {

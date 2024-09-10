@@ -12,7 +12,7 @@ class StaticEffect : public ILightEffect {
 
   private:
     Progress progress_ = Progress();
-    bool forceUpdate_  = false;
+    bool forceUpdate_ = false;
 };
 
 extern StaticEffect StaticFx;

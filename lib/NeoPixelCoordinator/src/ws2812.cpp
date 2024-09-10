@@ -1,14 +1,14 @@
 #include "ws2812.h"
 
 PioWS2812::PioWS2812(uint8_t pin, PIO pio, uint sm) {
-    sm_  = sm;
+    sm_ = sm;
     pio_ = pio;
     pin_ = pin;
 }
 
 void PioWS2812::setup(RGB* buffer, uint16_t count) {
-    buffer_     = buffer;
-    count_      = count;
+    buffer_ = buffer;
+    count_ = count;
     brightness_ = 255;
     uint offset = pio_add_program(pio1, &ws2812_program);
     ws2812_program_init(pio1, 1, offset, pin_, 800000, false);

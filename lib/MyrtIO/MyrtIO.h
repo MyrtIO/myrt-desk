@@ -9,8 +9,8 @@
 class IOUnit {
   public:
     virtual const char* name() = 0;
-    virtual void setup()       = 0;
-    virtual void loop()        = 0;
+    virtual void setup() = 0;
+    virtual void loop() = 0;
 };
 
 class IODevice {
@@ -42,7 +42,7 @@ class IODevice {
 
   private:
     uint8_t controllersCount_ = 0;
-    uint8_t platformsCount_   = 0;
+    uint8_t platformsCount_ = 0;
     IOUnit* controllers_[IO_DEVICE_MAX_CONTROLLERS];
     IOUnit* platforms_[IO_DEVICE_MAX_PLATFORMS];
 

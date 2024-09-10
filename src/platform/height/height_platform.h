@@ -20,8 +20,8 @@ class HeightPlatform : public IOUnit, public IHeightPlatform {
   private:
     BekantReader reader_;
     uint16_t targetHeight_ = 0;
-    DeskState state_       = DeskState::Chill;
-    SerialUART* stream_    = &CONFIG_BEKANT_LIN_UART;
+    DeskState state_ = DeskState::Chill;
+    SerialUART* stream_ = &CONFIG_BEKANT_LIN_UART;
 
     void moveUp_();
     void moveDown_();

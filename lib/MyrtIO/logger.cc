@@ -39,9 +39,9 @@ void IOLogger::printPrefix_() {
     char prefixBuffer[10];
     uint32_t seconds = now / 1000;
     uint32_t minutes = seconds / 60;
-    seconds          = seconds % 60;
-    uint32_t hours   = minutes / 60;
-    minutes          = minutes % 60;
+    seconds = seconds % 60;
+    uint32_t hours = minutes / 60;
+    minutes = minutes % 60;
     sprintf(prefixBuffer, "%02d:%02d:%02d", hours, minutes, seconds);
     stream_->print(prefixBuffer);
     stream_->print(" ");
