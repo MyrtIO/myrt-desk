@@ -14,7 +14,7 @@ build: $(MQTT_CONFIG_BASENAME).h src/config.example.h
 	pio run
 
 .PHONY: deploy
-flash:
+flash: $(MQTT_CONFIG_BASENAME).h src/config.example.h
 	pio run -t upload
 
 .PHONY: monitor

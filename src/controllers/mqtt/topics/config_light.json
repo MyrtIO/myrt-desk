@@ -7,7 +7,7 @@
   "brightness": true,
   "effect": true,
   "schema": "json",
-  "effect_list": ["static", "rainbow", "loading"],
+  "effect_list": ["static", "rainbow", "loading", "fill"],
   "supported_color_modes": ["rgb", "color_temp"],
   "max_mireds": 454,
   "min_mireds": 142,

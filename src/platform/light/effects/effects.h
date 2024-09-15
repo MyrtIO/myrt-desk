@@ -6,6 +6,7 @@
 #include "loading/loading_effect.h"
 #include "rainbow/rainbow_effect.h"
 #include "static/static_effect.h"
+#include "fill/fill_effect.h"
 
 // class LightEffect : public ILEDEffect<LightState> {
 //   public:

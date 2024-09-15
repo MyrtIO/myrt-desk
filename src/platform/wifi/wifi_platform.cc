@@ -20,6 +20,15 @@ void WiFiPlatform::loop() {
         return;
     }
 
+    if (firstConnect_) {
+        firstConnect_ = false;
+        connectTimer_.start(CONFIG_WIFI_START_DELAY);
+    }
+
+    if (!connectTimer_.finished()) {
+        return;
+    }
+
     if (state_ == Connecting) {
         if (timeout_.finished()) {
             wifiLog.print("timeout, reconnecting...");

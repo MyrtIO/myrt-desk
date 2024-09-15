@@ -18,6 +18,8 @@ class WiFiPlatform : public IOUnit, public IWiFiPlatform {
   private:
     WiFiState state_ = Disconnected;
     Timer timeout_;
+    bool firstConnect_ = true;
+    Timer connectTimer_ = Timer();
 
     void connect_();
 };

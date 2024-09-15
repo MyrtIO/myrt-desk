@@ -22,13 +22,20 @@ const char* kJsonStringEffect = "effect";
 const char* kJsonStringStatic = "static";
 const char* kJsonStringRainbow = "rainbow";
 const char* kJsonStringLoading = "loading";
+const char* kJsonStringFill = "fill";
 const char* kJsonStringColorMode = "color_mode";
 const char* kJsonStringColorTemp = "color_temp";
 
 JsonDocument lightStateDoc;
 char lightStateBuffer[256];
 
-const char* effectNames[3] = { kJsonStringStatic, kJsonStringRainbow, kJsonStringLoading };
+const uint8_t kLightEffectCount = 4;
+const char* effectNames[kLightEffectCount] = {
+    kJsonStringStatic,
+    kJsonStringRainbow,
+    kJsonStringLoading,
+    kJsonStringFill
+};
 
 void reportLightState(PubSubClient* client) {
     auto platform = IO_INJECT(ILightPlatform);
@@ -77,7 +84,7 @@ void updateLightState(PubSubClient* client, byte* payload, unsigned int length) 
     const char* effectValue = lightStateDoc[kJsonStringEffect];
     uint8_t reqEffect = 255;
     if (effectValue != nullptr) {
-        for (uint8_t i = 0; i < 3; i++) {
+        for (uint8_t i = 0; i < kLightEffectCount; i++) {
             if (strcmp(effectValue, effectNames[i]) == 0) {
                 reqEffect = i;
                 break;

@@ -23,7 +23,7 @@ bool LoadingEffect::handleFrame(LightState* state, Pixels* pixels) {
 }
 
 void LoadingEffect::onColorUpdate(LightState* state) {
-    state->selectedColor = state->currentColor;
+    state->selectedColor = state->targetColor;
     progress_.start(state->colorTransitionMs);
 }
 

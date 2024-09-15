@@ -7,6 +7,7 @@ enum LightEffect : effect_t {
     Static = 0,
     Rainbow = 1,
     Loading = 2,
+    Fill = 3,
 };
 
 enum LightMode : uint8_t {
@@ -18,6 +19,7 @@ struct LightState {
     bool enabled = true;
     uint8_t currentBrightness = 255;
     uint8_t targetBrightness = 255;
+    CRGB previousColor = CRGB::Black;
     CRGB selectedColor = CRGB::Black;
     CRGB currentColor = CRGB::Black;
     CRGB targetColor = CRGB::Black;

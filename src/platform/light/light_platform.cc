@@ -17,9 +17,10 @@ const char* LightPlatform::name() {
 void LightPlatform::setup() {
     state_.colorTransitionMs = 600;
     state_.effectTransitionMs = 1000;
+    state_.previousColor = CRGB::Black;
     state_.currentColor = CRGB::Black;
     state_.selectedColor = CRGB::Black;
-    state_.targetColor = CRGB(255, 74, 51);
+    state_.targetColor = CONFIG_LIGHT_COLOR_INITIAL;
     state_.currentBrightness = 255;
     state_.targetBrightness = 255;
     state_.enabled = true;
@@ -27,13 +28,16 @@ void LightPlatform::setup() {
     lightLog.print("setup ws2812");
     pixels_.setup(CONFIG_LIGHT_LED_COUNT);
     lightLog.print("setup pixel handler");
-    pixelHandler_.setup(&StaticFx, &state_, &pixels_);
+    auto initialEffect = &FillFx;
+    pixelHandler_.setup(initialEffect, &state_, &pixels_);
     lightLog.print("setup brightness handler");
     brightnessHandler_.setup(&state_, this);
     brightnessHandler_.handleBrightnessUpdate();
     coordinator_.addHandlers(&pixelHandler_, &brightnessHandler_);
     coordinator_.setFPS(15);
     coordinator_.start(&renderer_, kFramesPerSecond);
+    initialEffect->onActivate(&state_, &pixels_);
+    pixelHandler_.handleStateUpdate();
 }
 
 // Implementation of the function called at the start of each loop iteration.
@@ -70,6 +74,7 @@ bool LightPlatform::getPower() {
 
 void LightPlatform::setColor(CRGB color) {
     lightLog.print("update color");
+    state_.previousColor = state_.currentColor;
     state_.targetColor = color;
     state_.mode = LightMode::RGBMode;
     pixelHandler_.handleStateUpdate();
@@ -99,6 +104,7 @@ bool LightPlatform::setEffect(uint8_t effectCode) {
     case LightEffect::Static: nextEffect_ = &StaticFx; break;
     case LightEffect::Rainbow: nextEffect_ = &RainbowFx; break;
     case LightEffect::Loading: nextEffect_ = &LoadingFx; break;
+    case LightEffect::Fill: nextEffect_ = &FillFx; break;
     default: return false; break;
     }
     nextEffect_->onActivate(&state_, &pixels_);
@@ -122,6 +128,8 @@ effect_t LightPlatform::getEffect() {
         return LightEffect::Rainbow;
     } else if (current == &LoadingFx) {
         return LightEffect::Loading;
+    } else if (current == &FillFx) {
+        return LightEffect::Fill;
     }
     return 0;
 }

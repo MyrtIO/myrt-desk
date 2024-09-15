@@ -15,15 +15,13 @@ void ConnectionController_::loop() {
         if (!wereConnected_) {
             connLog.print("connected!");
             wereConnected_ = true;
-            light_->setEffect(previousEffect_);
+            light_->setColor(CONFIG_LIGHT_COLOR_CONNECTED);
         }
         return;
     }
     if (wereConnected_) {
         connLog.print("connecting...");
         wereConnected_ = false;
-        previousEffect_ = light_->getEffect();
-        light_->setEffect(LightEffect::Loading);
     }
 }
 

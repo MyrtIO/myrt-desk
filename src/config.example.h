@@ -6,6 +6,7 @@
 #define CONFIG_WIFI_SSID "Your SSID" // replace: "Your SSID"
 #define CONFIG_WIFI_PASSWORD "Your password" // replace: "Your password"
 #define CONFIG_WIFI_RECONNECT_TIMEOUT 30000
+#define CONFIG_WIFI_START_DELAY 2000
 // MQTT parameters
 #define CONFIG_MQTT_HOST "your.mqtt.server.local" // replace: "your.mqtt.server.local"
 #define CONFIG_MQTT_PORT 1883
@@ -27,5 +28,7 @@
 #define CONFIG_LIGHT_WORKER_SM 1
 #define CONFIG_LIGHT_LED_COUNT 92
 #define CONFIG_LIGHT_COLOR_CORRECTION 0xFF8173
+#define CONFIG_LIGHT_COLOR_INITIAL 0xFFBD77
+#define CONFIG_LIGHT_COLOR_CONNECTED 0x38FFB6
 #define CONFIG_LIGHT_MIREDS_MIN 142
 #define CONFIG_LIGHT_MIREDS_MAX 454

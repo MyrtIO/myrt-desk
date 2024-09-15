@@ -19,8 +19,8 @@ void setup() {
     // clang-format off
     desk.setup()
         ->platform(
-            IO_INJECT_INSTANCE(HeightPlatform),
             IO_INJECT_INSTANCE(LightPlatform),
+            IO_INJECT_INSTANCE(HeightPlatform),
             IO_INJECT_INSTANCE(WiFiPlatform)
         )
         ->controllers(&ConnectionController, &MQTTController);
