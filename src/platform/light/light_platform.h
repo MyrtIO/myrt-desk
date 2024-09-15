@@ -18,6 +18,7 @@ class LightPlatform : public IOUnit, public ILightPlatform, public EffectSwitche
 
     CRGB getColor();
     void setColor(CRGB color);
+    void setColorTemperature(uint16_t mireds);
 
     void setBrightness(uint8_t brightness);
     uint8_t getBrightness();
@@ -27,7 +28,9 @@ class LightPlatform : public IOUnit, public ILightPlatform, public EffectSwitche
 
     void onEffectSwitch();
     bool setEffect(uint8_t effectCode);
-    uint8_t getEffect();
+    effect_t getEffect();
+    uint8_t getMode();
+    uint16_t getTemperature();
 
   private:
     LEDCoordinator coordinator_;

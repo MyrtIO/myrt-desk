@@ -4,6 +4,8 @@
 const uint8_t kFramesPerSecond = 100;
 
 const char* kLightPlatformName = "Light";
+const CRGB kMaxTemperatureColor = CRGB(237, 249, 255);
+const CRGB kMinTemperatureColor = CRGB(255, 139, 20);
 
 IOLogger lightLog(kLightPlatformName, &Serial);
 
@@ -69,7 +71,27 @@ bool LightPlatform::getPower() {
 void LightPlatform::setColor(CRGB color) {
     lightLog.print("update color");
     state_.targetColor = color;
+    state_.mode = LightMode::RGBMode;
     pixelHandler_.handleStateUpdate();
+}
+
+void LightPlatform::setColorTemperature(uint16_t mireds) {
+    lightLog.print("update color temperature");
+    state_.mode = LightMode::WhiteMode;
+    state_.temperature = mireds;
+    uint8_t ratio = 255 - map(
+        mireds,
+        CONFIG_LIGHT_MIREDS_MIN,
+        CONFIG_LIGHT_MIREDS_MAX,
+        0,
+        255
+    );
+    state_.targetColor = blend(kMinTemperatureColor, kMaxTemperatureColor, ratio);
+    pixelHandler_.handleStateUpdate();
+}
+
+uint16_t LightPlatform::getTemperature() {
+    return state_.temperature;
 }
 
 bool LightPlatform::setEffect(uint8_t effectCode) {
@@ -92,7 +114,7 @@ void LightPlatform::onEffectSwitch() {
     }
 }
 
-uint8_t LightPlatform::getEffect() {
+effect_t LightPlatform::getEffect() {
     ILightEffect* current = pixelHandler_.getEffect();
     if (current == &StaticFx) {
         return LightEffect::Static;
@@ -102,4 +124,8 @@ uint8_t LightPlatform::getEffect() {
         return LightEffect::Loading;
     }
     return 0;
+}
+
+uint8_t LightPlatform::getMode() {
+    return state_.mode;
 }

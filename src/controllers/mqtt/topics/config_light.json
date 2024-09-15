@@ -8,7 +8,9 @@
   "effect": true,
   "schema": "json",
   "effect_list": ["static", "rainbow", "loading"],
-  "supported_color_modes": ["rgb"],
+  "supported_color_modes": ["rgb", "color_temp"],
+  "max_mireds": 454,
+  "min_mireds": 142,
   "device": {
     "name": "MyrtDesk",
     "identifiers": [
