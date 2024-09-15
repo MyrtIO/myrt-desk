@@ -2,6 +2,7 @@
 
 #include <MyrtIO.h>
 #include <interfaces/platform.h>
+#include <Attotime.h>
 
 enum WiFiState { Disconnected, Connecting, Connected };
 
@@ -16,4 +17,7 @@ class WiFiPlatform : public IOUnit, public IWiFiPlatform {
 
   private:
     WiFiState state_ = Disconnected;
+    Timer timeout_;
+
+    void connect_();
 };

@@ -14,6 +14,8 @@ void Pixels::mirror() {
 void Pixels::setup(uint8_t count) {
     count_ = count;
     FastLED.addLeds<WS2812B, CONFIG_PIN_LED_CTL, GRB>(colors_, count_);
+    FastLED.setCorrection(CONFIG_LIGHT_COLOR_CORRECTION);
+
 }
 
 void Pixels::set(CRGB color, uint8_t idx) {

@@ -5,7 +5,7 @@
 // Wi-Fi parameters
 #define CONFIG_WIFI_SSID "Your SSID" // replace: "Your SSID"
 #define CONFIG_WIFI_PASSWORD "Your password" // replace: "Your password"
-#define CONFIG_WIFI_RECONNECT_TIMEOUT 10000
+#define CONFIG_WIFI_RECONNECT_TIMEOUT 30000
 // MQTT parameters
 #define CONFIG_MQTT_HOST "your.mqtt.server.local" // replace: "your.mqtt.server.local"
 #define CONFIG_MQTT_PORT 1883

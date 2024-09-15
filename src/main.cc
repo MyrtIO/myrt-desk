@@ -6,7 +6,7 @@
 
 IODevice desk;
 
-IOLogger rootLog("root", &Serial);
+IOLogger mainLog("Main", &Serial);
 
 void setup() {
     Serial.begin();
@@ -15,7 +15,7 @@ void setup() {
         // Wait for serial port to connect
     }
 #endif
-    rootLog.print("starting desk...");
+    mainLog.print("starting desk...");
     // clang-format off
     desk.setup()
         ->platform(
@@ -25,7 +25,7 @@ void setup() {
         )
         ->controllers(&ConnectionController, &MQTTController);
     // clang-format on
-    rootLog.print("desk is initialized");
+    mainLog.print("desk is initialized");
 }
 
 void loop() {
