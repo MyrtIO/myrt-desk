@@ -1,50 +1,4 @@
-#include "logger.h"
-
-IOLogBuilder* IOLogBuilder::append(const char* message) {
-    for (int i = 0; i < strlen(message); i++) {
-        buffer_[size_] = message[i];
-        size_++;
-    }
-    return this;
-}
-
-IOLogBuilder* IOLogBuilder::append(const uint8_t message) {
-    char buffer[4];
-    itoa(message, buffer, 10);
-    return append(buffer);
-}
-
-IOLogBuilder* IOLogBuilder::append(const uint16_t message) {
-    char buffer[10];
-    itoa(message, buffer, 10);
-    return append(buffer);
-}
-
-IOLogBuilder* IOLogBuilder::append(const uint32_t message) {
-    char buffer[10];
-    itoa(message, buffer, 10);
-    return append(buffer);
-}
-
-void IOLogBuilder::prepare(bool debug) {
-    debug_ = debug;
-    for (int i = 0; i < 256; i++) {
-        buffer_[i] = 0;
-    }
-    size_ = 0;
-}
-
-void IOLogBuilder::flush() {
-    flusher_->flush(buffer_, size_);
-}
-
-char* IOLogBuilder::buffer() {
-    return buffer_;
-}
-
-uint8_t IOLogBuilder::size() {
-    return size_;
-}
+#include "io_logger.h"
 
 void IOLogger::print(const char* message) {
     printPrefix_();
@@ -53,7 +7,9 @@ void IOLogger::print(const char* message) {
 }
 
 void IOLogger::debug(const char* message) {
+#if IO_DEBUG
     this->print(message);
+#endif
 }
 
 void IOLogger::flush(const char* message, uint8_t length) {
@@ -87,14 +43,17 @@ void IOLogger::printPrefix_() {
     }
 }
 
-IOLogBuilder* IOLogger::builder() {
-    builder_.prepare(false);
+IStringBuilder* IOLogger::builder() {
+    builder_.prepare();
     return &builder_;
 }
 
-IOLogBuilder* IOLogger::debugBuilder() {
-    builder_.prepare(true);
+IStringBuilder* IOLogger::debugBuilder() {
+#if IO_DEBUG
     return &builder_;
+#else
+    return &dummyBuilder_;
+#endif
 }
 
 IOLogger IOLog = IOLogger(&Serial);

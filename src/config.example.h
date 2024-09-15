@@ -1,12 +1,7 @@
 #pragma once
 
-// MyrtIO parameters
-#define IO_BENCHMARK 1
-#define IO_DEBUG 1
-
 // Common parameters
 #define CONFIG_DEVICE_NAME "MyrtDesk"
-// #define CONFIG_DEBUG true
 // Wi-Fi parameters
 #define CONFIG_WIFI_SSID "Your SSID" // replace: "Your SSID"
 #define CONFIG_WIFI_PASSWORD "Your password" // replace: "Your password"

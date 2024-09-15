@@ -1,9 +1,18 @@
 #include "MyrtIO.h"
 
+#if IO_BENCHMARK
+#include "io_benchmark.h"
+#warning "Benchmarking enabled"
+IOBenchmark ioBenchmark;
+#endif
+
 IOLogger deviceLog("IODevice", &Serial);
 
 IODevice* IODevice::setup() {
     deviceLog.print("initializing...");
+#if IO_BENCHMARK
+    addController_(&ioBenchmark);
+#endif
     return this;
 }
 

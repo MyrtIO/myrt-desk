@@ -1,6 +1,3 @@
-#define IO_BENCHMARK 1
-#define IO_DEBUG 1
-
 #include "config.h"
 #include "controllers/controllers.h"
 #include "platform/platform.h"
@@ -9,16 +6,16 @@
 
 IODevice desk;
 
-
+IOLogger rootLog("root", &Serial);
 
 void setup() {
     Serial.begin();
-#ifdef CONFIG_DEBUG
+#ifdef IO_DEBUG
     while (!Serial) {
         // Wait for serial port to connect
     }
 #endif
-    IOLog.print("starting desk...");
+    rootLog.print("starting desk...");
     // clang-format off
     desk.setup()
         ->platform(
@@ -28,7 +25,7 @@ void setup() {
         )
         ->controllers(&ConnectionController, &MQTTController);
     // clang-format on
-    IOLog.print("desk is initialized");
+    rootLog.print("desk is initialized");
 }
 
 void loop() {

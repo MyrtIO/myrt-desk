@@ -1,7 +1,7 @@
 #pragma once
 
-#include "logger.h"
 #include <stdint.h>
+#include "logger/io_logger.h"
 
 #define IO_DEVICE_MAX_CONTROLLERS 8
 #define IO_DEVICE_MAX_PLATFORMS 8
