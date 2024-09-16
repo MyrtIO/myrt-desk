@@ -1,0 +1,170 @@
+# @file Astyle code automatic formatting settings
+# @see http://astyle.sourceforge.net/astyle.html#_General_Information
+
+--style=google
+--indent=tab=4
+
+#
+# Attach brackets to a class statement. This is done regardless of the bracket style being used.
+#
+--attach-classes
+--attach-inlines
+--attach-extern-c
+--indent-classes
+--indent-modifiers
+--indent-preproc-block
+--indent-preproc-define
+--indent-col1-comments
+# --break-blocks
+
+#
+# Pad empty lines around header blocks (e.g. 'if', 'for', 'while'...). Treat closing header blocks (e.g. 'else', 'catch') as stand-alone blocks.
+#
+# --break-blocks=all
+
+#
+# Insert space padding around operators. Any end of line comments will remain in the original column, if possible. Note that there is no option to unpad. Once padded, they stay padded.
+#
+--pad-oper
+
+#
+# Insert space padding around parenthesis on both the outside and the inside. Any end of line comments will remain in the original column, if possible.
+#
+#--pad-paren
+
+#
+# Insert space padding around parenthesis on the outside only. Parentheses that are empty will not be padded.
+#
+# --pad-paren-out
+
+#
+# Insert space padding around the first parenthesis in a series on the outside only.
+#
+# --pad-first-paren-out
+
+#
+# Insert space padding around parenthesis on the inside only.
+#
+# --pad-paren-in
+
+#
+# Insert space padding between a header (e.g. 'if', 'for', 'while'...) and the following paren.
+# Any end of line comments will remain in the original column, if possible.
+# This can be used with unpad-paren to remove unwanted spaces.
+#
+--pad-header
+
+#
+# Remove extra space padding around parenthesis on the inside and outside. Any end of line comments will remain in the original column, if possible.
+#
+--unpad-paren
+--unpad-brackets
+
+--indent-after-parens
+#
+# Delete empty lines within a function or method. Empty lines outside of functions or methods are NOT deleted.
+# If used with break-blocks or break-blocks=all it will delete all lines EXCEPT the lines added by the break-blocks options.
+#
+# --delete-empty-lines
+
+#
+# Fill empty lines with the white space of the previous line.
+#
+# --fill-empty-lines
+
+#
+# Attach a pointer or reference operator (*, &, or ^) to either the variable type (left) or variable name (right), or place it between the type and name (middle).
+#
+--align-pointer=type
+
+#
+# This option will align references separate from pointers. Pointers are not changed by this option.
+# If pointers and references are to be aligned the same, use the previous align-pointer option.
+#
+--align-reference=type
+
+#
+# When used with --style=java, --style=kr, --style=stroustrup, --style=linux, or --style=1tbs, this breaks closing headers (e.g. 'else', 'catch', ...)
+# from their immediately preceding closing brackets. Closing header brackets are always broken with the other styles.
+#
+# --break-closing-brackets
+
+#
+# Break "else if" header combinations into separate lines.
+#
+# --break-elseifs
+
+#
+# Add brackets to unbracketed one line conditional statements (e.g. 'if', 'for', 'while'...).
+# The statement must be on a single line. The brackets will be added according to the currently requested predefined style or bracket type.
+# If no style or bracket type is requested the brackets will be attached.
+# If --add-one-line-brackets is also used the result will be one line brackets.
+#
+# --add-brackets
+--mode=cs
+#
+# Add one line brackets to unbracketed one line conditional statements (e.g. 'if', 'for', 'while'...).
+#
+# --add-one-line-brackets
+
+#
+# Remove brackets from conditional statements (e.g. 'if', 'for', 'while'...).
+#
+# --remove-brackets
+
+#
+# Don't break one-line blocks.
+#
+# --keep-one-line-blocks
+
+#
+# Don't break complex statements and multiple statements residing on a single line.
+#
+# --keep-one-line-statements
+
+#
+# Converts tabs into spaces in the non-indentation part of the line. The number of spaces inserted will maintain the spacing of the tab.
+# The current setting for spaces per tab is used. It may not produce the expected results if convert-tabs is used when changing spaces per tab. Tabs are not replaced in quotes.
+#
+--convert-tabs
+
+#
+# Closes whitespace in the angle brackets of template definitions. Closing the ending angle brackets is now allowed by the C++11 standard.
+# Be sure your compiler supports this before making the changes.
+#
+# --close-templates
+
+#
+# Remove the preceding '*' in a multi-line comment that begins a line. A trailing '*', if present, is also removed.
+#
+# --remove-comment-prefix
+
+#
+# The option max?code?length will break a line if the code exceeds # characters.
+# The valid values are 50 thru 200. Lines without logical conditionals will break on a logical conditional (||, &&, ...), comma, paren, semicolon, or space.
+# Some code will not be broken, such as comments, quotes, and arrays. If used with keep?one?line?blocks or add-one-line-brackets the blocks will NOT be broken.
+# If used with keep?one?line?statements the statements will be broken at a semicolon if the line goes over the maximum length.
+# If there is no available break point within the max code length, the line will be broken at the first available break point after the max code length.
+# By default logical conditionals will be placed first on the new line.
+# The option break?after?logical will cause the logical conditionals to be placed last on the previous line. This option has no effect without max?code?length.
+#
+--max-code-length=90
+--break-after-logical
+
+#
+# Indent a C type, C#, or Java file. C type files are C, C++, C++/CLI, and Objective-C.  The option is usually set from the file extension for each file.
+#
+--mode=c
+
+#
+# Verbose display mode. Display optional information, such as release number and statistical data.
+#
+# --verbose
+
+#
+# Force use of the specified line end style. Valid options are windows (CRLF), linux (LF), and macold (CR).
+# MacOld style is the format for Mac OS 9 and earlier. OS X uses the Linux style.
+# If one of these options is not used the line ends will be determined automatically from the input file.
+# When redirection is used on Windows the output will always have Windows line ends. This option will be ignored.
+#
+--lineend=linux

@@ -23,7 +23,12 @@ monitor:
 
 .PHONY: format
 format:
-	find include src lib -iname '*.cc' -o -iname '*.h' -o -iname '*.cpp' | xargs clang-format -i
+	@astyle --project=.astylerc -n \
+		-r 'src/*.cc' \
+		-r 'src/*.h' \
+		-r 'lib/*.cc' \
+		-r 'lib/*.h' \
+		-r 'include/*.h'
 
 src/config.example.h: src/config.h
 	@python scripts/gen_replace.py \
