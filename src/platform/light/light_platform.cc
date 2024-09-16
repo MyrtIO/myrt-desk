@@ -15,7 +15,7 @@ const char* LightPlatform::name() {
 
 // Implementation of the setup function to initialize the LED platform.
 void LightPlatform::setup() {
-    state_.colorTransitionMs = 600;
+    state_.colorTransitionMs = CONFIG_LIGHT_COLOR_TRANSITION_MS;
     state_.effectTransitionMs = 1000;
     state_.previousColor = CRGB::Black;
     state_.currentColor = CRGB::Black;
