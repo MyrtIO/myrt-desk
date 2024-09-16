@@ -3,6 +3,7 @@
   "icon": "mdi:led-strip-variant",
   "state_topic": "myrt/desk/light",
   "command_topic": "myrt/desk/light/set",
+  "fps_command_topic": "myrt/desk/light/fps/set",
   "unique_id": "myrt_desk_light",
   "brightness": true,
   "effect": true,

@@ -145,3 +145,7 @@ effect_t LightPlatform::getEffect() {
 uint8_t LightPlatform::getMode() {
 	return state_.mode;
 }
+
+void LightPlatform::setFPS(uint8_t fps) {
+	coordinator_.setFPS(fps);
+}

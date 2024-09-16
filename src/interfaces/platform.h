@@ -14,6 +14,7 @@ class ILightPlatform {
 	virtual bool getPower() = 0;
 	virtual void setBrightness(uint8_t brightness) = 0;
 	virtual uint8_t getBrightness() = 0;
+	virtual void setFPS(uint8_t fps) = 0;
 	virtual bool setEffect(effect_t code) = 0;
 	virtual effect_t getEffect() = 0;
 	virtual uint8_t getMode() = 0;

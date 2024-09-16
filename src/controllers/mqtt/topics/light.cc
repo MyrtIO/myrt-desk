@@ -6,6 +6,7 @@
 
 const char* kLightOutTopic = "myrt/desk/light";
 const char* kLightInTopic = "myrt/desk/light/set";
+const char* kLightFPSInTopic = "myrt/desk/light/fps/set";
 const char* kLightConfigTopic = "homeassistant/light/myrt_desk_light/config";
 const size_t kLightReportInterval = 60000;
 
@@ -58,7 +59,7 @@ void reportLightState(PubSubClient* client) {
 	client->publish(kLightOutTopic, &lightStateBuffer[0]);
 }
 
-void updateLightState(PubSubClient* client, byte* payload, unsigned int length) {
+void updateLightState(PubSubClient* client, byte* payload, uint length) {
 	auto platform = IO_INJECT(ILightPlatform);
 	bool isEnabled = platform->getPower();
 	CRGB color = platform->getColor();
@@ -117,12 +118,20 @@ void updateLightState(PubSubClient* client, byte* payload, unsigned int length) 
 	}
 }
 
+void updateFPS(PubSubClient* client, byte* payload, uint length) {
+	auto platform = IO_INJECT(ILightPlatform);
+	uint8_t fps = atoi((char*)payload);
+	platform->setFPS(fps);
+}
+
 void reportLightConfig(PubSubClient* client) {
 	client->publish(kLightConfigTopic, kLightConfig);
 }
 
 void registerLightTopics(MyrtQTT* server) {
-	server->reportConfig(reportLightConfig)
+	server
+	->reportConfig(reportLightConfig)
 	->report(reportLightState, kLightReportInterval)
-	->on(kLightInTopic, updateLightState);
+	->on(kLightInTopic, updateLightState)
+	->on(kLightFPSInTopic, updateFPS);
 }

@@ -32,6 +32,8 @@ class LightPlatform : public IOUnit, public ILightPlatform, public EffectSwitche
 	uint8_t getMode();
 	uint16_t getTemperature();
 
+	void setFPS(uint8_t fps);
+
   private:
 	LEDCoordinator coordinator_;
 	ILightEffect* nextEffect_ = nullptr;
