@@ -1,7 +1,7 @@
 #include "io_device.h"
 #include "logger/io_logger.h"
 
-#if IO_BENCHMARK
+#ifdef IO_BENCHMARK
 	#include "benchmark/io_benchmark.h"
 	#warning "Benchmarking enabled"
 	IOBenchmark ioBenchmark;
