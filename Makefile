@@ -6,16 +6,22 @@ MQTT_CONFIG_BASENAME = src/controllers/mqtt/topics/config_data
 
 .PHONY: configure
 configure:
-	pio init --ide vscode
-	make build
+	@pio init --ide vscode
+	@make build
 
 .PHONY: build
 build: $(MQTT_CONFIG_BASENAME).h src/config.example.h
-	pio run
+	@pio run
 
 .PHONY: deploy
 flash: $(MQTT_CONFIG_BASENAME).h src/config.example.h
-	pio run -t upload
+	@pio run -t upload -e release
+
+.PHONY: flash-debug
+flash-debug: $(MQTT_CONFIG_BASENAME).h
+	@pio run -t upload -e debug
+	@sleep 1
+	@make monitor
 
 .PHONY: monitor
 monitor:
