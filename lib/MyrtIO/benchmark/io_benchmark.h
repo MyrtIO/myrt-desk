@@ -1,11 +1,15 @@
 #pragma once
 
 #include "MyrtIO.h"
-#include "median.h"
 #include <Attotime.h>
 
-#define IO_BENCHMARK_MEASUREMENTS 128
-#define IO_BENCHMARK_INTERVAL 5000
+#ifndef IO_BENCHMARK_MEASUREMENTS
+	#define IO_BENCHMARK_MEASUREMENTS 128
+#endif
+
+#ifndef IO_BENCHMARK_INTERVAL
+	#define IO_BENCHMARK_INTERVAL 5000
+#endif
 
 class IOBenchmark : public IOUnit {
   public:

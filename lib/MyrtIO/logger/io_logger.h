@@ -1,9 +1,9 @@
 #pragma once
 
-#include "string_builder.h"
 #include <Arduino.h>
 #include <Stream.h>
 #include <stdint.h>
+#include "io_string_builder.h"
 
 class IOLogger : public IStringFlusher {
   public:

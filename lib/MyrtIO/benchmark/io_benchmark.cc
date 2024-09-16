@@ -1,5 +1,5 @@
 #include "io_benchmark.h"
-#include "median.h"
+#include "math_utils.h"
 
 const char* kBenchmarkName = "Benchmark";
 
