@@ -22,24 +22,24 @@ class IODevice {
 	}
 
 	template <typename... Args> IODevice* controllers(IOUnit* last) {
-		addUnit_(last, controllers_, &controllersCount_);
+		addUnit_(last, &controllers_[0], &controllersCount_);
 		return this;
 	}
 
 	template <typename... Args>
 	IODevice* controllers(IOUnit* first, Args... args) {
-		addUnit_(first, controllers_, &controllersCount_);
+		addUnit_(first, &controllers_[0], &controllersCount_);
 		return controllers(args...);
 	}
 
 	template <typename... Args> IODevice* platform(IOUnit* last) {
-		addUnit_(last, platforms_, &platformsCount_);
+		addUnit_(last, &platforms_[0], &platformsCount_);
 		return this;
 	}
 
 	template <typename... Args>
 	IODevice* platform(IOUnit* first, Args... args) {
-		addUnit_(first, platforms_, &platformsCount_);
+		addUnit_(first, &platforms_[0], &platformsCount_);
 		return platform(args...);
 	}
 

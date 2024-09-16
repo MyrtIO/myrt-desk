@@ -12,7 +12,7 @@ IOLogger deviceLog("IODevice", &Serial);
 IODevice* IODevice::setup() {
 	deviceLog.print("initializing...");
 #if IO_BENCHMARK
-	addController_(&ioBenchmark);
+	controllers(&ioBenchmark);
 #endif
 	return this;
 }
@@ -29,7 +29,7 @@ bool IODevice::addUnit_(IOUnit* u, IOUnit** units, uint8_t* count) {
 	deviceLog.print("setup unit...");
 	u->setup();
 	units[*count] = u;
-	*count++;
+	*count = *count + 1;
 	deviceLog.print("unit successfully added");
 	return false;
 }
