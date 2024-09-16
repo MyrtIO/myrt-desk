@@ -20,8 +20,8 @@ void IOBenchmark::loop() {
 	    ->append(loopsCount_)
 	    ->append("")
 	    ->append(" lps, ")
-		->append(1000000 / loopsCount_)
-		->append(" us")
+	    ->append(kBenchmarkInterval / loopsCount_)
+	    ->append(" us")
 	    ->flush();
 	loopsCount_ = 0;
 	nextCheck_.start(kBenchmarkInterval);
