@@ -9,12 +9,12 @@
 
 class IOBenchmark : public IOUnit {
   public:
-    void setup();
-    void loop();
-    const char* name();
+	void setup();
+	void loop();
+	const char* name();
 
   private:
-    Timer nextCheck_;
-    uint8_t count_ = 0;
-    uint32_t measurements_[IO_BENCHMARK_MEASUREMENTS];
+	Timer nextCheck_;
+	uint8_t count_ = 0;
+	uint32_t measurements_[IO_BENCHMARK_MEASUREMENTS];
 };

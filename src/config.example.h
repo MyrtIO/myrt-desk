@@ -8,7 +8,8 @@
 #define CONFIG_WIFI_RECONNECT_TIMEOUT 30000
 #define CONFIG_WIFI_START_DELAY 800
 // MQTT parameters
-#define CONFIG_MQTT_HOST "your.mqtt.server.local" // replace: "your.mqtt.server.local"
+#define CONFIG_MQTT_HOST \
+	"your.mqtt.server.local" // replace: "your.mqtt.server.local"
 #define CONFIG_MQTT_PORT 1883
 #define CONFIG_MQTT_BUFFER_SIZE 1024
 // GPIO pins

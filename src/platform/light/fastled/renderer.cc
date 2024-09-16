@@ -2,5 +2,5 @@
 #include <FastLED.h>
 
 void FastLEDRenderer::apply() {
-    FastLED.show();
+	FastLED.show();
 }

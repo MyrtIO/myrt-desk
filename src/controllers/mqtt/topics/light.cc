@@ -30,98 +30,99 @@ JsonDocument lightStateDoc;
 char lightStateBuffer[256];
 
 const uint8_t kLightEffectCount = 4;
-const char* effectNames[kLightEffectCount] = {
-    kJsonStringStatic,
-    kJsonStringRainbow,
-    kJsonStringLoading,
-    kJsonStringFill
-};
+const char* effectNames[kLightEffectCount] = { kJsonStringStatic, kJsonStringRainbow,
+    kJsonStringLoading, kJsonStringFill
+    };
 
 void reportLightState(PubSubClient* client) {
-    auto platform = IO_INJECT(ILightPlatform);
+	auto platform = IO_INJECT(ILightPlatform);
 
-    if (platform->getMode() == LightMode::RGBMode) {
-        lightStateDoc[kJsonStringColorMode] = kJsonStringRGB;
-        CRGB color = platform->getColor();
-        auto colorProp = lightStateDoc[kJsonStringColor].to<JsonObject>();
-        colorProp[kJsonStringR] = color.r;
-        colorProp[kJsonStringG] = color.g;
-        colorProp[kJsonStringB] = color.b;
-    } else {
-        lightStateDoc[kJsonStringColorMode] = kJsonStringColorTemp;
-        lightStateDoc[kJsonStringColorTemp] = platform->getTemperature();
-    }
+	if (platform->getMode() == LightMode::RGBMode) {
+		lightStateDoc[kJsonStringColorMode] = kJsonStringRGB;
+		CRGB color = platform->getColor();
+		auto colorProp = lightStateDoc[kJsonStringColor].to<JsonObject>();
+		colorProp[kJsonStringR] = color.r;
+		colorProp[kJsonStringG] = color.g;
+		colorProp[kJsonStringB] = color.b;
+	} else {
+		lightStateDoc[kJsonStringColorMode] = kJsonStringColorTemp;
+		lightStateDoc[kJsonStringColorTemp] = platform->getTemperature();
+	}
 
-    lightStateDoc[kJsonStringEffect] = effectNames[platform->getEffect()];
-    lightStateDoc[kJsonStringBrightness] = platform->getBrightness();
-    lightStateDoc[kJsonStringState] = platform->getPower() ? kJsonStringOn : kJsonStringOff;
+	lightStateDoc[kJsonStringEffect] = effectNames[platform->getEffect()];
+	lightStateDoc[kJsonStringBrightness] = platform->getBrightness();
+	lightStateDoc[kJsonStringState] = platform->getPower() ? kJsonStringOn : kJsonStringOff;
 
-    // Serialize to JSON
-    serializeJson(lightStateDoc, lightStateBuffer);
-    client->publish(kLightOutTopic, &lightStateBuffer[0]);
+	// Serialize to JSON
+	serializeJson(lightStateDoc, lightStateBuffer);
+	client->publish(kLightOutTopic, &lightStateBuffer[0]);
 }
 
 void updateLightState(PubSubClient* client, byte* payload, unsigned int length) {
-    auto platform = IO_INJECT(ILightPlatform);
-    bool isEnabled = platform->getPower();
-    CRGB color = platform->getColor();
-    uint8_t brightness = platform->getBrightness();
+	auto platform = IO_INJECT(ILightPlatform);
+	bool isEnabled = platform->getPower();
+	CRGB color = platform->getColor();
+	uint8_t brightness = platform->getBrightness();
 
-    deserializeJson(lightStateDoc, payload);
-    bool reqIsEnabled = strcmp(lightStateDoc[kJsonStringState], kJsonStringOn) == 0;
-    uint8_t reqBrightness = lightStateDoc[kJsonStringBrightness];
-    auto colorProp = lightStateDoc[kJsonStringColor];
-    CRGB reqColor = CRGB::Black;
-    if (colorProp != nullptr) {
-        reqColor = CRGB(
-            colorProp[kJsonStringR],
-            colorProp[kJsonStringG],
-            colorProp[kJsonStringB]
-        );
-    }
-    uint16_t reqColorTemp = lightStateDoc[kJsonStringColorTemp];
+	deserializeJson(lightStateDoc, payload);
+	bool reqIsEnabled = strcmp(lightStateDoc[kJsonStringState], kJsonStringOn) == 0;
+	uint8_t reqBrightness = lightStateDoc[kJsonStringBrightness];
+	auto colorProp = lightStateDoc[kJsonStringColor];
+	CRGB reqColor = CRGB::Black;
 
-    const char* effectValue = lightStateDoc[kJsonStringEffect];
-    uint8_t reqEffect = 255;
-    if (effectValue != nullptr) {
-        for (uint8_t i = 0; i < kLightEffectCount; i++) {
-            if (strcmp(effectValue, effectNames[i]) == 0) {
-                reqEffect = i;
-                break;
-            }
-        }
-    }
+	if (colorProp != nullptr) {
+		reqColor =
+		    CRGB(colorProp[kJsonStringR], colorProp[kJsonStringG], colorProp[kJsonStringB]);
+	}
 
-    bool hasChanges = false;
-    if (reqIsEnabled != isEnabled) {
-        platform->setPower(reqIsEnabled);
-        hasChanges = true;
-    } else if (reqBrightness != brightness && reqBrightness != 0) {
-        platform->setBrightness(reqBrightness);
-        hasChanges = true;
-    }
-    if (reqEffect != platform->getEffect() && reqEffect != 255) {
-        platform->setEffect(reqEffect);
-        hasChanges = true;
-    }
-    if (reqColor != color && reqColor != CRGB::Black) {
-        platform->setColor(reqColor);
-        hasChanges = true;
-    } else if (reqColorTemp != 0) {
-        platform->setColorTemperature(reqColorTemp);
-        hasChanges = true;
-    }
-    if (hasChanges) {
-        reportLightState(client);
-    }
+	uint16_t reqColorTemp = lightStateDoc[kJsonStringColorTemp];
+
+	const char* effectValue = lightStateDoc[kJsonStringEffect];
+	uint8_t reqEffect = 255;
+
+	if (effectValue != nullptr) {
+		for (uint8_t i = 0; i < kLightEffectCount; i++) {
+			if (strcmp(effectValue, effectNames[i]) == 0) {
+				reqEffect = i;
+				break;
+			}
+		}
+	}
+
+	bool hasChanges = false;
+
+	if (reqIsEnabled != isEnabled) {
+		platform->setPower(reqIsEnabled);
+		hasChanges = true;
+	} else if (reqBrightness != brightness && reqBrightness != 0) {
+		platform->setBrightness(reqBrightness);
+		hasChanges = true;
+	}
+
+	if (reqEffect != platform->getEffect() && reqEffect != 255) {
+		platform->setEffect(reqEffect);
+		hasChanges = true;
+	}
+
+	if (reqColor != color && reqColor != CRGB::Black) {
+		platform->setColor(reqColor);
+		hasChanges = true;
+	} else if (reqColorTemp != 0) {
+		platform->setColorTemperature(reqColorTemp);
+		hasChanges = true;
+	}
+
+	if (hasChanges) {
+		reportLightState(client);
+	}
 }
 
 void reportLightConfig(PubSubClient* client) {
-    client->publish(kLightConfigTopic, kLightConfig);
+	client->publish(kLightConfigTopic, kLightConfig);
 }
 
 void registerLightTopics(MyrtQTT* server) {
-    server->reportConfig(reportLightConfig)
-    ->report(reportLightState, kLightReportInterval)
-    ->on(kLightInTopic, updateLightState);
+	server->reportConfig(reportLightConfig)
+	->report(reportLightState, kLightReportInterval)
+	->on(kLightInTopic, updateLightState);
 }

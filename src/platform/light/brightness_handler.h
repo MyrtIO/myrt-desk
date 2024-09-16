@@ -4,40 +4,40 @@
 #include <LEDCoordinator.h>
 
 enum class BrightnessChangeReason {
-    Brightness,
-    Power,
-    Effect,
+	Brightness,
+	Power,
+	Effect,
 };
 
 class EffectSwitcher {
   public:
-    virtual void onEffectSwitch() = 0;
+	virtual void onEffectSwitch() = 0;
 };
 
 class SmoothBrightness : public ILEDHandler {
   public:
-    void setup(LightState* state, EffectSwitcher* switcher);
+	void setup(LightState* state, EffectSwitcher* switcher);
 
-    // Public method to handle frame and update brightness gradually.
-    // Returns true if the brightness needs to be updated, false otherwise.
-    bool handleFrame();
+	// Public method to handle frame and update brightness gradually.
+	// Returns true if the brightness needs to be updated, false otherwise.
+	bool handleFrame();
 
-    void handleBrightnessUpdate();
-    void handlePowerUpdate();
-    void handleEffectUpdate();
+	void handleBrightnessUpdate();
+	void handlePowerUpdate();
+	void handleEffectUpdate();
 
   private:
-    bool enabled_ = true;
-    bool transitioning_ = false;
-    bool effectSwitched_ = false;
-    uint8_t previous_ = 0;
-    uint8_t current_ = 254;
-    uint8_t target_ = 255;
-    LightState* state_;
-    Progress transition_;
-    BrightnessChangeReason reason_;
+	bool enabled_ = true;
+	bool transitioning_ = false;
+	bool effectSwitched_ = false;
+	uint8_t previous_ = 0;
+	uint8_t current_ = 254;
+	uint8_t target_ = 255;
+	LightState* state_;
+	Progress transition_;
+	BrightnessChangeReason reason_;
 
-    EffectSwitcher* switcher_ = nullptr;
+	EffectSwitcher* switcher_ = nullptr;
 
-    bool handleEffectChangeFrame_();
+	bool handleEffectChangeFrame_();
 };

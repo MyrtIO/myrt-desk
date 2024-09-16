@@ -11,33 +11,33 @@
 
 class LightPlatform : public IOUnit, public ILightPlatform, public EffectSwitcher {
   public:
-    void setup();
-    void loop();
+	void setup();
+	void loop();
 
-    const char* name();
+	const char* name();
 
-    CRGB getColor();
-    void setColor(CRGB color);
-    void setColorTemperature(uint16_t mireds);
+	CRGB getColor();
+	void setColor(CRGB color);
+	void setColorTemperature(uint16_t mireds);
 
-    void setBrightness(uint8_t brightness);
-    uint8_t getBrightness();
+	void setBrightness(uint8_t brightness);
+	uint8_t getBrightness();
 
-    void setPower(bool enabled);
-    bool getPower();
+	void setPower(bool enabled);
+	bool getPower();
 
-    void onEffectSwitch();
-    bool setEffect(uint8_t effectCode);
-    effect_t getEffect();
-    uint8_t getMode();
-    uint16_t getTemperature();
+	void onEffectSwitch();
+	bool setEffect(uint8_t effectCode);
+	effect_t getEffect();
+	uint8_t getMode();
+	uint16_t getTemperature();
 
   private:
-    LEDCoordinator coordinator_;
-    ILightEffect* nextEffect_ = nullptr;
-    LightState state_;
-    SmoothBrightness brightnessHandler_;
-    PixelHandler pixelHandler_;
-    Pixels pixels_;
-    FastLEDRenderer renderer_;
+	LEDCoordinator coordinator_;
+	ILightEffect* nextEffect_ = nullptr;
+	LightState state_;
+	SmoothBrightness brightnessHandler_;
+	PixelHandler pixelHandler_;
+	Pixels pixels_;
+	FastLEDRenderer renderer_;
 };

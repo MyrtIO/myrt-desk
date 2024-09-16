@@ -6,15 +6,15 @@
 
 class ConnectionController_ : public IOUnit {
   public:
-    void setup();
-    void loop();
-    const char* name();
+	void setup();
+	void loop();
+	const char* name();
 
   private:
-    bool wereConnected_ = false;
-    ILightPlatform* light_ = IO_INJECT(ILightPlatform);
-    IWiFiPlatform* wifi_ = IO_INJECT(IWiFiPlatform);
-    effect_t previousEffect_ = LightEffect::Static;
+	bool wereConnected_ = false;
+	ILightPlatform* light_ = IO_INJECT(ILightPlatform);
+	IWiFiPlatform* wifi_ = IO_INJECT(IWiFiPlatform);
+	effect_t previousEffect_ = LightEffect::Static;
 };
 
 extern ConnectionController_ ConnectionController;
