@@ -7,7 +7,7 @@ void IOLogger::print(const char* message) {
 }
 
 void IOLogger::debug(const char* message) {
-#if IO_DEBUG
+#ifdef IO_DEBUG
 	this->print(message);
 #endif
 }
@@ -50,6 +50,7 @@ IStringBuilder* IOLogger::builder() {
 
 IStringBuilder* IOLogger::debugBuilder() {
 #if IO_DEBUG
+	builder_.prepare();
 	return &builder_;
 #else
 	return &dummyBuilder_;
