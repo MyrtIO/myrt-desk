@@ -23,6 +23,14 @@ flash-debug: $(MQTT_CONFIG_BASENAME).h
 	@sleep 1
 	@make monitor
 
+.PHONY: ota
+ota:
+	@pio run -e release
+	@python scripts/espota.py \
+		-i 192.168.1.224 \
+		-p 2040 \
+		-f .pio/build/release/firmware.bin
+
 .PHONY: monitor
 monitor:
 	pio device monitor -p $(BOARD_TTY) --baud $(BAUD_RATE)

@@ -21,7 +21,7 @@ void setup() {
 	auto wifi = IO_INJECT_INSTANCE(WiFiPlatform);
 	desk.setup()
 	    ->platform(light, height, wifi)
-	    ->controllers(&ConnectionController, &MQTTController);
+	    ->controllers(&ConnectionController, &MQTTController, &OTAController);
 	mainLog.print("desk is initialized");
 }
 
