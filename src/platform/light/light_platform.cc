@@ -1,7 +1,7 @@
 #include "light_platform.h"
 #include "effects/effects.h"
 
-const uint8_t kFramesPerSecond = 100;
+const uint8_t kFramesPerSecond = 250;
 
 const char* kLightPlatformName = "Light";
 const CRGB kMaxTemperatureColor = CRGB(237, 249, 255);
@@ -34,7 +34,6 @@ void LightPlatform::setup() {
 	brightnessHandler_.setup(&state_, this);
 	brightnessHandler_.handleBrightnessUpdate();
 	coordinator_.addHandlers(&pixelHandler_, &brightnessHandler_);
-	coordinator_.setFPS(15);
 	coordinator_.start(&renderer_, kFramesPerSecond);
 	initialEffect->onActivate(&state_, &pixels_);
 	pixelHandler_.handleStateUpdate();
