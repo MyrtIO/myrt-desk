@@ -28,7 +28,7 @@ void LightPlatform::setup() {
 	lightLog.print("setup ws2812");
 	pixels_.setup(CONFIG_LIGHT_LED_COUNT);
 	lightLog.print("setup pixel handler");
-	auto initialEffect = &FillFx;
+	auto initialEffect = &StaticFx;
 	pixelHandler_.setup(initialEffect, &state_, &pixels_);
 	lightLog.print("setup brightness handler");
 	brightnessHandler_.setup(&state_, this);
@@ -93,7 +93,7 @@ uint16_t LightPlatform::getTemperature() {
 	return state_.temperature;
 }
 
-bool LightPlatform::setEffect(uint8_t effectCode) {
+bool LightPlatform::setEffect(uint8_t effectCode, bool force) {
 	switch (effectCode) {
 	case LightEffect::Static:
 		nextEffect_ = &StaticFx;
@@ -111,9 +111,12 @@ bool LightPlatform::setEffect(uint8_t effectCode) {
 		return false;
 		break;
 	}
-
 	nextEffect_->onActivate(&state_, &pixels_);
-	brightnessHandler_.handleEffectUpdate();
+	if (force) {
+		onEffectSwitch();
+	} else {
+		brightnessHandler_.handleEffectUpdate();
+	}
 	return true;
 }
 

@@ -27,7 +27,7 @@ class LightPlatform : public IOUnit, public ILightPlatform, public EffectSwitche
 	bool getPower();
 
 	void onEffectSwitch();
-	bool setEffect(uint8_t effectCode);
+	bool setEffect(uint8_t effectCode, bool force = false);
 	effect_t getEffect();
 	uint8_t getMode();
 	uint16_t getTemperature();
