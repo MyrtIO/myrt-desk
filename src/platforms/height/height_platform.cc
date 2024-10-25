@@ -2,7 +2,7 @@
 
 const char* kHeightPlatformName = "Height";
 
-IOLogger heightLog(kHeightPlatformName, &Serial);
+IOLogger heightLog(kHeightPlatformName);
 
 const char* HeightPlatform::name() {
 	return kHeightPlatformName;
@@ -45,10 +45,10 @@ uint16_t HeightPlatform::get() {
 }
 
 bool HeightPlatform::set(uint16_t height) {
-	heightLog.debugBuilder()
-	    ->append("updating to to ")
-	    ->append(height)
-	    ->flush();
+	heightLog.builder()
+	    ->append("updating to ")
+	    ->append(height);
+	heightLog.flush();
 	if (state_ != DeskState::Chill) {
 		return false;
 	}
@@ -79,7 +79,9 @@ void HeightPlatform::moveUp_() {
 	digitalWrite(params_.bekantPinDown, LOW);
 	state_ = DeskState::MoveUp;
 
-	heightLog.debug("moving up");
+#ifdef IO_DEBUG
+	heightLog.print("moving up");
+#endif
 }
 
 void HeightPlatform::moveDown_() {
@@ -87,7 +89,9 @@ void HeightPlatform::moveDown_() {
 	digitalWrite(params_.bekantPinDown, HIGH);
 	state_ = DeskState::MoveDown;
 
-	heightLog.debug("moving down");
+#ifdef IO_DEBUG
+	heightLog.print("moving down");
+#endif
 }
 
 void HeightPlatform::stop_() {
@@ -95,5 +99,7 @@ void HeightPlatform::stop_() {
 	digitalWrite(params_.bekantPinDown, LOW);
 	state_ = DeskState::Chill;
 
-	heightLog.debug("stopping");
+#ifdef IO_DEBUG
+	heightLog.print("stopping");
+#endif
 }

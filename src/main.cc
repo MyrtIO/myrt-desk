@@ -1,19 +1,13 @@
 #include <MyrtIO.h>
-#include <WiFi.h>
+#include <TopicStream.h>
 #include "controllers/controllers.h"
 #include "platforms/platforms.h"
 
 IODevice desk;
-IOLogger mainLog("Main", &Serial);
+IOLogger mainLog("Main");
 
 void setup() {
-
-	Serial.begin();
-#ifdef IO_DEBUG
-	while (!Serial) {
-		// Wait for serial port to connect
-	}
-#endif
+	IOLogger::setOutput(&mqttLogStream);
 	mainLog.print("starting desk...");
 	desk.setup()
 	    ->platforms(

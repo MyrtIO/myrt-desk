@@ -15,13 +15,15 @@ void OTAController::setup() {
 	ArduinoOTA.onEnd([]() {
 		otaLog.print("Done!");
 	});
+#ifdef IO_DEBUG
 	ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
-		otaLog.debugBuilder()
+		otaLog.builder()
 		    ->append("Progress: ")
 		    ->append((uint8_t)(progress / (total / 100)))
-		    ->append("%")
-		    ->flush();
+		    ->append("%");
+		otaLog.flush();
 	});
+#endif
 	ArduinoOTA.onError([](ota_error_t error) {
 		otaLog.print("Update error");
 		if (error == OTA_AUTH_ERROR) {

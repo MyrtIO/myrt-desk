@@ -7,7 +7,7 @@
 	IOBenchmark ioBenchmark;
 #endif
 
-IOLogger deviceLog("IODevice", &Serial);
+IOLogger deviceLog("IODevice");
 
 IODevice* IODevice::setup() {
 	deviceLog.print("initializing...");
@@ -20,8 +20,8 @@ IODevice* IODevice::setup() {
 bool IODevice::addUnit_(IOUnit* u, IOUnit** units, uint8_t* count) {
 	deviceLog.builder()
 	    ->append("adding unit: ")
-	    ->append(u->name())
-	    ->flush();
+	    ->append(u->name());
+	deviceLog.flush();
 	if (*count >= IO_DEVICE_MAX_CONTROLLERS) {
 		deviceLog.print("too many units of this type");
 		return false;

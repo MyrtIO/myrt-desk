@@ -1,10 +1,9 @@
 #include "mqtt_controller.h"
 #include <WiFi.h>
-#include "topics/topics.h"
 
 const char* kMQTTName = "MQTT";
 
-IOLogger mqttLog(kMQTTName, &Serial);
+IOLogger mqttLog(kMQTTName);
 
 MQTTController::MQTTController(const MQTTControllerParams& params):
 	params_(params),
@@ -19,6 +18,7 @@ const char* MQTTController::name() {
 void MQTTController::setup() {
 	registerLightTopics(&server_);
 	registerHeightTopics(&server_);
+	registerLogTopics(&server_);
 	server_.start(params_.host, params_.port);
 }
 
@@ -41,7 +41,7 @@ void MQTTController::onMessage(char* topic, uint8_t* payload, uint16_t length) {
 		->append(topic)
 		->append(" - ")
 		->append(length)
-		->append(" bytes")
-		->flush();
+		->append(" bytes");
+	mqttLog.flush();
 #endif
 }

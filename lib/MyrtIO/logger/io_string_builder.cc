@@ -34,13 +34,14 @@ IOStringBuilder* IOStringBuilder::append(const uint32_t message) {
 	return append(buffer);
 }
 
-void IOStringBuilder::prepare() {
-	for (int i = 0; i < 256; i++) {
+IOStringBuilder* IOStringBuilder::clear() {
+	if (size_ == 0) {
+		return this;
+	}
+	for (int i = 0; i < size_; i++) {
 		buffer_[i] = 0;
 	}
 	size_ = 0;
+	return this;
 }
 
-void IOStringBuilder::flush() {
-	flusher_->flush(buffer_, size_);
-}

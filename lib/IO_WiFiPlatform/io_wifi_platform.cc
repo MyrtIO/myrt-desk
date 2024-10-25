@@ -3,7 +3,7 @@
 
 const char* kIOWiFiPlatformName = "WiFi";
 
-IOLogger wifiLog(kIOWiFiPlatformName, &Serial);
+IOLogger wifiLog(kIOWiFiPlatformName);
 
 void WiFiPlatform::setup() {
 	state_ = Disconnected;
@@ -57,8 +57,8 @@ void WiFiPlatform::connect_() {
 	wifiLog.builder()
 	    ->append("connecting to ")
 	    ->append(params_.ssid)
-	    ->append("...")
-	    ->flush();
+	    ->append("...");
+	wifiLog.flush();
 	state_ = Connecting;
 	WiFi.begin(params_.ssid, params_.password);
 	timeout_.start(params_.reconnectTimeout);

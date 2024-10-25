@@ -2,7 +2,9 @@
 
 #include <MyrtIO.h>
 #include <PubSubServer.h>
+#include <TopicStream.h>
 #include <platforms.h>
+#include "topics/topics.h"
 
 struct MQTTControllerParams {
 	char* clientID;

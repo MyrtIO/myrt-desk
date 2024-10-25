@@ -2,7 +2,7 @@
 
 const char* kBootControllerName = "Boot";
 
-IOLogger connLog(kBootControllerName, &Serial);
+IOLogger connLog(kBootControllerName);
 
 void BootController::setup() {
 	firstConnect_ = true;

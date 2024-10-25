@@ -5,25 +5,19 @@
 #include <stdint.h>
 #include "io_string_builder.h"
 
-class IOLogger : public IStringFlusher {
+class IOLogger {
   public:
-	IOLogger(Stream* stream = &Serial) : stream_(stream) {};
-	IOLogger(const char* moduleName, Stream* stream = &Serial)
-		: moduleName_(moduleName), stream_(stream) {};
+	IOLogger(const char* moduleName) : moduleName_(moduleName) {}
 
 	void print(const char* message);
-	void debug(const char* message);
-	void flush(const char* message, uint8_t length);
-	IStringBuilder* builder();
-	IStringBuilder* debugBuilder();
+	void flush();
+
+	static void setOutput(Print* stream);
+
+	IOStringBuilder* builder();
 
   private:
-	Stream* stream_;
 	const char* moduleName_ = nullptr;
-	IOStringBuilder builder_ = IOStringBuilder(this);
-#ifndef IO_DEBUG
-	IODummyStringBuilder dummyBuilder_;
-#endif
 
-	void printPrefix_();
+	void appendPrefix_(IOStringBuilder* message);
 };
