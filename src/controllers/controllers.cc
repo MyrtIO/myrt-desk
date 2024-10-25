@@ -7,4 +7,7 @@ DI_REGISTER_INSTANCE(MQTTController, {
 	.host = CONFIG_MQTT_HOST,
 	.port = CONFIG_MQTT_PORT
 });
-DI_REGISTER_INSTANCE(OTAController);
+DI_REGISTER_INSTANCE(OTAController, {
+	.hostname = CONFIG_DEVICE_NAME,
+	.port = CONFIG_OTA_PORT
+});

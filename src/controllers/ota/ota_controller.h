@@ -2,8 +2,14 @@
 
 #include <platforms.h>
 
+struct OTAControllerParams {
+	char* hostname;
+	uint16_t port;
+};
+
 class OTAController : public IOUnit {
   public:
+	OTAController(const OTAControllerParams& params);
 	void setup();
 	void loop();
 	const char* name();
@@ -11,5 +17,6 @@ class OTAController : public IOUnit {
   private:
 	IOWiFi* wifi_ = DI_INJECT(IOWiFi);
 	bool firstConnect_ = true;
+	OTAControllerParams params_;
 };
 

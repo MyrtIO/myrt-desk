@@ -5,10 +5,13 @@ const char* kOTAControllerName = "OTA";
 
 IOLogger otaLog(kOTAControllerName);
 
+OTAController::OTAController(const OTAControllerParams& params) {
+	params_ = params;
+}
+
 void OTAController::setup() {
-	// TODO: move OTA params to config
-	ArduinoOTA.setHostname("myrt-desk");
-	ArduinoOTA.setPort(2040);
+	ArduinoOTA.setHostname(params_.hostname);
+	ArduinoOTA.setPort(params_.port);
 	ArduinoOTA.onStart([]() {
 		otaLog.print("Starting update...");
 	});

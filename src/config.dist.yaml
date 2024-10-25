@@ -10,6 +10,8 @@ mqtt:
   host: "mqtt.local"
   port: 1883
   buffer_size: 1024
+ota:
+  port: 2040
 bekant:
   height_max: 1260
   height_min: 650
