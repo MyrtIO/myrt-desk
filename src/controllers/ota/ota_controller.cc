@@ -3,7 +3,7 @@
 
 const char* kOTAControllerName = "OTA";
 
-IOLogger otaLog(kOTAControllerName);
+io::Logger otaLog(kOTAControllerName);
 
 OTAController::OTAController(const OTAControllerParams& params) {
 	params_ = params;

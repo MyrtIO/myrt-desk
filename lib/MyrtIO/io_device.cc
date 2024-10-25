@@ -4,32 +4,34 @@
 #ifdef IO_BENCHMARK
 	#include "benchmark/io_benchmark.h"
 	#warning "Benchmarking enabled"
-	IOBenchmark ioBenchmark;
+	io::Benchmark ioBenchmark;
 #endif
 
-IOLogger deviceLog("IODevice");
-
-IODevice* IODevice::setup() {
-	deviceLog.print("initializing...");
+io::Device* io::Device::setup() {
+	log_.print("initializing...");
 #if IO_BENCHMARK
 	controllers(&ioBenchmark);
 #endif
 	return this;
 }
 
-bool IODevice::addUnit_(IOUnit* u, IOUnit** units, uint8_t* count) {
-	deviceLog.builder()
+io::Logger* io::Device::log() {
+	return &log_;
+}
+
+bool io::Device::addUnit_(io::Unit* u, io::Unit** units, uint8_t* count) {
+	log_.builder()
 	    ->append("adding unit: ")
 	    ->append(u->name());
-	deviceLog.flush();
+	log_.flush();
 	if (*count >= IO_DEVICE_MAX_CONTROLLERS) {
-		deviceLog.print("too many units of this type");
+		log_.print("too many units of this type");
 		return false;
 	}
-	deviceLog.print("setup unit...");
+	log_.print("setup unit...");
 	u->setup();
 	units[*count] = u;
 	*count = *count + 1;
-	deviceLog.print("unit successfully added");
-	return false;
+	log_.print("unit successfully added");
+	return true;
 }

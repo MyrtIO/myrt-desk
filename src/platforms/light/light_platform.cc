@@ -6,7 +6,7 @@ const uint8_t kFramesPerSecond = 120;
 
 const char* kIOLightPlatformName = "Light";
 
-IOLogger lightLog(kIOLightPlatformName);
+io::Logger lightLog(kIOLightPlatformName);
 
 const char* LightPlatform::name() {
 	return kIOLightPlatformName;

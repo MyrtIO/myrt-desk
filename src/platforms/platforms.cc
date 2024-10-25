@@ -2,8 +2,8 @@
 #include <config.h>
 
 DI_REGISTER_IMPLEMENTATION(
-	IOWiFi,
-	WiFiPlatform,
+	IWiFiPlatform,
+	io::WiFiPlatform,
 	{
 		.ssid = CONFIG_WIFI_SSID,
 		.password = CONFIG_WIFI_PASSWORD,

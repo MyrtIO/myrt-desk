@@ -1,16 +1,16 @@
-#include "io_wifi_platform.h"
+#include "MyrtIO_WiFiPlatform.h"
 #include <WiFi.h>
 
-const char* kIOWiFiPlatformName = "WiFi";
+const char* kWiFiPlatformName = "WiFi";
 
-IOLogger wifiLog(kIOWiFiPlatformName);
+io::Logger wifiLog(kWiFiPlatformName);
 
-void WiFiPlatform::setup() {
+void io::WiFiPlatform::setup() {
 	state_ = Disconnected;
 	WiFi.setHostname(params_.hostname);
 }
 
-void WiFiPlatform::loop() {
+void io::WiFiPlatform::loop() {
 	if (WiFi.status() == WL_CONNECTED) {
 		if (state_ != Connected) {
 			state_ = Connected;
@@ -37,23 +37,23 @@ void WiFiPlatform::loop() {
 	connect_();
 }
 
-const char* WiFiPlatform::name() {
-	return kIOWiFiPlatformName;
+const char* io::WiFiPlatform::name() {
+	return kWiFiPlatformName;
 }
 
-bool WiFiPlatform::connected() {
+bool io::WiFiPlatform::connected() {
 	return state_ == Connected;
 }
 
-WiFiState WiFiPlatform::state() {
+WiFiState io::WiFiPlatform::state() {
 	return state_;
 }
 
-const char* WiFiPlatform::hostname() {
+const char* io::WiFiPlatform::hostname() {
 	return params_.hostname;
 }
 
-void WiFiPlatform::connect_() {
+void io::WiFiPlatform::connect_() {
 	wifiLog.builder()
 	    ->append("connecting to ")
 	    ->append(params_.ssid)

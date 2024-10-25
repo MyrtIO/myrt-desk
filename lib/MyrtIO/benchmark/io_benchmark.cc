@@ -5,13 +5,13 @@ const char* kBenchmarkName = "Benchmark";
 // One second
 const uint32_t kBenchmarkInterval = 1000 * 1000;
 
-IOLogger benchmarkLogger(kBenchmarkName);
+io::Logger benchmarkLogger(kBenchmarkName);
 
-void IOBenchmark::setup() {
+void io::Benchmark::setup() {
 	nextCheck_.start(kBenchmarkInterval);
 }
 
-void IOBenchmark::loop() {
+void io::Benchmark::loop() {
 	if (!nextCheck_.finished()) {
 		loopsCount_++;
 		return;
@@ -27,6 +27,6 @@ void IOBenchmark::loop() {
 	nextCheck_.start(kBenchmarkInterval);
 }
 
-const char* IOBenchmark::name() {
+const char* io::Benchmark::name() {
 	return kBenchmarkName;
 }

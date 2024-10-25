@@ -5,19 +5,23 @@
 #include <stdint.h>
 #include "io_string_builder.h"
 
-class IOLogger {
-  public:
-	IOLogger(const char* moduleName) : moduleName_(moduleName) {}
+namespace io {
+	class Logger {
+	  public:
+		Logger(const char* moduleName) : moduleName_(moduleName) {}
 
-	void print(const char* message);
-	void flush();
+		void print(const char* message);
+		void flush();
 
-	static void setOutput(Print* stream);
+		static void setOutput(Print* stream);
 
-	IOStringBuilder* builder();
+		IOStringBuilder* builder();
 
-  private:
-	const char* moduleName_ = nullptr;
+	  private:
+		const char* moduleName_ = nullptr;
 
-	void appendPrefix_(IOStringBuilder* message);
-};
+		void appendPrefix_(IOStringBuilder* message);
+	};
+}
+
+

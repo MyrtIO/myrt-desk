@@ -2,7 +2,7 @@
 
 const char* kHeightPlatformName = "Height";
 
-IOLogger heightLog(kHeightPlatformName);
+io::Logger heightLog(kHeightPlatformName);
 
 const char* HeightPlatform::name() {
 	return kHeightPlatformName;

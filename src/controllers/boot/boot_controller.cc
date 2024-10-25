@@ -2,7 +2,7 @@
 
 const char* kBootControllerName = "Boot";
 
-IOLogger connLog(kBootControllerName);
+io::Logger connLog(kBootControllerName);
 
 void BootController::setup() {
 	firstConnect_ = true;

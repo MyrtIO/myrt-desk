@@ -21,7 +21,7 @@ struct LightPlatformParams {
 	uint16_t transitionMs;
 };
 
-class LightPlatform : public IOUnit, public IOLight, public EffectSwitcher {
+class LightPlatform : public io::Unit, public IOLight, public EffectSwitcher {
   public:
 	LightPlatform(const LightPlatformParams& params) : params_(params) {};
 	void setup();

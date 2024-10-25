@@ -7,7 +7,7 @@ struct OTAControllerParams {
 	uint16_t port;
 };
 
-class OTAController : public IOUnit {
+class OTAController : public io::Unit {
   public:
 	OTAController(const OTAControllerParams& params);
 	void setup();

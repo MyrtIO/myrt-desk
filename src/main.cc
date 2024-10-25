@@ -3,15 +3,13 @@
 #include "controllers/controllers.h"
 #include "platforms/platforms.h"
 
-IODevice desk;
-IOLogger mainLog("Main");
+io::Device desk("Desk");
 
 void setup() {
-	IOLogger::setOutput(&mqttLogStream);
-	mainLog.print("starting desk...");
+	io::Logger::setOutput(&mqttLogStream);
 	desk.setup()
 	    ->platforms(
-			DI_INJECT_UNIT(IOWiFi),
+			DI_INJECT_UNIT(IWiFiPlatform),
 			DI_INJECT_UNIT(IOHeight),
 			DI_INJECT_UNIT(IOLight)
 		)
@@ -20,7 +18,7 @@ void setup() {
 			DI_INJECT_UNIT(MQTTController),
 			DI_INJECT_UNIT(OTAController)
 		);
-	mainLog.print("desk is initialized");
+	desk.log()->print("initialized");
 }
 
 void loop() {

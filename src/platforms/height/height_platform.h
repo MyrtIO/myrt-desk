@@ -18,7 +18,7 @@ struct HeightPlatformParams {
 	float bekantHeightBias = 0;
 };
 
-class HeightPlatform : public IOUnit, public IOHeight {
+class HeightPlatform : public io::Unit, public IOHeight {
   public:
 	HeightPlatform(const HeightPlatformParams& params): params_(params) {}
 	void setup();

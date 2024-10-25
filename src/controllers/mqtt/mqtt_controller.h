@@ -12,11 +12,11 @@ struct MQTTControllerParams {
 	uint16_t port;
 };
 
-class MQTTController : public IOUnit, public PubSubServerListener {
+class MQTTController : public io::Unit, public PubSubServerListener {
   public:
 	MQTTController(const MQTTControllerParams& params);
 
-	// IOUnit interface
+	// io::Unit interface
 	const char* name();
 	void setup();
 	void loop();

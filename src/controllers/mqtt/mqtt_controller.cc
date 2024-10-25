@@ -3,7 +3,7 @@
 
 const char* kMQTTName = "MQTT";
 
-IOLogger mqttLog(kMQTTName);
+io::Logger mqttLog(kMQTTName);
 
 MQTTController::MQTTController(const MQTTControllerParams& params):
 	params_(params),
