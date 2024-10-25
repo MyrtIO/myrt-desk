@@ -17,7 +17,7 @@ class PixelHandler : public ILEDHandler {
 
 	ILightEffect* getEffect() {
 		return effect_;
-	}
+	};
 
 	// Set the color for the LED matrix.
 	void handleStateUpdate();

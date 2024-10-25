@@ -1,14 +1,14 @@
 #pragma once
 
-#include <FastLED.h>
 #include <stdint.h>
+#include "rgb_color.h"
 
 typedef uint8_t effect_t;
 
-class ILightPlatform {
+class IOLight {
   public:
-	virtual CRGB getColor() = 0;
-	virtual void setColor(CRGB color) = 0;
+	virtual RGBColor getColor() = 0;
+	virtual void setColor(RGBColor color) = 0;
 	virtual void setColorTemperature(uint16_t mireds) = 0;
 	virtual void setPower(bool enabled) = 0;
 	virtual bool getPower() = 0;
@@ -19,15 +19,4 @@ class ILightPlatform {
 	virtual effect_t getEffect() = 0;
 	virtual uint8_t getMode() = 0;
 	virtual uint16_t getTemperature() = 0;
-};
-
-class IHeightPlatform {
-  public:
-	virtual uint16_t getHeight() = 0;
-	virtual bool setHeight(uint16_t height) = 0;
-};
-
-class IWiFiPlatform {
-  public:
-	virtual bool connected() = 0;
 };

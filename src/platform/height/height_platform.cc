@@ -9,54 +9,51 @@ const char* HeightPlatform::name() {
 }
 
 void HeightPlatform::setup() {
-	pinMode(CONFIG_PIN_BUTTON_UP, OUTPUT);
-	pinMode(CONFIG_PIN_BUTTON_DOWN, OUTPUT);
+	pinMode(params_.bekantPinUp, OUTPUT);
+	pinMode(params_.bekantPinDown, OUTPUT);
 	heightLog.print("starting UART...");
-	stream_->setTX(CONFIG_PIN_LIN_TX);
-	stream_->setRX(CONFIG_PIN_LIN_RX);
-	stream_->begin(LIN_BAUD_RATE);
+	params_.linUART->setTX(params_.linPinTX);
+	params_.linUART->setRX(params_.linPinRX);
+	params_.linUART->begin(LIN_BAUD_RATE);
 	heightLog.print("starting LIN reader...");
-	reader_.begin(stream_);
+	reader_.begin(
+		params_.linUART,
+		params_.bekantHeightSlope,
+		params_.bekantHeightBias
+	);
 	heightLog.print("starting state machine...");
 }
 
 void HeightPlatform::loop() {
 	reader_.handle();
-
 	switch (state_) {
 	case DeskState::MoveUp:
 		if (reader_.getHeight() >= targetHeight_) {
 			stop_();
 		}
-
 		break;
-
 	case DeskState::MoveDown:
 		if (reader_.getHeight() <= targetHeight_) {
 			stop_();
 		}
-
 		break;
 	}
 }
 
-uint16_t HeightPlatform::getHeight() {
+uint16_t HeightPlatform::get() {
 	return reader_.getHeight();
 }
 
-bool HeightPlatform::setHeight(uint16_t height) {
-	// clang-format off
+bool HeightPlatform::set(uint16_t height) {
 	heightLog.debugBuilder()
 	    ->append("updating to to ")
 	    ->append(height)
 	    ->flush();
-
-	// clang-format on
 	if (state_ != DeskState::Chill) {
 		return false;
 	}
 
-	if (height > CONFIG_BEKANT_HEIGHT_MAX || height < CONFIG_BEKANT_HEIGHT_MIN) {
+	if (height > params_.bekantHeightMax || height < params_.bekantHeightMin) {
 		return false;
 	}
 
@@ -78,24 +75,24 @@ bool HeightPlatform::setHeight(uint16_t height) {
 }
 
 void HeightPlatform::moveUp_() {
-	digitalWrite(CONFIG_PIN_BUTTON_UP, HIGH);
-	digitalWrite(CONFIG_PIN_BUTTON_DOWN, LOW);
+	digitalWrite(params_.bekantPinUp, HIGH);
+	digitalWrite(params_.bekantPinDown, LOW);
 	state_ = DeskState::MoveUp;
 
 	heightLog.debug("moving up");
 }
 
 void HeightPlatform::moveDown_() {
-	digitalWrite(CONFIG_PIN_BUTTON_UP, LOW);
-	digitalWrite(CONFIG_PIN_BUTTON_DOWN, HIGH);
+	digitalWrite(params_.bekantPinUp, LOW);
+	digitalWrite(params_.bekantPinDown, HIGH);
 	state_ = DeskState::MoveDown;
 
 	heightLog.debug("moving down");
 }
 
 void HeightPlatform::stop_() {
-	digitalWrite(CONFIG_PIN_BUTTON_UP, LOW);
-	digitalWrite(CONFIG_PIN_BUTTON_DOWN, LOW);
+	digitalWrite(params_.bekantPinUp, LOW);
+	digitalWrite(params_.bekantPinDown, LOW);
 	state_ = DeskState::Chill;
 
 	heightLog.debug("stopping");

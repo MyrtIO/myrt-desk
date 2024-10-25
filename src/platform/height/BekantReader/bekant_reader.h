@@ -10,7 +10,7 @@
 
 class BekantReader {
   public:
-	void begin(Stream* stream);
+	void begin(Stream* stream, float slope, float bias);
 	void handle();
 	uint16_t getHeight();
 
@@ -19,6 +19,9 @@ class BekantReader {
 	uint16_t position_;
 	uint8_t head_ = 0;
 	uint8_t buffer_[5];
+
+	float slope_ = 0;
+	float bias_ = 0;
 
 	void clear_();
 	void tryParsePosition_();

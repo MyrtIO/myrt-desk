@@ -14,6 +14,7 @@ class IStringFlusher {
 class IStringBuilder {
   public:
 	virtual IStringBuilder* append(const char* message) = 0;
+	virtual IStringBuilder* append(const char symbol) = 0;
 	virtual IStringBuilder* append(const uint8_t message) = 0;
 	virtual IStringBuilder* append(const uint16_t message) = 0;
 	virtual IStringBuilder* append(const uint32_t message) = 0;
@@ -25,6 +26,7 @@ class IOStringBuilder : public IStringBuilder {
   public:
 	IOStringBuilder(IStringFlusher* flusher) : flusher_(flusher) {}
 	IOStringBuilder* append(const char* message);
+	IOStringBuilder* append(const char symbol);
 	IOStringBuilder* append(const uint8_t message);
 	IOStringBuilder* append(const uint16_t message);
 	IOStringBuilder* append(const uint32_t message);
@@ -41,6 +43,10 @@ class IOStringBuilder : public IStringBuilder {
 class IODummyStringBuilder : public IStringBuilder {
   public:
 	IODummyStringBuilder* append(const char* message) {
+		return this;
+	}
+
+	IODummyStringBuilder* append(const char symbol) {
 		return this;
 	}
 	IODummyStringBuilder* append(const uint8_t message) {

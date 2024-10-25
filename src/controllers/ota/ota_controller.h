@@ -2,15 +2,14 @@
 
 #include <platform.h>
 
-class OTAController_ : public IOUnit {
+class OTAController : public IOUnit {
   public:
 	void setup();
 	void loop();
 	const char* name();
 
   private:
-	IWiFiPlatform* wifi_ = IO_INJECT(IWiFiPlatform);
+	IOWiFi* wifi_ = DI_INJECT(IOWiFi);
 	bool firstConnect_ = true;
 };
 
-extern OTAController_ OTAController;

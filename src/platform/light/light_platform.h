@@ -1,23 +1,36 @@
 #pragma once
 
+#include <MyrtIO.h>
+#include <FastLED.h>
+
+#include "rgb_color.h"
+#include "light_interface.h"
 #include "brightness_handler.h"
 #include "fastled/renderer.h"
 #include "light_effect.h"
 #include "pixel_handler.h"
-#include <FastLED.h>
-#include <MyrtIO.h>
-#include <config.h>
-#include <interfaces/platform.h>
 
-class LightPlatform : public IOUnit, public ILightPlatform, public EffectSwitcher {
+struct LightPlatformParams {
+	uint8_t ledCount;
+	uint32_t colorCorrection;
+	uint32_t colorInitial;
+	uint32_t colorWarmWhite;
+	uint16_t colorWarmWhiteMireds;
+	uint32_t colorColdWhite;
+	uint16_t colorColdWhiteMireds;
+	uint16_t transitionMs;
+};
+
+class LightPlatform : public IOUnit, public IOLight, public EffectSwitcher {
   public:
+	LightPlatform(const LightPlatformParams& params) : params_(params) {};
 	void setup();
 	void loop();
 
 	const char* name();
 
-	CRGB getColor();
-	void setColor(CRGB color);
+	RGBColor getColor();
+	void setColor(RGBColor color);
 	void setColorTemperature(uint16_t mireds);
 
 	void setBrightness(uint8_t brightness);
@@ -42,4 +55,5 @@ class LightPlatform : public IOUnit, public ILightPlatform, public EffectSwitche
 	PixelHandler pixelHandler_;
 	Pixels pixels_;
 	FastLEDRenderer renderer_;
+	LightPlatformParams params_;
 };

@@ -1,4 +1,4 @@
-BOARD_TTY = /dev/tty.usbmodem11301
+BOARD_TTY = /dev/cu.usbmodem11301
 BAUD_RATE = 115200
 
 MQTT_CONFIGS = src/controllers/mqtt/topics/config_*.json

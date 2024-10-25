@@ -1,25 +1,31 @@
 #pragma once
 
-#include "myrt_qtt.h"
 #include <MyrtIO.h>
-#include <WiFi.h>
+#include <PubSubServer.h>
 #include <platform.h>
 
-typedef void (*TopicRegisterer)(MyrtQTT* mqtt);
-
-class MQTTController_ : public IOUnit {
-  public:
-	void setup();
-	void loop();
-	const char* name();
-	void handleMessage(char* topic, byte* payload, unsigned int length);
-
-  private:
-	WiFiClient wifiClient_ = WiFiClient();
-	PubSubClient client_ = PubSubClient(wifiClient_);
-	MyrtQTT mqtt_ = MyrtQTT(&client_, CONFIG_DEVICE_NAME);
-	IWiFiPlatform* wifi_ = IO_INJECT(IWiFiPlatform);
-	bool connected_();
+struct MQTTControllerParams {
+	char* clientID;
+	char* host;
+	uint16_t port;
 };
 
-extern MQTTController_ MQTTController;
+class MQTTController : public IOUnit, public PubSubServerListener {
+  public:
+	MQTTController(const MQTTControllerParams& params);
+
+	// IOUnit interface
+	const char* name();
+	void setup();
+	void loop();
+	// PubSubServerListener interface
+	void onConnect();
+	void onDisconnect();
+	void onMessage(char* topic, uint8_t* payload, uint16_t length);
+
+  private:
+	PubSubServer server_;
+	MQTTControllerParams params_;
+	WiFiClient client_ = WiFiClient();
+	IOWiFi* wifi_ = DI_INJECT(IOWiFi);
+};

@@ -4,17 +4,18 @@
 #include <MyrtIO.h>
 #include <platform.h>
 
-class ConnectionController_ : public IOUnit {
+class BootController : public IOUnit {
   public:
+	BootController(RGBColor connectionColor):
+		connectionColor_(connectionColor) {};
 	void setup();
 	void loop();
 	const char* name();
 
   private:
 	bool firstConnect_ = false;
-	ILightPlatform* light_ = IO_INJECT(ILightPlatform);
-	IWiFiPlatform* wifi_ = IO_INJECT(IWiFiPlatform);
+	IOLight* light_ = DI_INJECT(IOLight);
+	IOWiFi* wifi_ = DI_INJECT(IOWiFi);
 	effect_t previousEffect_ = LightEffect::Static;
+	RGBColor connectionColor_;
 };
-
-extern ConnectionController_ ConnectionController;

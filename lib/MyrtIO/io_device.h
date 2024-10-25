@@ -32,15 +32,15 @@ class IODevice {
 		return controllers(args...);
 	}
 
-	template <typename... Args> IODevice* platform(IOUnit* last) {
+	template <typename... Args> IODevice* platforms(IOUnit* last) {
 		addUnit_(last, &platforms_[0], &platformsCount_);
 		return this;
 	}
 
 	template <typename... Args>
-	IODevice* platform(IOUnit* first, Args... args) {
+	IODevice* platforms(IOUnit* first, Args... args) {
 		addUnit_(first, &platforms_[0], &platformsCount_);
-		return platform(args...);
+		return platforms(args...);
 	}
 
   private:

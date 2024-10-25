@@ -1,7 +1,8 @@
 #include "bekant_reader.h"
-#include <config.h>
 
-void BekantReader::begin(Stream* stream) {
+void BekantReader::begin(Stream* stream, float slope, float bias) {
+	slope_ = slope;
+	bias_ = bias;
 	stream_ = stream;
 	handle();
 }
@@ -59,7 +60,7 @@ bool BekantReader::isPositionValid_(uint16_t position) {
 }
 
 uint16_t BekantReader::positionToHeight_(uint16_t position) {
-	float height = CONFIG_BEKANT_HEIGHT_SLOPE * static_cast<float>(position);
-	height += CONFIG_BEKANT_HEIGHT_BIAS;
+	float height = slope_ * static_cast<float>(position);
+	height += bias_;
 	return static_cast<uint16_t>(round(height));
 }

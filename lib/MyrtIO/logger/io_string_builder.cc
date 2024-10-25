@@ -10,6 +10,12 @@ IOStringBuilder* IOStringBuilder::append(const char* message) {
 	return this;
 }
 
+IOStringBuilder* IOStringBuilder::append(const char symbol) {
+	buffer_[size_] = symbol;
+	size_++;
+	return this;
+}
+
 IOStringBuilder* IOStringBuilder::append(const uint8_t message) {
 	char buffer[4];
 	itoa(message, buffer, 10);

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "fastled/effect.h"
-#include <interfaces/platform.h>
+#include "light_interface.h"
 
 enum LightEffect : effect_t {
 	Static = 0,

@@ -1,32 +1,31 @@
 #include "light_platform.h"
 #include "effects/effects.h"
+#include "fastled/crgb_color.h"
 
-const uint8_t kFramesPerSecond = 250;
+const uint8_t kFramesPerSecond = 120;
 
-const char* kLightPlatformName = "Light";
-const CRGB kMaxTemperatureColor = CRGB(237, 249, 255);
-const CRGB kMinTemperatureColor = CRGB(255, 139, 20);
+const char* kIOLightPlatformName = "Light";
 
-IOLogger lightLog(kLightPlatformName, &Serial);
+IOLogger lightLog(kIOLightPlatformName, &Serial);
 
 const char* LightPlatform::name() {
-	return kLightPlatformName;
+	return kIOLightPlatformName;
 }
 
 // Implementation of the setup function to initialize the LED platform.
 void LightPlatform::setup() {
-	state_.colorTransitionMs = CONFIG_LIGHT_COLOR_TRANSITION_MS;
+	state_.colorTransitionMs = params_.transitionMs;
 	state_.effectTransitionMs = 1000;
 	state_.previousColor = CRGB::Black;
 	state_.currentColor = CRGB::Black;
 	state_.selectedColor = CRGB::Black;
-	state_.targetColor = CONFIG_LIGHT_COLOR_INITIAL;
+	state_.targetColor = params_.colorInitial;
 	state_.currentBrightness = 255;
 	state_.targetBrightness = 255;
 	state_.enabled = true;
 
 	lightLog.print("setup ws2812");
-	pixels_.setup(CONFIG_LIGHT_LED_COUNT);
+	pixels_.setup(params_.ledCount);
 	lightLog.print("setup pixel handler");
 	auto initialEffect = &StaticFx;
 	pixelHandler_.setup(initialEffect, &state_, &pixels_);
@@ -44,8 +43,8 @@ void LightPlatform::loop() {
 	coordinator_.handle();
 }
 
-CRGB LightPlatform::getColor() {
-	return state_.targetColor;
+RGBColor LightPlatform::getColor() {
+	return rgbFromFastLED(state_.currentColor);
 }
 
 uint8_t LightPlatform::getBrightness() {
@@ -71,10 +70,10 @@ bool LightPlatform::getPower() {
 	return state_.enabled;
 }
 
-void LightPlatform::setColor(CRGB color) {
+void LightPlatform::setColor(RGBColor color) {
 	lightLog.print("update color");
 	state_.previousColor = state_.currentColor;
-	state_.targetColor = color;
+	state_.targetColor = rgbToFastLED(color);
 	state_.mode = LightMode::RGBMode;
 	pixelHandler_.handleStateUpdate();
 }
@@ -83,9 +82,12 @@ void LightPlatform::setColorTemperature(uint16_t mireds) {
 	lightLog.print("update color temperature");
 	state_.mode = LightMode::WhiteMode;
 	state_.temperature = mireds;
-	uint8_t ratio = map(mireds, CONFIG_LIGHT_MIREDS_MIN, CONFIG_LIGHT_MIREDS_MAX, 0, 255);
+	uint8_t ratio = map(mireds,
+		params_.colorColdWhiteMireds, params_.colorWarmWhiteMireds,
+		0, 255
+	);
 	ratio = 255 - ratio;
-	state_.targetColor = blend(kMinTemperatureColor, kMaxTemperatureColor, ratio);
+	state_.targetColor = blend(params_.colorWarmWhite, params_.colorColdWhite, ratio);
 	pixelHandler_.handleStateUpdate();
 }
 

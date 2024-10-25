@@ -1,5 +1,8 @@
 #pragma once
-#include "controllers/mqtt/myrt_qtt.h"
 
-void registerLightTopics(MyrtQTT* server);
-void registerHeightTopics(MyrtQTT* server);
+#include <PubSubServer.h>
+
+
+
+void registerLightTopics(PubSubServer* server);
+void registerHeightTopics(PubSubServer* server);

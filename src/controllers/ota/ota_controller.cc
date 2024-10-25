@@ -5,10 +5,10 @@ const char* kOTAControllerName = "OTA";
 
 IOLogger otaLog(kOTAControllerName);
 
-OTAController_ OTAController = OTAController_();
-
-void OTAController_::setup() {
-	ArduinoOTA.setHostname("MyrtDeskOTA");
+void OTAController::setup() {
+	// TODO: move OTA params to config
+	ArduinoOTA.setHostname("myrt-desk");
+	ArduinoOTA.setPort(2040);
 	ArduinoOTA.onStart([]() {
 		otaLog.print("Starting update...");
 	});
@@ -37,16 +37,18 @@ void OTAController_::setup() {
 		}
 	});
 }
-void OTAController_::loop() {
+void OTAController::loop() {
+	if (!wifi_->connected()) {
+		return;
+	}
 	if (firstConnect_) {
 		firstConnect_ = false;
 		ArduinoOTA.begin();
+		return;
 	}
-	if (wifi_->connected()) {
-		ArduinoOTA.handle();
-	}
+	ArduinoOTA.handle();
 }
 
-const char* OTAController_::name() {
+const char* OTAController::name() {
 	return kOTAControllerName;
 }

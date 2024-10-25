@@ -1,20 +1,18 @@
-#include "wifi_platform.h"
+#include "io_wifi_platform.h"
 #include <WiFi.h>
-#include <config.h>
 
-const char* kWiFiPlatformName = "WiFi";
+const char* kIOWiFiPlatformName = "WiFi";
 
-IOLogger wifiLog(kWiFiPlatformName, &Serial);
+IOLogger wifiLog(kIOWiFiPlatformName, &Serial);
 
 void WiFiPlatform::setup() {
 	state_ = Disconnected;
-	WiFi.setHostname(CONFIG_DEVICE_NAME);
+	WiFi.setHostname(params_.hostname);
 }
 
 void WiFiPlatform::loop() {
 	if (WiFi.status() == WL_CONNECTED) {
 		if (state_ != Connected) {
-			wifiLog.print("connected!");
 			state_ = Connected;
 		}
 		return;
@@ -22,9 +20,8 @@ void WiFiPlatform::loop() {
 
 	if (firstConnect_) {
 		firstConnect_ = false;
-		connectTimer_.start(CONFIG_WIFI_START_DELAY);
+		connectTimer_.start(params_.connectDelay);
 	}
-
 	if (!connectTimer_.finished()) {
 		return;
 	}
@@ -37,17 +34,11 @@ void WiFiPlatform::loop() {
 		}
 		return;
 	}
-
-	wifiLog.builder()
-	    ->append("connecting to ")
-	    ->append(CONFIG_WIFI_SSID)
-	    ->append("...")
-	    ->flush();
 	connect_();
 }
 
 const char* WiFiPlatform::name() {
-	return kWiFiPlatformName;
+	return kIOWiFiPlatformName;
 }
 
 bool WiFiPlatform::connected() {
@@ -58,8 +49,17 @@ WiFiState WiFiPlatform::state() {
 	return state_;
 }
 
+const char* WiFiPlatform::hostname() {
+	return params_.hostname;
+}
+
 void WiFiPlatform::connect_() {
+	wifiLog.builder()
+	    ->append("connecting to ")
+	    ->append(params_.ssid)
+	    ->append("...")
+	    ->flush();
 	state_ = Connecting;
-	WiFi.begin(CONFIG_WIFI_SSID, CONFIG_WIFI_PASSWORD);
-	timeout_.start(CONFIG_WIFI_RECONNECT_TIMEOUT);
+	WiFi.begin(params_.ssid, params_.password);
+	timeout_.start(params_.reconnectTimeout);
 }

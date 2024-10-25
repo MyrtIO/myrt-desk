@@ -1,27 +1,39 @@
 #pragma once
 
-#include "bekant_reader.h"
 #include <MyrtIO.h>
-#include <config.h>
-#include <interfaces/platform.h>
+#include "height_interface.h"
+#include "BekantReader/bekant_reader.h"
 
 enum class DeskState { Chill, MoveUp, MoveDown };
 
-class HeightPlatform : public IOUnit, public IHeightPlatform {
+struct HeightPlatformParams {
+	SerialUART* linUART = nullptr;
+	uint8_t linPinTX = 0;
+	uint8_t linPinRX = 0;
+	uint8_t bekantPinUp = 0;
+	uint8_t bekantPinDown = 0;
+	uint16_t bekantHeightMax = 0;
+	uint16_t bekantHeightMin = 0;
+	float bekantHeightSlope = 0;
+	float bekantHeightBias = 0;
+};
+
+class HeightPlatform : public IOUnit, public IOHeight {
   public:
+	HeightPlatform(const HeightPlatformParams& params): params_(params) {}
 	void setup();
 	void loop();
 
 	const char* name();
 
-	uint16_t getHeight();
-	bool setHeight(uint16_t height);
+	uint16_t get();
+	bool set(uint16_t height);
 
   private:
 	BekantReader reader_;
 	uint16_t targetHeight_ = 0;
 	DeskState state_ = DeskState::Chill;
-	SerialUART* stream_ = &CONFIG_BEKANT_LIN_UART;
+	HeightPlatformParams params_;
 
 	void moveUp_();
 	void moveDown_();

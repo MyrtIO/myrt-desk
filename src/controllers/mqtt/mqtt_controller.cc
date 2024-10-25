@@ -1,55 +1,47 @@
 #include "mqtt_controller.h"
+#include <WiFi.h>
 #include "topics/topics.h"
-#include <config.h>
 
 const char* kMQTTName = "MQTT";
 
 IOLogger mqttLog(kMQTTName, &Serial);
 
-MQTTController_ MQTTController = MQTTController_();
+MQTTController::MQTTController(const MQTTControllerParams& params):
+	params_(params),
+	server_(PubSubServer(client_, params.clientID)) {
+		server_.setListener(this);
+	}
 
-void handleTopicMessage(char* topic, byte* payload, unsigned int length) {
-	MQTTController.handleMessage(topic, payload, length);
-}
-
-const char* MQTTController_::name() {
+const char* MQTTController::name() {
 	return kMQTTName;
 }
 
-void MQTTController_::setup() {
-	client_.setCallback(handleTopicMessage);
-	mqtt_.setServer(CONFIG_MQTT_HOST, CONFIG_MQTT_PORT);
-	registerLightTopics(&mqtt_);
-	registerHeightTopics(&mqtt_);
+void MQTTController::setup() {
+	registerLightTopics(&server_);
+	registerHeightTopics(&server_);
+	server_.start(params_.host, params_.port);
 }
 
-void MQTTController_::loop() {
-	if (!connected_()) {
-		return;
-	}
-
-	mqtt_.loop();
+void MQTTController::loop() {
+	server_.loop();
 }
 
-void MQTTController_::handleMessage(char* topic, byte* payload, unsigned int length) {
-	mqtt_.handleMessage(topic, payload, length);
+void MQTTController::onConnect() {
+	mqttLog.print("Connected");
 }
 
-bool MQTTController_::connected_() {
-	if (client_.connected()) {
-		return true;
-	}
+void MQTTController::onDisconnect() {
+	mqttLog.print("Disconnected");
+}
 
-	if (!wifi_->connected()) {
-		return false;
-	}
-
-	if (client_.connect(CONFIG_DEVICE_NAME)) {
-		mqttLog.debug("connected to broker");
-		mqtt_.onConnect();
-		return true;
-	}
-
-	mqttLog.debug("failed to connect");
-	return false;
+void MQTTController::onMessage(char* topic, uint8_t* payload, uint16_t length) {
+#ifdef IO_DEBUG
+	mqttLog.builder()
+		->append("Message received: ")
+		->append(topic)
+		->append(" - ")
+		->append(length)
+		->append(" bytes")
+		->flush();
+#endif
 }
