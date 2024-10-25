@@ -1,0 +1,35 @@
+device:
+  name: MyrtDesk
+  id: myrt_desk
+wifi:
+  ssid: Your SSID
+  password: Your password
+  start_delay: 800
+  reconnect_timeout: 30000
+mqtt:
+  host: "mqtt.local"
+  port: 1883
+  buffer_size: 1024
+bekant:
+  height_max: 1260
+  height_min: 650
+  height_slope: 0.09792
+  height_bias: 633.3536
+  pin_button_up: 9
+  pin_button_down: 8
+  pin_lin_tx: 4
+  pin_lin_rx: 5
+  lin_uart: $raw Serial2
+light:
+  pin_ctl: 3
+  led_count: 92
+  color:
+    correction: 0xFFBD77
+    initial: 0xFFBD77
+    connected: 0x38FFB6
+    warm_white: 0xFF8B14
+    cold_white: 0xE8F9FF
+    warm_white_mireds: 454
+    cold_white_mireds: 142
+  transition:
+    color: 700

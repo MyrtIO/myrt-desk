@@ -10,11 +10,11 @@ configure:
 	@make build
 
 .PHONY: build
-build: $(MQTT_CONFIG_BASENAME).h src/config.example.h
+build: $(MQTT_CONFIG_BASENAME).h config
 	@pio run
 
 .PHONY: deploy
-flash: $(MQTT_CONFIG_BASENAME).h src/config.example.h
+flash: $(MQTT_CONFIG_BASENAME).h config
 	@pio run -t upload -e release
 
 .PHONY: flash-debug
@@ -44,10 +44,10 @@ format:
 		-r 'lib/*.h' \
 		-r 'include/*.h'
 
-src/config.example.h: src/config.h
-	@python scripts/gen_replace.py \
-		src/config.h \
-		src/config.example.h
+config: src/config.yaml
+	@python scripts/gen_config.py \
+		src/config.yaml \
+		include/config.h
 
 $(MQTT_CONFIG_BASENAME).h: $(wildcard $(MQTT_CONFIGS))
 	@python scripts/gen_content_char.py \

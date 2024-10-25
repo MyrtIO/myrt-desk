@@ -1,6 +1,5 @@
 #include <MyrtIO.h>
 #include <WiFi.h>
-#include "config.h"
 #include "controllers/controllers.h"
 #include "platforms/platforms.h"
 
@@ -8,6 +7,7 @@ IODevice desk;
 IOLogger mainLog("Main", &Serial);
 
 void setup() {
+
 	Serial.begin();
 #ifdef IO_DEBUG
 	while (!Serial) {
