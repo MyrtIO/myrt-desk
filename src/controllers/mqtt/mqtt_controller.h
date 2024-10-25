@@ -2,7 +2,7 @@
 
 #include <MyrtIO.h>
 #include <PubSubServer.h>
-#include <platform.h>
+#include <platforms.h>
 
 struct MQTTControllerParams {
 	char* clientID;

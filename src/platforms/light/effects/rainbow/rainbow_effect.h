@@ -1,6 +1,6 @@
 #pragma once
 
-#include "platform/light/light_effect.h"
+#include "platforms/light/light_effect.h"
 #include <Attotime.h>
 #include <MyrtIO.h>
 

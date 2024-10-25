@@ -1,5 +1,5 @@
 #include <PubSubServer.h>
-#include <platform.h>
+#include <platforms.h>
 #include "config_data.h"
 
 // TODO: add generation of config topic

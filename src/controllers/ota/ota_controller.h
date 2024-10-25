@@ -1,6 +1,6 @@
 #pragma once
 
-#include <platform.h>
+#include <platforms.h>
 
 class OTAController : public IOUnit {
   public:

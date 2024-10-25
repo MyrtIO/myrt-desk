@@ -1,4 +1,4 @@
-#include "platform.h"
+#include "platforms.h"
 #include <config.h>
 
 DI_REGISTER_IMPLEMENTATION(

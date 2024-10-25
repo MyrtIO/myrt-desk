@@ -2,7 +2,7 @@
 
 #include <Attotime.h>
 #include <MyrtIO.h>
-#include <platform.h>
+#include <platforms.h>
 
 class BootController : public IOUnit {
   public:
