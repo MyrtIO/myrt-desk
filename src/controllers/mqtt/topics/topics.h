@@ -1,6 +1,6 @@
 #pragma once
 
-#include <PubSubServer.h>
+#include <MyrtIO_MQTTController.h>
 #include <PrintBuffer.h>
 
 void registerLightTopics(PubSubServer* server);

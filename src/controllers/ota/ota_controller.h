@@ -15,7 +15,7 @@ class OTAController : public io::Unit {
 	const char* name();
 
   private:
-	IOWiFi* wifi_ = DI_INJECT(IOWiFi);
+	IWiFiPlatform* wifi_ = DI_INJECT(IWiFiPlatform);
 	bool firstConnect_ = true;
 	OTAControllerParams params_;
 };

@@ -22,8 +22,8 @@ class PubSubServer {
 		listener_ = listener;
 	}
 
-	PubSubServer* on(const char* topic, DataCallback callback);
-	PubSubServer* report(ReportCallback callback, size_t interval);
+	PubSubServer* on(const char* topic, DataHandler_t callback);
+	PubSubServer* report(ReportHandler_t callback, size_t interval);
 
 	// Public for internal use, not intended for external use
 	void handleMessage_(char* topic, byte* payload, unsigned int length);

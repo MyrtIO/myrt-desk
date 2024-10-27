@@ -32,7 +32,7 @@ void PubSubServer::loop() {
 	handleReports_();
 }
 
-PubSubServer* PubSubServer::on(const char* topic, DataCallback callback) {
+PubSubServer* PubSubServer::on(const char* topic, DataHandler_t callback) {
 	if (handlersCount_ < PUBSUBSERVER_MAX_HANDLERS) {
 		handlers_[handlersCount_].topic = topic;
 		handlers_[handlersCount_].callback = callback;
@@ -41,7 +41,7 @@ PubSubServer* PubSubServer::on(const char* topic, DataCallback callback) {
 	return this;
 }
 
-PubSubServer* PubSubServer::report(ReportCallback callback, size_t interval) {
+PubSubServer* PubSubServer::report(ReportHandler_t callback, size_t interval) {
 	if (reportersCount_ < PUBSUBSERVER_MAX_REPORTERS) {
 		reporters_[reportersCount_].callback = callback;
 		reporters_[reportersCount_].interval = interval;

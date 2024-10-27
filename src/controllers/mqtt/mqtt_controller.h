@@ -1,33 +1,11 @@
 #pragma once
 
-#include <MyrtIO.h>
-#include <PubSubServer.h>
-#include <TopicStream.h>
-#include <platforms.h>
+#include <MyrtIO_WiFiPlatform.h>
 #include "topics/topics.h"
 
-struct MQTTControllerParams {
-	char* clientID;
-	char* host;
-	uint16_t port;
-};
-
-class MQTTController : public io::Unit, public PubSubServerListener {
+class MQTTController : public io::MQTTController {
   public:
-	MQTTController(const MQTTControllerParams& params);
-
-	// io::Unit interface
-	const char* name();
-	void setup();
-	void loop();
-	// PubSubServerListener interface
-	void onConnect();
-	void onDisconnect();
-	void onMessage(char* topic, uint8_t* payload, uint16_t length);
-
-  private:
-	PubSubServer server_;
-	MQTTControllerParams params_;
-	WiFiClient client_ = WiFiClient();
-	IOWiFi* wifi_ = DI_INJECT(IOWiFi);
+	MQTTController(const io::MQTTControllerParams& params):
+		io::MQTTController(params) {};
+	void setupHandlers(PubSubServer* server);
 };
