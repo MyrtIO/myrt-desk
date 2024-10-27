@@ -5,7 +5,6 @@ wifi:
   ssid: Your SSID
   password: Your password
   start_delay: 800
-  reconnect_timeout: 30000
 mqtt:
   host: "mqtt.local"
   port: 1883

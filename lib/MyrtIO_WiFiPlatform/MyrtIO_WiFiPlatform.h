@@ -16,36 +16,46 @@ class IWiFiPlatform {
 	virtual WiFiState state() = 0;
 };
 
-namespace io {
-	struct WiFiPlatformParams {
-		const char* ssid;
-		const char* password;
-		const char* hostname;
-		size_t connectDelay;
-		size_t reconnectTimeout;
-	};
+#ifndef IO_WIFI_TIMEOUT
+#define IO_WIFI_TIMEOUT 15000
+#endif
 
+namespace io {
 	class WiFiPlatform : public Unit, public IWiFiPlatform {
-	  public:
+	public:
 		WiFiPlatform(
-			const WiFiPlatformParams& params
-		): params_(params) {}
+			const char* ssid,
+			const char* password,
+			const char* hostname
+		):
+			ssid_(ssid),
+			password_(password),
+			hostname_(hostname) {}
 
 		void setup();
 		void loop();
-		const char* name();
+		void setTimeout(size_t timeoutMs);
 		const char* hostname();
-
-		WiFiState state();
 		bool connected();
+		WiFiState state();
 
-	  private:
+		virtual const char* name() = 0;
+		virtual void onStateChange(WiFiState state) {}
+		virtual void onSetup() {}
+
+	protected:
+		virtual bool shouldConnect() {
+			return true;
+		}
+
+	private:
 		WiFiState state_ = Disconnected;
 		Timer timeout_;
-		Timer connectTimer_;
-		bool firstConnect_ = true;
-		WiFiPlatformParams params_;
-
+		size_t timeoutMs_ = IO_WIFI_TIMEOUT;
+		const char* ssid_;
+		const char* password_;
+		const char* hostname_;
 		void connect_();
+		void setState_(WiFiState state);
 	};
 }

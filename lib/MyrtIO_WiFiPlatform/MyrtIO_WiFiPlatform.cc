@@ -1,48 +1,31 @@
 #include "MyrtIO_WiFiPlatform.h"
 #include <WiFi.h>
 
-const char* kWiFiPlatformName = "WiFi";
-
-io::Logger wifiLog(kWiFiPlatformName);
-
 void io::WiFiPlatform::setup() {
-	state_ = Disconnected;
-	WiFi.setHostname(params_.hostname);
+	state_ = WiFiState::Disconnected;
+	WiFi.setHostname(hostname_);
+	onSetup();
 }
 
 void io::WiFiPlatform::loop() {
 	if (WiFi.status() == WL_CONNECTED) {
-		if (state_ != Connected) {
-			state_ = Connected;
-		}
+		setState_(WiFiState::Connected);
 		return;
 	}
 
-	if (firstConnect_) {
-		firstConnect_ = false;
-		connectTimer_.start(params_.connectDelay);
-	}
-	if (!connectTimer_.finished()) {
-		return;
-	}
-
-	if (state_ == Connecting) {
+	switch (state_) {
+	case WiFiState::Connecting:
 		if (timeout_.finished()) {
-			wifiLog.print("timeout, reconnecting...");
-			state_ = Disconnected;
 			connect_();
 		}
-		return;
+	default:
+		connect_();
+		break;
 	}
-	connect_();
-}
-
-const char* io::WiFiPlatform::name() {
-	return kWiFiPlatformName;
 }
 
 bool io::WiFiPlatform::connected() {
-	return state_ == Connected;
+	return state_ == WiFiState::Connected;
 }
 
 WiFiState io::WiFiPlatform::state() {
@@ -50,16 +33,26 @@ WiFiState io::WiFiPlatform::state() {
 }
 
 const char* io::WiFiPlatform::hostname() {
-	return params_.hostname;
+	return hostname_;
+}
+
+void io::WiFiPlatform::setTimeout(size_t timeoutMs) {
+	timeoutMs_ = timeoutMs;
 }
 
 void io::WiFiPlatform::connect_() {
-	wifiLog.builder()
-	    ->append("connecting to ")
-	    ->append(params_.ssid)
-	    ->append("...");
-	wifiLog.flush();
-	state_ = Connecting;
-	WiFi.begin(params_.ssid, params_.password);
-	timeout_.start(params_.reconnectTimeout);
+	if (!shouldConnect()) {
+		return;
+	}
+	setState_(WiFiState::Connecting);
+	WiFi.begin(ssid_, password_);
+	timeout_.start(timeoutMs_);
+}
+
+void io::WiFiPlatform::setState_(WiFiState state) {
+	if (state_ == state) {
+		return;
+	}
+	state_ = state;
+	onStateChange(state);
 }

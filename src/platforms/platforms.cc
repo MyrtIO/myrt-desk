@@ -3,13 +3,12 @@
 
 DI_REGISTER_IMPLEMENTATION(
 	IWiFiPlatform,
-	io::WiFiPlatform,
+	WiFiPlatform,
 	{
 		.ssid = CONFIG_WIFI_SSID,
 		.password = CONFIG_WIFI_PASSWORD,
 		.hostname = CONFIG_DEVICE_NAME,
-		.connectDelay = CONFIG_WIFI_START_DELAY,
-		.reconnectTimeout = CONFIG_WIFI_RECONNECT_TIMEOUT
+		.startDelayMs = CONFIG_WIFI_START_DELAY
 	}
 );
 

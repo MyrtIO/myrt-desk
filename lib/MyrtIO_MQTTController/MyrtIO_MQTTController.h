@@ -1,14 +1,10 @@
 #pragma once
 
-#include <MyrtIO_WiFiPlatform.h>
+#include <MyrtIO.h>
 #include <PubSubServer/PubSubServer.h>
+#include <WiFiClient.h>
 
 namespace io {
-	class TopicHandler {
-	public:
-		virtual void registerHandler(PubSubServer* server) = 0;
-	};
-
 	struct MQTTControllerParams {
 		char* clientID;
 		char* host;
@@ -23,8 +19,8 @@ namespace io {
 		// Unit interface
 		const char* name();
 		void setup();
-
 		void loop();
+
 		// PubSubServerListener interface
 		void onConnect();
 		void onDisconnect();
@@ -34,9 +30,8 @@ namespace io {
 		virtual void setupHandlers(PubSubServer* server) = 0;
 
 	  protected:
-		PubSubServer server_;
 		MQTTControllerParams params_;
+		PubSubServer server_;
 		WiFiClient client_;
-		IWiFiPlatform* wifi_ = DI_INJECT(IWiFiPlatform);
 	};
 };
