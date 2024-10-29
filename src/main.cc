@@ -5,17 +5,19 @@
 io::Device desk("Desk");
 
 void setup() {
-	io::Logger::setOutput(&mqttLogStream);
+	auto mqttController = IO_INJECT_INSTANCE(MQTTController);
+	io::Logger::setOutput(mqttController->logStream());
+	// io::Logger::setOutput(&Serial);
 	desk.setup()
 	    ->platforms(
-			DI_INJECT_UNIT(IWiFiPlatform),
-			DI_INJECT_UNIT(IOHeight),
-			DI_INJECT_UNIT(IOLight)
+			IO_INJECT_UNIT(IWiFiPlatform),
+			IO_INJECT_UNIT(IHeightPlatform),
+			IO_INJECT_UNIT(ILightPlatform)
 		)
 	    ->controllers(
-			DI_INJECT_UNIT(BootController),
-			DI_INJECT_UNIT(MQTTController),
-			DI_INJECT_UNIT(OTAController)
+			IO_INJECT_UNIT(BootController),
+			IO_INJECT_UNIT(MQTTController),
+			IO_INJECT_UNIT(OTAController)
 		);
 	desk.log()->print("initialized");
 }

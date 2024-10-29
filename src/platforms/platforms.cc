@@ -1,7 +1,7 @@
 #include "platforms.h"
 #include <config.h>
 
-DI_REGISTER_IMPLEMENTATION(
+IO_REGISTER_IMPLEMENTATION(
 	IWiFiPlatform,
 	WiFiPlatform,
 	{
@@ -12,8 +12,8 @@ DI_REGISTER_IMPLEMENTATION(
 	}
 );
 
-DI_REGISTER_IMPLEMENTATION(
-	IOLight,
+IO_REGISTER_IMPLEMENTATION(
+	ILightPlatform,
 	LightPlatform,
 	{
 		.ledCount = CONFIG_LIGHT_LED_COUNT,
@@ -27,8 +27,8 @@ DI_REGISTER_IMPLEMENTATION(
 	}
 )
 
-DI_REGISTER_IMPLEMENTATION(
-	IOHeight,
+IO_REGISTER_IMPLEMENTATION(
+	IHeightPlatform,
 	HeightPlatform,
 	{
 		.linUART = &CONFIG_BEKANT_LIN_UART,

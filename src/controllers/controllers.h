@@ -4,6 +4,6 @@
 #include "mqtt/mqtt_controller.h"
 #include "ota/ota_controller.h"
 
-DI_PROVIDE_INSTANCE(BootController);
-DI_PROVIDE_INSTANCE(MQTTController);
-DI_PROVIDE_INSTANCE(OTAController);
+IO_PROVIDE_INSTANCE(BootController);
+IO_PROVIDE_INSTANCE(MQTTController);
+IO_PROVIDE_INSTANCE(OTAController);

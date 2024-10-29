@@ -5,7 +5,7 @@
 
 typedef uint8_t effect_t;
 
-class IOLight {
+class ILightPlatform {
   public:
 	virtual RGBColor getColor() = 0;
 	virtual void setColor(RGBColor color) = 0;

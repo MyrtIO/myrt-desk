@@ -101,7 +101,7 @@ def serve(remoteAddr, localAddr, remotePort, localPort, password, filename, comm
   sock2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
   remote_address = (remoteAddr, int(remotePort))
   sock2.sendto(message.encode(), remote_address)
-  sock2.settimeout(10)
+  sock2.settimeout(5)
   try:
     data = sock2.recv(128).decode()
   except Exception:

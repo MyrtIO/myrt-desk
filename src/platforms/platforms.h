@@ -7,6 +7,6 @@
 #include "light/light_platform.h"
 #include "wifi/wifi_platform.h"
 
-DI_PROVIDE_IMPLEMENTATION(IWiFiPlatform);
-DI_PROVIDE_IMPLEMENTATION(IOHeight);
-DI_PROVIDE_IMPLEMENTATION(IOLight);
+IO_PROVIDE_IMPLEMENTATION(IWiFiPlatform);
+IO_PROVIDE_IMPLEMENTATION(IHeightPlatform);
+IO_PROVIDE_IMPLEMENTATION(ILightPlatform);

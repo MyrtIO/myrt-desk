@@ -2,7 +2,7 @@
 
 #include <PubSubClient.h>
 
-typedef void (*DataHandler_t)(PubSubClient* client, byte* payload, unsigned int length);
+typedef void (*DataHandler_t)(PubSubClient* client, byte* payload, uint length);
 typedef void (*ReportHandler_t)(PubSubClient* client);
 
 struct TopicHandler {

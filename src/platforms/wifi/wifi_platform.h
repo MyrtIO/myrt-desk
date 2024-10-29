@@ -24,7 +24,7 @@ protected:
 	bool shouldConnect();
 
 private:
-	WiFiPlatformParams params_;
+	const WiFiPlatformParams params_;
 	Timer startDelay_;
 	bool firstConnect_ = true;
 };

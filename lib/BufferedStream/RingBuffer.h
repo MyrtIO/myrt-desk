@@ -1,9 +1,11 @@
 #pragma once
 
-#include <Print.h>
+#include <Stream.h>
 
-template <int SIZE>
-class PrintBuffer: public Print {
+// #define SIZE 1024
+
+template <int SIZE = 1024>
+class RingBuffer : public Stream {
 public:
     size_t write(uint8_t newVal) {
         size_t i = (head_ + 1) % SIZE;
@@ -19,18 +21,20 @@ public:
         return (head_ + 1) % SIZE != tail_;
     }
 
-    uint8_t read() {
-        if (head_ == tail_) return 0;   // буфер пуст
-        uint8_t val = buffer_[tail_];      // берём с хвоста
-        tail_ = (tail_ + 1) % SIZE;     // хвост двигаем
-        return val;                   // возвращаем
+    int read() {
+        if (head_ == tail_) {
+			return 0;
+		}
+        uint8_t value = buffer_[tail_];
+        tail_ = (tail_ + 1) % SIZE;
+        return value;
     }
 
-    uint8_t peek() {
+    int peek() {
         return buffer_[tail_];
     }
 
-    size_t available() {
+    int available() {
         return (SIZE + head_ - tail_) % SIZE;
     }
 

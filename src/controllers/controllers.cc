@@ -1,13 +1,13 @@
 #include "controllers.h"
 #include <config.h>
 
-DI_REGISTER_INSTANCE(BootController, CONFIG_LIGHT_COLOR_CONNECTED);
-DI_REGISTER_INSTANCE(MQTTController, {
+IO_REGISTER_INSTANCE(BootController, CONFIG_LIGHT_COLOR_CONNECTED);
+IO_REGISTER_INSTANCE(MQTTController, {
 	.clientID = CONFIG_DEVICE_NAME,
 	.host = CONFIG_MQTT_HOST,
 	.port = CONFIG_MQTT_PORT
 });
-DI_REGISTER_INSTANCE(OTAController, {
+IO_REGISTER_INSTANCE(OTAController, {
 	.hostname = CONFIG_DEVICE_NAME,
 	.port = CONFIG_OTA_PORT
 });

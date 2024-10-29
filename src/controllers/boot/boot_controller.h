@@ -13,9 +13,8 @@ class BootController : public io::Unit {
 	const char* name();
 
   private:
-	bool firstConnect_ = false;
-	IOLight* light_ = DI_INJECT(IOLight);
-	IWiFiPlatform* wifi_ = DI_INJECT(IWiFiPlatform);
-	effect_t previousEffect_ = LightEffect::Static;
+	bool firstConnect_;
 	RGBColor connectionColor_;
+	ILightPlatform* light_ = IO_INJECT(ILightPlatform);
+	IWiFiPlatform* wifi_ = IO_INJECT(IWiFiPlatform);
 };

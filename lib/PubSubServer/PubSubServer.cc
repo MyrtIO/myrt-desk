@@ -12,10 +12,8 @@ void handleTopicMessage(char* topic, byte* payload, unsigned int length) {
 PubSubServer::PubSubServer(
 	Client& client,
 	const char* clientID
-) {
-	client_ = PubSubClient(client);
-	clientID_ = clientID;
-}
+) : client_(PubSubClient(client)),
+	clientID_(clientID) {}
 
 void PubSubServer::start(char* host, uint16_t port, size_t bufferSize) {
 	activePubSubServer = this;
@@ -25,10 +23,10 @@ void PubSubServer::start(char* host, uint16_t port, size_t bufferSize) {
 }
 
 void PubSubServer::loop() {
+	client_.loop();
 	if (!keepConnected_()) {
 		return;
 	}
-	client_.loop();
 	handleReports_();
 }
 
@@ -57,7 +55,7 @@ void PubSubServer::subscribe_() {
 	}
 }
 
-void PubSubServer::handleMessage_(char* topic, byte* payload, unsigned int length) {
+void PubSubServer::handleMessage_(char* topic, byte* payload, uint length) {
 	for (int i = 0; i < handlersCount_; i++) {
 		if (strcmp(handlers_[i].topic, topic) == 0) {
 			if (listener_ != nullptr) {
