@@ -28,6 +28,14 @@ ota:
 		-p 2040 \
 		-f .pio/build/release/firmware.bin
 
+.PHONY: ota-debug
+ota-debug:
+	@pio run -e debug
+	@python scripts/espota.py \
+		-i 192.168.1.224 \
+		-p 2040 \
+		-f .pio/build/debug/firmware.bin
+
 .PHONY: monitor
 monitor:
 	pio device monitor -p $(BOARD_TTY) --baud $(BAUD_RATE)
