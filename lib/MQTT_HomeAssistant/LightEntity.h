@@ -64,7 +64,7 @@ namespace HomeAssistant {
 			for (uint16_t i = 0; i < config_.effectCount; i++) {
 				effects.add(config_.effects[i]);
 			}
-			auto colorModes = json.createNestedArray("color_modes");
+			auto colorModes = json.createNestedArray("supported_color_modes");
 			colorModes.add("color_temp");
 			colorModes.add("rgb");
 		}

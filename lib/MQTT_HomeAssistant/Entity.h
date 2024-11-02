@@ -75,7 +75,7 @@ namespace HomeAssistant {
 			if (configTopic_ == nullptr) {
 				size_t configTopicLen = strlen(component()) + strlen(id()) + 23;
 				configTopic_ = (char*)malloc(configTopicLen);
-				snprintf(configTopic_, configTopicLen, "test/%s/%s/config", component(), id());
+				snprintf(configTopic_, configTopicLen, "homeassistant/%s/%s/config", component(), id());
 			}
 			return configTopic_;
 		}

@@ -44,7 +44,7 @@ void LightPlatform::loop() {
 }
 
 RGBColor LightPlatform::getColor() {
-	return rgbFromFastLED(state_.currentColor);
+	return rgbFromFastLED(state_.targetColor);
 }
 
 uint8_t LightPlatform::getBrightness() {
