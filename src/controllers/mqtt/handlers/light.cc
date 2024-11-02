@@ -81,6 +81,7 @@ void updateLightState(PubSubClient* client, byte* payload, uint length) {
 	} else if (state.colorTemp != 0) {
 		light->setColorTemperature(state.colorTemp);
 	}
+	reportLightState(client);
 }
 
 void registerLightTopics(PubSubServer* server) {
