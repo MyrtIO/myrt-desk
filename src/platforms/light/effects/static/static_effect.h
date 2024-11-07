@@ -1,14 +1,15 @@
 #pragma once
 
-#include "platforms/light/light_effect.h"
+#include <LightComposer/LightComposer.h>
 #include <Attotime.h>
-#include <MyrtIO.h>
 
-class StaticEffect : public ILightEffect {
+typedef LightState<void> StaticEffectState;
+
+class StaticEffect : public IPixelsEffect<void> {
   public:
-	bool handleFrame(LightState* state, Pixels* pixels);
-	void onColorUpdate(LightState* state);
-	void onEffectUpdate(LightState* state);
+	bool handleFrame(StaticEffectState& state, IPixels& pixels);
+	void onColorUpdate(StaticEffectState& state);
+	void onActivate(StaticEffectState& state);
 
   private:
 	Progress progress_ = Progress();

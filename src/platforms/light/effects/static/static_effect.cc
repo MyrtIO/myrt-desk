@@ -1,35 +1,31 @@
 #include "static_effect.h"
+#include "LightComposer/utils/blend.h"
 
-bool StaticEffect::handleFrame(LightState* state, Pixels* pixels) {
+bool StaticEffect::handleFrame(StaticEffectState& state, IPixels& pixels) {
 	if (forceUpdate_) {
-		pixels->set(state->targetColor);
-		state->selectedColor = state->targetColor;
-		state->currentColor = state->targetColor;
+		pixels.set(state.targetColor);
+		state.currentColor = state.targetColor;
 		forceUpdate_ = false;
 		return true;
 	}
-
-	if (state->selectedColor == state->targetColor) {
+	if (state.currentColor == state.targetColor) {
 		return false;
 	}
 
-	state->currentColor =
-	    blend(state->selectedColor, state->targetColor, progress_.get());
-	pixels->set(state->currentColor);
-
+	state.currentColor = blendColors(state.previousColor, state.targetColor, progress_.get());
+	pixels.set(state.currentColor);
 	if (progress_.finished()) {
-		state->selectedColor = state->targetColor;
+		state.currentColor = state.targetColor;
 	}
 
 	return true;
 }
 
-void StaticEffect::onColorUpdate(LightState* state) {
-	state->selectedColor = state->currentColor;
-	progress_.start(state->colorTransitionMs);
+void StaticEffect::onColorUpdate(StaticEffectState& state) {
+	progress_.start(state.transitionMs);
 }
 
-void StaticEffect::onEffectUpdate(LightState* state) {
+void StaticEffect::onActivate(StaticEffectState& state) {
 	forceUpdate_ = true;
 }
 

@@ -1,22 +1,23 @@
 #pragma once
 
-#include "platforms/light/light_effect.h"
+#include <LightComposer/LightComposer.h>
 #include <Attotime.h>
-#include <MyrtIO.h>
 
-class RainbowEffect : public ILightEffect {
+typedef LightState<void> RainbowEffectState;
+
+class RainbowEffect : public IPixelsEffect<void> {
   public:
-	bool handleFrame(LightState* state, Pixels* pixels);
+	bool handleFrame(RainbowEffectState& state, IPixels& pixels);
+	void onActivate(RainbowEffectState& state, IPixels& pixels);
 
   private:
 	Progress progress_ = Progress();
 	uint8_t hueProgress_ = 0;
-	CHSV firstColor_ = CHSV(0, 255, 255);
-	CHSV secondColor_ = CHSV(0, 255, 255);
-	CHSV thirdColor_ = CHSV(0, 255, 255);
+	HSVColor firstColor_ = HSVColor(0, 255, 255);
+	HSVColor secondColor_ = HSVColor(0, 255, 255);
+	HSVColor thirdColor_ = HSVColor(0, 255, 255);
 
 	uint8_t hueShift_(uint8_t shift);
-	void restart_();
 };
 
 extern RainbowEffect RainbowFx;

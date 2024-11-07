@@ -1,18 +1,18 @@
 #pragma once
 
-#include "platforms/light/light_effect.h"
+#include <LightComposer/LightComposer.h>
 #include <Attotime.h>
-#include <MyrtIO.h>
 
-class FillEffect : public ILightEffect {
+typedef LightState<void> FillEffectState;
+
+class FillEffect : public IPixelsEffect<void> {
   public:
-	bool handleFrame(LightState* state, Pixels* pixels);
-	void onColorUpdate(LightState* state);
-	void onActivate(LightState* state, Pixels* pixels);
+	bool handleFrame(FillEffectState& state, IPixels& pixels);
+	void onColorUpdate(FillEffectState& state);
+	void onActivate(FillEffectState& state, IPixels& pixels);
 
   private:
 	Progress progress_ = Progress();
-	uint8_t center_ = 0;
 };
 
 extern FillEffect FillFx;

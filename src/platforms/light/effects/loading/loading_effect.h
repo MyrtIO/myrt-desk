@@ -1,22 +1,21 @@
 #pragma once
 
-#include "platforms/light/light_effect.h"
+#include <LightComposer/LightComposer.h>
 #include <Attotime.h>
-#include <MyrtIO.h>
 
-class LoadingEffect : public ILightEffect {
+typedef LightState<void> LoadingEffectState;
+
+class LoadingEffect : public IPixelsEffect<void> {
   public:
-	bool handleFrame(LightState* state, Pixels* pixels);
-	void onColorUpdate(LightState* state);
-	void onActivate(LightState* state, Pixels* pixels);
+	bool handleFrame(LoadingEffectState& state, IPixels& pixels);
+	void onColorUpdate(LoadingEffectState& state);
+	void onActivate(LoadingEffectState& state, IPixels& pixels);
 
   private:
-	bool isReverse_ = true;
-	uint8_t fillSize_ = 0;
-	uint8_t maxOffset = 0;
 	Progress progress_ = Progress();
-
-	void fill_(Pixels* pixels, LightState* state, uint8_t start, uint8_t length);
+	bool isReverse_ = false;
+	uint8_t fillSize_ = 0;
+	size_t maxOffset_ = 0;
 };
 
 extern LoadingEffect LoadingFx;

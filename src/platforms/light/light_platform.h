@@ -1,14 +1,12 @@
 #pragma once
 
 #include <MyrtIO.h>
-#include <FastLED.h>
-
-#include "rgb_color.h"
+#include <LightComposer/LightComposer.h>
+#include <config.h>
 #include "light_interface.h"
-#include "brightness_handler.h"
-#include "fastled/renderer.h"
-#include "light_effect.h"
-#include "pixel_handler.h"
+#include "ws2812_hal.h"
+#include "LightComposer/brightness/BrightnessRenderer.h"
+#include "LightComposer/pixels/PixelsRenderer.h"
 
 struct LightPlatformParams {
 	uint8_t ledCount;
@@ -21,7 +19,7 @@ struct LightPlatformParams {
 	uint16_t transitionMs;
 };
 
-class LightPlatform : public io::Unit, public ILightPlatform, public EffectSwitcher {
+class LightPlatform : public io::Unit, public ILightPlatform {
   public:
 	LightPlatform(const LightPlatformParams& params) : params_(params) {};
 	void setup();
@@ -29,9 +27,10 @@ class LightPlatform : public io::Unit, public ILightPlatform, public EffectSwitc
 
 	const char* name();
 
-	RGBColor getColor();
 	void setColor(RGBColor color);
-	void setColorTemperature(uint16_t mireds);
+	RGBColor getColor();
+	void setColorTemperature(mireds_t temperature);
+	mireds_t getTemperature();
 
 	void setBrightness(uint8_t brightness);
 	uint8_t getBrightness();
@@ -39,21 +38,18 @@ class LightPlatform : public io::Unit, public ILightPlatform, public EffectSwitc
 	void setPower(bool enabled);
 	bool getPower();
 
-	void onEffectSwitch();
 	bool setEffect(uint8_t effectCode, bool force = false);
 	effect_t getEffect();
-	uint8_t getMode();
-	uint16_t getTemperature();
+	color_mode_t getMode();
 
 	void setFPS(uint8_t fps);
 
   private:
-	LEDCoordinator coordinator_;
-	ILightEffect* nextEffect_ = nullptr;
-	LightState state_;
-	SmoothBrightness brightnessHandler_;
-	PixelHandler pixelHandler_;
-	Pixels pixels_;
-	FastLEDRenderer renderer_;
+	WS2812HAL hal_;
+	BrightnessRenderer brightness_;
+	PixelsRenderer<void> pixels_;
+	LightComposer<void> composer_;
 	LightPlatformParams params_;
+	LightMode mode_ = LightMode::RGBMode;
+	mireds_t temperature_ = 0;
 };
