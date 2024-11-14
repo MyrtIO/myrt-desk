@@ -1,8 +1,8 @@
 #include "loading_effect.h"
-#include <LightComposer/utils/scale.h>
+#include <LightComposer/math/scale.h>
 
 const size_t kLoadingCycleDuration = 1000;
-const fract_t kLoadingFillFract = 200;
+const scale_t kLoadingFillFract = 200;
 
 void LoadingEffect::onActivate(LoadingEffectState& state, IPixels& pixels) {
 	isReverse_ = false;

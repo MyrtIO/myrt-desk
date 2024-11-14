@@ -1,6 +1,6 @@
 #pragma once
 
-#include <MyrtIO.h>
+#include <MyrtIO/device/unit.h>
 #include "height_interface.h"
 #include "BekantReader/bekant_reader.h"
 
@@ -21,10 +21,10 @@ struct HeightPlatformParams {
 class HeightPlatform : public io::Unit, public IHeightPlatform {
   public:
 	HeightPlatform(const HeightPlatformParams& params): params_(params) {}
-	void setup();
-	void loop();
+	const char* getName() override;
+	void setup() override;
+	void loop() override;
 
-	const char* name();
 
 	uint16_t get();
 	bool set(uint16_t height);

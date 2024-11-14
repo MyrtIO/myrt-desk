@@ -50,6 +50,6 @@ format:
 		-r 'include/*.h'
 
 config: src/config.yaml
-	@python scripts/gen_config.py \
+	@python .pio/libdeps/release/MyrtIO/tools/configgen/configgen.py \
 		src/config.yaml \
 		include/config.h

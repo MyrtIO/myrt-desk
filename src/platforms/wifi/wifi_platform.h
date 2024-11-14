@@ -15,7 +15,7 @@ public:
 	  io::WiFiPlatform(params.ssid, params.password, params.hostname),
 	  params_(params) {}
 
-	const char* name();
+	const char* getName() override;
 
 	void onStateChange(WiFiState state);
 	void onSetup();

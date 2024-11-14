@@ -1,4 +1,5 @@
 #include "ota_controller.h"
+#include <MyrtIO/logging/logger.h>
 #include <ArduinoOTA.h>
 
 const char* kOTAControllerName = "OTA";
@@ -20,10 +21,10 @@ void OTAController::setup() {
 	});
 #ifdef IO_DEBUG
 	ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
-		otaLog.builder()
-		    ->append("Progress: ")
-		    ->append((uint8_t)(progress / (total / 100)))
-		    ->append("%");
+		otaLog.build()
+		    .append("Progress: ")
+		    .append((uint8_t)(progress / (total / 100)))
+		    .append("%");
 		otaLog.flush();
 	});
 #endif
@@ -54,6 +55,6 @@ void OTAController::loop() {
 	ArduinoOTA.handle();
 }
 
-const char* OTAController::name() {
+const char* OTAController::getName() {
 	return kOTAControllerName;
 }

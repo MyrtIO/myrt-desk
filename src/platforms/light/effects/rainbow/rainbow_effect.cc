@@ -1,5 +1,5 @@
 #include "rainbow_effect.h"
-#include <LightComposer/utils/rainbow.h>
+#include <LightComposer/color/rainbow.h>
 
 const size_t kRainbowTransitionDuration = 12000;
 

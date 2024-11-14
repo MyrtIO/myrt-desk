@@ -1,10 +1,11 @@
 #include "height_platform.h"
+#include <MyrtIO/logging/logger.h>
 
 const char* kHeightPlatformName = "Height";
 
 io::Logger heightLog(kHeightPlatformName);
 
-const char* HeightPlatform::name() {
+const char* HeightPlatform::getName() {
 	return kHeightPlatformName;
 }
 
@@ -45,9 +46,9 @@ uint16_t HeightPlatform::get() {
 }
 
 bool HeightPlatform::set(uint16_t height) {
-	heightLog.builder()
-	    ->append("updating to ")
-	    ->append(height);
+	heightLog.build()
+	    .append("updating to ")
+	    .append(height);
 	heightLog.flush();
 	if (state_ != DeskState::Chill) {
 		return false;

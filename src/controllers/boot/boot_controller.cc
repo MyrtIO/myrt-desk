@@ -1,4 +1,5 @@
 #include "boot_controller.h"
+#include <MyrtIO/logging/logger.h>
 
 const char* kBootControllerName = "Boot";
 
@@ -20,6 +21,6 @@ void BootController::loop() {
 	}
 }
 
-const char* BootController::name() {
+const char* BootController::getName() {
 	return kBootControllerName;
 }

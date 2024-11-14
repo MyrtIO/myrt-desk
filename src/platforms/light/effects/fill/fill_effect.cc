@@ -1,5 +1,5 @@
 #include "fill_effect.h"
-#include <LightComposer/utils/scale.h>
+#include <LightComposer/math/scale.h>
 
 const uint8_t kGlowSize = 10;
 

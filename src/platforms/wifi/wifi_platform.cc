@@ -1,4 +1,5 @@
 #include "wifi_platform.h"
+#include <MyrtIO/logging/logger.h>
 
 char* kWiFiPlatformName = "WiFi";
 
@@ -11,10 +12,10 @@ void WiFiPlatform::onSetup() {
 void WiFiPlatform::onStateChange(WiFiState state) {
 	switch (state) {
 		case WiFiState::Connecting:
-			wifiLog.builder()
-				->append("connecting to ")
-				->append(params_.ssid)
-				->append("...");
+			wifiLog.build()
+				.append("connecting to ")
+				.append(params_.ssid)
+				.append("...");
 			wifiLog.flush();
 			break;
 		case WiFiState::Connected:
@@ -31,7 +32,7 @@ void WiFiPlatform::onStateChange(WiFiState state) {
 	}
 }
 
-const char* WiFiPlatform::name() {
+const char* WiFiPlatform::getName() {
 	return kWiFiPlatformName;
 }
 

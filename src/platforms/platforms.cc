@@ -1,7 +1,7 @@
 #include "platforms.h"
 #include <config.h>
 
-IO_REGISTER_IMPLEMENTATION(
+IO_CREATE_INSTANCE_OF(
 	IWiFiPlatform,
 	WiFiPlatform,
 	{
@@ -12,7 +12,7 @@ IO_REGISTER_IMPLEMENTATION(
 	}
 );
 
-IO_REGISTER_IMPLEMENTATION(
+IO_CREATE_INSTANCE_OF(
 	ILightPlatform,
 	LightPlatform,
 	{
@@ -27,7 +27,7 @@ IO_REGISTER_IMPLEMENTATION(
 	}
 )
 
-IO_REGISTER_IMPLEMENTATION(
+IO_CREATE_INSTANCE_OF(
 	IHeightPlatform,
 	HeightPlatform,
 	{

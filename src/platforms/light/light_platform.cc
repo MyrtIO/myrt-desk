@@ -1,6 +1,7 @@
+#include <MyrtIO/logging/logger.h>
+#include <LightComposer/color/blend.h>
 #include "light_platform.h"
 #include "effects/effects.h"
-#include "LightComposer/utils/blend.h"
 
 const uint8_t kFramesPerSecond = 120;
 
@@ -8,7 +9,7 @@ const char* kIOLightPlatformName = "Light";
 
 io::Logger lightLog(kIOLightPlatformName);
 
-const char* LightPlatform::name() {
+const char* LightPlatform::getName() {
 	return kIOLightPlatformName;
 }
 
@@ -64,6 +65,7 @@ void LightPlatform::setColor(RGBColor color) {
 }
 
 void LightPlatform::setColorTemperature(mireds_t temperature) {
+	// TODO: move to separate class
 	lightLog.print("update color temperature");
 	mode_ = LightMode::WhiteMode;
 	temperature_ = temperature;

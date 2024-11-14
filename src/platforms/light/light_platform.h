@@ -1,12 +1,12 @@
 #pragma once
 
-#include <MyrtIO.h>
-#include <LightComposer/LightComposer.h>
+#include <MyrtIO/device/unit.h>
+#include <LightComposer.h>
+#include <LightComposer/brightness/brightness_renderer.h>
+#include <LightComposer/pixels/pixels_renderer.h>
 #include <config.h>
 #include "light_interface.h"
 #include "ws2812_hal.h"
-#include "LightComposer/brightness/BrightnessRenderer.h"
-#include "LightComposer/pixels/PixelsRenderer.h"
 
 struct LightPlatformParams {
 	uint8_t ledCount;
@@ -22,10 +22,10 @@ struct LightPlatformParams {
 class LightPlatform : public io::Unit, public ILightPlatform {
   public:
 	LightPlatform(const LightPlatformParams& params) : params_(params) {};
-	void setup();
-	void loop();
 
-	const char* name();
+	const char* getName() override;
+	void setup() override;
+	void loop() override;
 
 	void setColor(RGBColor color);
 	RGBColor getColor();

@@ -1,16 +1,16 @@
 #pragma once
 
 #include <Attotime.h>
-#include <MyrtIO.h>
+#include <MyrtIO/device/unit.h>
 #include <platforms.h>
 
 class BootController : public io::Unit {
   public:
 	BootController(RGBColor connectionColor):
 		connectionColor_(connectionColor) {};
-	void setup();
-	void loop();
-	const char* name();
+	void setup() override;
+	void loop() override;
+	const char* getName() override;
 
   private:
 	bool firstConnect_;

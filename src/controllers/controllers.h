@@ -1,5 +1,6 @@
 #pragma once
 
+#include <MyrtIO/device/di.h>
 #include "boot/boot_controller.h"
 #include "mqtt/mqtt_controller.h"
 #include "ota/ota_controller.h"

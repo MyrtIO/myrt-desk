@@ -1,6 +1,6 @@
 #pragma once
 
-#include <MyrtIO.h>
+#include <MyrtIO/device/unit.h>
 #include <WiFiClient.h>
 #include <RingBuffer.h>
 #include "handlers/topics.h"
@@ -21,9 +21,9 @@ public:
 	};
 
 	// Unit interface
-	const char* name();
-	void setup();
-	void loop();
+	const char* getName() override;
+	void setup() override;
+	void loop() override;
 
 	// Controller interface
 	Stream* logStream() {

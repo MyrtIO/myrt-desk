@@ -1,5 +1,5 @@
 #include "static_effect.h"
-#include "LightComposer/utils/blend.h"
+#include "LightComposer/color/blend.h"
 
 bool StaticEffect::handleFrame(StaticEffectState& state, IPixels& pixels) {
 	if (forceUpdate_) {

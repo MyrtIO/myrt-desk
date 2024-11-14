@@ -10,9 +10,9 @@ struct OTAControllerParams {
 class OTAController : public io::Unit {
   public:
 	OTAController(const OTAControllerParams& params);
-	void setup();
-	void loop();
-	const char* name();
+	void setup() override;
+	void loop() override;
+	const char* getName() override;
 
   private:
 	IWiFiPlatform* wifi_ = IO_INJECT(IWiFiPlatform);

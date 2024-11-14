@@ -1,7 +1,7 @@
 #pragma once
 
 #include <stdint.h>
-#include <LightComposer/RGBColor.h>
+#include <LightComposer/color/rgb_color.h>
 
 typedef uint8_t effect_t;
 typedef uint8_t color_mode_t;

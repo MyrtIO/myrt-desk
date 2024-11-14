@@ -1,6 +1,6 @@
 #pragma once
 
-#include <LightComposer/LightComposer.h>
+#include <LightComposer/pixels/i_pixels_effect.h>
 #include <Attotime.h>
 
 typedef LightState<void> FillEffectState;

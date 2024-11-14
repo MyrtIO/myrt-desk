@@ -1,6 +1,7 @@
 #pragma once
 
-#include <LightComposer/LightComposer.h>
+#include <LightComposer/pixels/i_pixels_effect.h>
+#include <LightComposer/color/hsv_color.h>
 #include <Attotime.h>
 
 typedef LightState<void> RainbowEffectState;

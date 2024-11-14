@@ -1,10 +1,11 @@
 #include "mqtt_controller.h"
+#include <MyrtIO/logging/logger.h>
 
 const char* kMQTTName = "MQTT";
 
 io::Logger mqttLog(kMQTTName);
 
-const char* MQTTController::name() {
+const char* MQTTController::getName() {
 	return kMQTTName;
 }
 
@@ -29,12 +30,12 @@ void MQTTController::onDisconnect() {
 
 void MQTTController::onMessage(char* topic, uint8_t* payload, uint16_t length) {
 #ifdef IO_DEBUG
-	mqttLog.builder()
-		->append("message received: ")
-		->append(topic)
-		->append(" - ")
-		->append(length)
-		->append(" bytes");
+	mqttLog.build()
+		.append("message received: ")
+		.append(topic)
+		.append(" - ")
+		.append(length)
+		.append(" bytes");
 	mqttLog.flush();
 #endif
 }

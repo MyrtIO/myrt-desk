@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Attotime.h>
-#include <MyrtIO.h>
+#include <MyrtIO/device/unit.h>
 
 enum WiFiState : uint8_t {
 	Disconnected,
@@ -27,19 +27,19 @@ namespace io {
 			const char* ssid,
 			const char* password,
 			const char* hostname
-		):
+		) :
 			ssid_(ssid),
 			password_(password),
 			hostname_(hostname) {}
 
-		void setup();
-		void loop();
+		void setup() override;
+		void loop() override;
+
 		void setTimeout(size_t timeoutMs);
 		const char* hostname();
 		bool connected();
 		WiFiState state();
 
-		virtual const char* name() = 0;
 		virtual void onStateChange(WiFiState state) {}
 		virtual void onSetup() {}
 

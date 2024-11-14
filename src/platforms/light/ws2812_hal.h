@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LightComposer/interfaces/LightHAL.h"
+#include <LightComposer/i_light_hal.h>
 #include <config.h>
 
 class WS2812HAL : public ILightHAL {
