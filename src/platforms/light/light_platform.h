@@ -4,8 +4,9 @@
 #include <LightComposer.h>
 #include <LightComposer/brightness/brightness_renderer.h>
 #include <LightComposer/pixels/pixels_renderer.h>
+#include <LightComposer/pixels/effect_vector.h>
 #include <config.h>
-#include "light_interface.h"
+#include "i_light_platform.h"
 #include "ws2812_hal.h"
 
 struct LightPlatformParams {
@@ -27,20 +28,22 @@ class LightPlatform : public io::Unit, public ILightPlatform {
 	void setup() override;
 	void loop() override;
 
-	void setColor(RGBColor color);
-	RGBColor getColor();
-	void setColorTemperature(mireds_t temperature);
-	mireds_t getTemperature();
+	void setColor(RGBColor color) override;
+	RGBColor getColor() override;
+	void setColorTemperature(mireds_t temperature) override;
+	mireds_t getTemperature() override;
+	color_mode_t getMode() override;
 
-	void setBrightness(uint8_t brightness);
-	uint8_t getBrightness();
+	void setBrightness(uint8_t brightness) override;
+	uint8_t getBrightness() override;
 
-	void setPower(bool enabled);
-	bool getPower();
+	void setPower(bool enabled) override;
+	bool getPower() override;
 
-	bool setEffect(uint8_t effectCode, bool force = false);
-	effect_t getEffect();
-	color_mode_t getMode();
+	bool setEffect(const char* effect, bool force = false) override;
+	const char* getEffect() override;
+	virtual const char** effects();
+	virtual uint8_t effectCount();
 
 	void setFPS(uint8_t fps);
 
@@ -52,4 +55,5 @@ class LightPlatform : public io::Unit, public ILightPlatform {
 	LightPlatformParams params_;
 	LightMode mode_ = LightMode::RGBMode;
 	mireds_t temperature_ = 0;
+	EffectList<void> effects_;
 };

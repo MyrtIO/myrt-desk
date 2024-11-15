@@ -3,6 +3,10 @@
 
 const uint8_t kGlowSize = 10;
 
+const char* FillEffect::getName() {
+	return "fill";
+}
+
 bool FillEffect::handleFrame(FillEffectState& state, IPixels& pixels) {
 	if (state.currentColor == state.targetColor) {
 		return false;

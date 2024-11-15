@@ -16,7 +16,7 @@ void BootController::loop() {
 	if (wifi_->connected()) {
 		connLog.print("Animating connection to wifi");
 		firstConnect_ = false;
-		light_->setEffect(LightEffect::Fill, true);
+		light_->setEffect("fill", true);
 		light_->setColor(connectionColor_);
 	}
 }

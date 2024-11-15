@@ -1,6 +1,10 @@
 #include "static_effect.h"
 #include "LightComposer/color/blend.h"
 
+const char* StaticEffect::getName() {
+	return "static";
+}
+
 bool StaticEffect::handleFrame(StaticEffectState& state, IPixels& pixels) {
 	if (forceUpdate_) {
 		pixels.set(state.targetColor);

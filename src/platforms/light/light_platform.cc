@@ -18,6 +18,12 @@ void LightPlatform::setup() {
 	lightLog.print("starting HAL...");
 	hal_.setup(params_.colorCorrection);
 
+	effects_
+		.insert(&StaticFx)
+		.insert(&RainbowFx)
+		.insert(&LoadingFx)
+		.insert(&FillFx);
+
 	lightLog.print("setup LEDs");
 	pixels_.setColor(params_.colorInitial);
 	pixels_.setTransition(params_.transitionMs);
@@ -83,41 +89,34 @@ mireds_t LightPlatform::getTemperature() {
 	return temperature_;
 }
 
-bool LightPlatform::setEffect(uint8_t effectCode, bool force) {
-	switch (effectCode) {
-	case LightEffect::Static:
-		pixels_.setEffect(&StaticFx, force);
-		break;
-	case LightEffect::Rainbow:
-		pixels_.setEffect(&RainbowFx, force);
-		break;
-	case LightEffect::Loading:
-		pixels_.setEffect(&LoadingFx, force);
-		break;
-	case LightEffect::Fill:
-		pixels_.setEffect(&FillFx, force);
-		break;
-	default:
+bool LightPlatform::setEffect(const char* effectName, bool force) {
+	if (effectName == nullptr) {
 		return false;
-		break;
 	}
+
+	auto effect = effects_.find(effectName);
+	if (effect == nullptr || pixels_.getEffect() == effect) {
+		return false;
+	}
+	pixels_.setEffect(effect, force);
 	return true;
 }
 
-effect_t LightPlatform::getEffect() {
+const char* LightPlatform::getEffect() {
 	auto current = pixels_.getEffect();
-
-	if (current == &StaticFx) {
-		return LightEffect::Static;
-	} else if (current == &FillFx) {
-		return LightEffect::Fill;
-	} else if (current == &LoadingFx) {
-		return LightEffect::Loading;
-	} else if (current == &RainbowFx) {
-		return LightEffect::Rainbow;
+	if (current == nullptr) {
+		return nullptr;
 	}
 
-	return 0;
+	return current->getName();
+}
+
+const char** LightPlatform::effects() {
+	return effects_.names();
+}
+
+uint8_t LightPlatform::effectCount() {
+	return effects_.size();
 }
 
 color_mode_t LightPlatform::getMode() {

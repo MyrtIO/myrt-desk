@@ -8,8 +8,8 @@ namespace HomeAssistant {
 		const char* name;
 		const char* identifier;
 		const char* icon = nullptr;
-		const char** effects;
-		const uint16_t effectCount;
+		const char** effects = nullptr;
+		uint16_t effectCount = 0;
 		const bool writable = false;
 		const uint16_t maxMireds = 400;
 		const uint16_t minMireds = 100;
@@ -30,7 +30,7 @@ namespace HomeAssistant {
 		bool enabled;
 		uint16_t brightness;
 		uint16_t colorTemp;
-		uint8_t effect;
+		const char* effect;
 		RGBColor color;
 		ColorMode colorMode;
 	};
@@ -53,16 +53,23 @@ namespace HomeAssistant {
 			return "light";
 		}
 
+		void setEffects(const char** effects, uint16_t count) {
+			config_.effects = effects;
+			config_.effectCount = count;
+		}
+
 		void fillConfig() {
 			// TODO: add supports check
 			json["schema"] = "json";
 			json["brightness"] = true;
-			json["effect"] = true;
 			json["max_mireds"] = config_.maxMireds;
 			json["min_mireds"] = config_.minMireds;
-			auto effects = json.createNestedArray("effect_list");
-			for (uint16_t i = 0; i < config_.effectCount; i++) {
-				effects.add(config_.effects[i]);
+			if (config_.effectCount > 0) {
+				json["effect"] = true;
+				auto effects = json.createNestedArray("effect_list");
+				for (uint16_t i = 0; i < config_.effectCount; i++) {
+					effects.add(config_.effects[i]);
+				}
 			}
 			auto colorModes = json.createNestedArray("supported_color_modes");
 			colorModes.add("color_temp");
@@ -86,16 +93,7 @@ namespace HomeAssistant {
 				state.colorMode = ColorMode::ColorTempMode;
 				state.colorTemp = json["color_temp"];
 			}
-			state.effect = 255;
-			auto effectProp = json["effect"];
-			if (effectProp != nullptr) {
-				for (uint8_t i = 0; i < config_.effectCount; i++) {
-					if (strcmp(effectProp, config_.effects[i]) == 0) {
-						state.effect = i;
-						break;
-					}
-				}
-			}
+			state.effect = json["effect"];
 		}
 
 		template <typename TDestination>
@@ -111,7 +109,7 @@ namespace HomeAssistant {
 				json["color_mode"] = "color_temp";
 				json["color_temp"] = state.colorTemp;
 			}
-			json["effect"] = config_.effects[state.effect];
+			json["effect"] = state.effect;
 			json["brightness"] = state.brightness;
 			json["state"] = state.enabled ? "ON" : "OFF";
 			serializeJson(json, buffer);

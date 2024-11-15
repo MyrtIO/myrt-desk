@@ -5,18 +5,10 @@
 #include <arrutil.h>
 #include "ha_common.h"
 
-const char* effects[] = {
-	"static",
-	"rainbow",
-	"loading",
-	"fill",
-};
 HomeAssistant::LightEntity entity({
 	.name = "backlight",
 	.identifier = "light",
 	.icon = "mdi:desk",
-	.effects = effects,
-	.effectCount = SIZEOF_ARRAY(effects),
 	.writable = true,
 	.maxMireds = CONFIG_LIGHT_COLOR_WARM_WHITE_MIREDS,
 	.minMireds = CONFIG_LIGHT_COLOR_COLD_WHITE_MIREDS
@@ -62,7 +54,6 @@ void updateLightState(PubSubClient* client, byte* payload, uint length) {
 	auto enabled = light->getPower();
 	auto brightness = light->getBrightness();
 	auto colorTemp = light->getTemperature();
-	auto effect = light->getEffect();
 	auto color = light->getColor();
 
 	if (state.enabled != enabled) {
@@ -70,7 +61,7 @@ void updateLightState(PubSubClient* client, byte* payload, uint length) {
 	} else if (brightness != state.brightness && state.brightness != 0) {
 		light->setBrightness(state.brightness);
 	}
-	if (state.effect != effect && state.effect != 255) {
+	if (state.effect != nullptr) {
 		light->setEffect(state.effect);
 	}
 	if (!isColorEquals(state.color, color) &&
@@ -86,6 +77,7 @@ void updateLightState(PubSubClient* client, byte* payload, uint length) {
 
 void registerLightTopics(PubSubServer* server) {
 	light = IO_INJECT(ILightPlatform);
+	entity.setEffects(light->effects(), light->effectCount());
 	server
 		->report(reportLightConfig, MQTT_CONFIG_REPORT_INTERVAL)
 		->report(reportLightState, MQTT_STATE_REPORT_INTERVAL)

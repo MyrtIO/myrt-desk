@@ -6,12 +6,13 @@
 typedef LightState<void> StaticEffectState;
 
 class StaticEffect : public IPixelsEffect<void> {
-  public:
+public:
+	const char* getName();
 	bool handleFrame(StaticEffectState& state, IPixels& pixels);
 	void onColorUpdate(StaticEffectState& state);
 	void onActivate(StaticEffectState& state);
 
-  private:
+private:
 	Progress progress_ = Progress();
 	bool forceUpdate_ = false;
 };

@@ -6,12 +6,13 @@
 typedef LightState<void> FillEffectState;
 
 class FillEffect : public IPixelsEffect<void> {
-  public:
+public:
+	const char* getName();
 	bool handleFrame(FillEffectState& state, IPixels& pixels);
 	void onColorUpdate(FillEffectState& state);
 	void onActivate(FillEffectState& state, IPixels& pixels);
 
-  private:
+private:
 	Progress progress_ = Progress();
 };
 

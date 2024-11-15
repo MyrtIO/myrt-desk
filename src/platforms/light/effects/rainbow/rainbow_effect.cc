@@ -3,6 +3,10 @@
 
 const size_t kRainbowTransitionDuration = 12000;
 
+const char* RainbowEffect::getName() {
+	return "rainbow";
+}
+
 bool RainbowEffect::handleFrame(RainbowEffectState& state, IPixels& pixels) {
 	hueProgress_ = progress_.get();
 

@@ -6,12 +6,13 @@
 typedef LightState<void> LoadingEffectState;
 
 class LoadingEffect : public IPixelsEffect<void> {
-  public:
+public:
+	const char* getName();
 	bool handleFrame(LoadingEffectState& state, IPixels& pixels);
 	void onColorUpdate(LoadingEffectState& state);
 	void onActivate(LoadingEffectState& state, IPixels& pixels);
 
-  private:
+private:
 	Progress progress_ = Progress();
 	bool isReverse_ = false;
 	uint8_t fillSize_ = 0;

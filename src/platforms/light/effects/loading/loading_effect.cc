@@ -4,6 +4,10 @@
 const size_t kLoadingCycleDuration = 1000;
 const scale_t kLoadingFillFract = 200;
 
+const char* LoadingEffect::getName() {
+	return "loading";
+}
+
 void LoadingEffect::onActivate(LoadingEffectState& state, IPixels& pixels) {
 	isReverse_ = false;
 	progress_.start(kLoadingCycleDuration);

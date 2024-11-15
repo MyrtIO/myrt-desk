@@ -7,13 +7,6 @@ typedef uint8_t effect_t;
 typedef uint8_t color_mode_t;
 typedef uint16_t mireds_t;
 
-enum LightEffect : effect_t {
-	Static = 0,
-	Rainbow = 1,
-	Loading = 2,
-	Fill = 3,
-};
-
 enum LightMode : color_mode_t {
 	RGBMode = 0,
 	WhiteMode = 1,
@@ -35,8 +28,10 @@ class ILightPlatform {
 
 	virtual void setFPS(uint8_t fps) = 0;
 
-	virtual effect_t getEffect() = 0;
-	virtual bool setEffect(effect_t code, bool force = false) = 0;
+	virtual const char* getEffect();
+	virtual bool setEffect(const char* effect, bool force = false) = 0;
+	virtual const char** effects();
+	virtual uint8_t effectCount();
 
 	virtual color_mode_t getMode() = 0;
 };
