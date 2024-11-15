@@ -2,7 +2,6 @@
 #include <LightEntity.h>
 #include <platforms.h>
 #include <config.h>
-#include <arrutil.h>
 #include "ha_common.h"
 
 HomeAssistant::LightEntity entity({

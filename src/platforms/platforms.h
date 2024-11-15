@@ -1,7 +1,6 @@
 #pragma once
 
 #include <MyrtIO/device/di.h>
-#include <MyrtIO_WiFiPlatform.h>
 
 #include "height/height_platform.h"
 #include "light/light_platform.h"

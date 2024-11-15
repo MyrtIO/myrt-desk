@@ -1,6 +1,6 @@
 #pragma once
 
-#include <MyrtIO_WiFiPlatform.h>
+#include <MyrtIO-WiFi/wifi_platform.h>
 
 struct WiFiPlatformParams {
 	const char* ssid;
