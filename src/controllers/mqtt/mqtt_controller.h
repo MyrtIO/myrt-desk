@@ -31,9 +31,9 @@ public:
 	}
 
 	// PubSubServerListener interface
-	void onConnect();
-	void onDisconnect();
-	void onMessage(char* topic, uint8_t* payload, uint16_t length);
+	void onConnect() override;
+	void onDisconnect() override;
+	void onMessage(char* topic, uint8_t* payload, uint16_t length) override;
 
 private:
 	MQTTControllerParams params_;
