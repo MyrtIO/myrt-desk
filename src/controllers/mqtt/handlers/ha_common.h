@@ -1,6 +1,6 @@
 #pragma once
 
-#include <HomeAssistant_MQTT.h>
+#include <HomeAssistantJSON/device.h>
 
 #ifndef MQTT_BUFFER_SIZE
 	#define MQTT_BUFFER_SIZE 512

@@ -1,5 +1,5 @@
 #include <PubSubServer.h>
-#include <LightEntity.h>
+#include <HomeAssistantJSON/light_entity.h>
 #include <platforms.h>
 #include <config.h>
 #include "ha_common.h"

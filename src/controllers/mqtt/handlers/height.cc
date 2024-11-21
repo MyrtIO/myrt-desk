@@ -1,5 +1,5 @@
 #include <PubSubServer.h>
-#include <NumberEntity.h>
+#include <HomeAssistantJSON/number_entity.h>
 #include <platforms.h>
 #include <config.h>
 #include "ha_common.h"
