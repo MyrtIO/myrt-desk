@@ -3,9 +3,9 @@
 #include <stdint.h>
 #include <LightComposer/color/rgb_color.h>
 
-typedef uint8_t effect_t;
 typedef uint8_t color_mode_t;
-typedef uint16_t mireds_t;
+
+typedef unsigned short mireds_t;
 
 enum LightMode : color_mode_t {
 	RGBMode = 0,

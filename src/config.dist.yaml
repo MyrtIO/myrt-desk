@@ -25,12 +25,10 @@ light:
   pin_ctl: 3
   led_count: 92
   color:
-    correction: 0xFFBD77
+    correction: 0xFF8D6D
     initial: 0xFFBD77
     connected: 0x38FFB6
-    warm_white: 0xFF8B14
-    cold_white: 0xE8F9FF
-    warm_white_mireds: 454
-    cold_white_mireds: 142
+    warm_white_mireds: 600
+    cold_white_mireds: 125
   transition:
     color: 700

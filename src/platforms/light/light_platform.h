@@ -5,6 +5,7 @@
 #include <LightComposer/brightness/brightness_renderer.h>
 #include <LightComposer/pixels/pixels_renderer.h>
 #include <LightComposer/pixels/effect_vector.h>
+#include <LightComposer/color/white_color.h>
 #include <config.h>
 #include "i_light_platform.h"
 #include "ws2812_hal.h"
@@ -56,4 +57,5 @@ class LightPlatform : public io::Unit, public ILightPlatform {
 	LightMode mode_ = LightMode::RGBMode;
 	mireds_t temperature_ = 0;
 	EffectList<void> effects_;
+	WhiteColor whiteColor_;
 };

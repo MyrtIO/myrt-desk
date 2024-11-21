@@ -67,26 +67,24 @@ bool LightPlatform::getPower() {
 
 void LightPlatform::setColor(RGBColor color) {
 	lightLog.print("update color");
+	mode_ = LightMode::RGBMode;
 	pixels_.setColor(color);
 }
 
 void LightPlatform::setColorTemperature(mireds_t temperature) {
 	// TODO: move to separate class
+	if (temperature < CONFIG_LIGHT_COLOR_COLD_WHITE_MIREDS
+		|| temperature > CONFIG_LIGHT_COLOR_WARM_WHITE_MIREDS) {
+		return;
+	}
 	lightLog.print("update color temperature");
 	mode_ = LightMode::WhiteMode;
-	temperature_ = temperature;
-	uint8_t ratio = map(temperature,
-		params_.colorColdWhiteMireds, params_.colorWarmWhiteMireds,
-		0, 255
-	);
-	ratio = 255 - ratio;
-	pixels_.setColor(
-		blendColors(params_.colorWarmWhite, params_.colorColdWhite, ratio)
-	);
+	whiteColor_.setMireds(temperature);
+	pixels_.setColor(whiteColor_);
 }
 
 mireds_t LightPlatform::getTemperature() {
-	return temperature_;
+	return whiteColor_.mireds();
 }
 
 bool LightPlatform::setEffect(const char* effectName, bool force) {
