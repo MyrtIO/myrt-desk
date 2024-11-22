@@ -73,8 +73,8 @@ void LightPlatform::setColor(RGBColor color) {
 
 void LightPlatform::setColorTemperature(mireds_t temperature) {
 	// TODO: move to separate class
-	if (temperature < CONFIG_LIGHT_COLOR_COLD_WHITE_MIREDS
-		|| temperature > CONFIG_LIGHT_COLOR_WARM_WHITE_MIREDS) {
+	if (temperature < params_.colorColdWhiteMireds
+		|| temperature > params_.colorWarmWhiteMireds) {
 		return;
 	}
 	lightLog.print("update color temperature");

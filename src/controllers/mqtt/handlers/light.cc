@@ -1,6 +1,6 @@
 #include <PubSubServer.h>
 #include <HomeAssistantJSON/light_entity.h>
-#include <platforms.h>
+#include <platforms/platforms.h>
 #include <config.h>
 #include "ha_common.h"
 
@@ -9,8 +9,8 @@ HomeAssistant::LightEntity entity({
 	.identifier = "light",
 	.icon = "mdi:desk",
 	.writable = true,
-	.maxMireds = CONFIG_LIGHT_COLOR_WARM_WHITE_MIREDS,
-	.minMireds = CONFIG_LIGHT_COLOR_COLD_WHITE_MIREDS
+	.maxMireds = CONFIG_LIGHT_COLOR_MIREDS_WARM,
+	.minMireds = CONFIG_LIGHT_COLOR_MIREDS_COLD
 }, haDesk);
 
 ILightPlatform* light;

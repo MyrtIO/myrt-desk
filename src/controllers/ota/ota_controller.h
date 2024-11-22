@@ -1,6 +1,6 @@
 #pragma once
 
-#include <platforms.h>
+#include <platforms/platforms.h>
 
 struct OTAControllerParams {
 	char* hostname;

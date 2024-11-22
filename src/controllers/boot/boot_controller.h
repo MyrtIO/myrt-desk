@@ -2,7 +2,7 @@
 
 #include <Attotime.h>
 #include <MyrtIO/device/unit.h>
-#include <platforms.h>
+#include <platforms/platforms.h>
 
 class BootController : public io::Unit {
   public:

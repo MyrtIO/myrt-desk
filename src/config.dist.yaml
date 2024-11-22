@@ -28,7 +28,7 @@ light:
     correction: 0xFF8D6D
     initial: 0xFFBD77
     connected: 0x38FFB6
-    warm_white_mireds: 600
-    cold_white_mireds: 125
+    mireds_warm: 400
+    mireds_cold: 135
   transition:
     color: 700
