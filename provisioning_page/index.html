@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>MyrtIO Стол</title>
+    </head>
+
+    <body>
+        <div id="statusOverlay" class="status-overlay">
+            <div class="spinner"></div>
+            <span id="statusText">Сохранение...</span>
+        </div>
+
+        <div class="container">
+            <header id="header">
+                <div class="logo">MyrtIO <span>Стол</span></div>
+                <div class="loader _visible"></div>
+                <button
+                    type="submit"
+                    id="button-save"
+                    class="btn _rounded _hidden"
+                    form="configForm"
+                >
+                    Сохранить
+                </button>
+            </header>
+
+            <form id="configForm" class="_disabled animated">
+                <section>
+                    <h2>Wi-Fi</h2>
+                    <div class="card">
+                        <div class="row">
+                            <div class="label">Точка доступа</div>
+                            <div class="value">
+                                <input
+                                    spellcheck="false"
+                                    type="text"
+                                    name="wifi_ssid"
+                                    maxlength="32"
+                                    required
+                                    placeholder="SSID"
+                                />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="label">Пароль</div>
+                            <div spellcheck="false" class="value">
+                                <input
+                                    type="password"
+                                    name="wifi_password"
+                                    maxlength="64"
+                                    placeholder="******"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>MQTT</h2>
+                    <div class="card">
+                        <div class="row">
+                            <div class="label">Хост</div>
+                            <div spellcheck="false" class="value">
+                                <input
+                                    type="text"
+                                    name="mqtt_host"
+                                    maxlength="64"
+                                    required
+                                    placeholder="mqtt.local"
+                                />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="label">Порт</div>
+                            <div spellcheck="false" class="value">
+                                <input
+                                    type="number"
+                                    name="mqtt_port"
+                                    type="number"
+                                    max="65535"
+                                    min="1"
+                                    required
+                                    placeholder="1883"
+                                />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="label">Имя пользователя</div>
+                            <div spellcheck="false" class="value">
+                                <input
+                                    type="text"
+                                    name="mqtt_username"
+                                    maxlength="32"
+                                />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="label">Пароль</div>
+                            <div class="value">
+                                <input
+                                    type="password"
+                                    name="mqtt_password"
+                                    maxlength="64"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Освещение</h2>
+                    <div class="card">
+                        <div class="row">
+                            <div class="label">Цветокоррекция</div>
+                            <div class="value">
+                                <input
+                                    type="color"
+                                    id="color_correction_picker"
+                                />
+                                <input
+                                    type="text"
+                                    name="color_correction"
+                                    class="color-hex"
+                                    placeholder="#FFFFFF"
+                                    maxlength="7"
+                                />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="label">Яркость</div>
+                            <div class="value">
+                                <div class="brightness-range">
+                                    от
+                                    <input
+                                        type="number"
+                                        id="brightness_min"
+                                        name="brightness_min"
+                                        placeholder="0"
+                                        min="0"
+                                        max="255"
+                                    />
+                                    до
+                                    <input
+                                        type="number"
+                                        id="brightness_max"
+                                        name="brightness_max"
+                                        placeholder="255"
+                                        min="0"
+                                        max="255"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="label">Проверка цвета</div>
+                            <div class="value">
+                                <div class="test-buttons">
+                                    <button
+                                        type="button"
+                                        id="test-red"
+                                        class="btn _small"
+                                        style="
+                                            background: var(--danger-color);
+                                            color: white;
+                                        "
+                                    >
+                                        R
+                                    </button>
+                                    <button
+                                        type="button"
+                                        id="test-green"
+                                        class="btn _small"
+                                        style="
+                                            background: var(--success-color);
+                                            color: var(--text-primary);
+                                        "
+                                    >
+                                        G
+                                    </button>
+                                    <button
+                                        type="button"
+                                        id="test-blue"
+                                        class="btn _small"
+                                        style="
+                                            background: var(--accent-color);
+                                            color: var(--text-primary);
+                                        "
+                                    >
+                                        B
+                                    </button>
+                                    <button
+                                        type="button"
+                                        id="test-white"
+                                        class="btn _small"
+                                        style="
+                                            background: var(--text-primary);
+                                            color: var(--text-primary);
+                                        "
+                                    >
+                                        W
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </form>
+            <section class="system-section _disabled animated">
+                <h2>Система</h2>
+                <div class="card">
+                    <div class="row">
+                        <div class="label">Время сборки</div>
+                        <div
+                            class="value"
+                            id="build-version"
+                            style="color: var(--text-secondary)"
+                        >
+                            Apr 23 2026 21:30:00
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Сетевой режим</div>
+                        <div
+                            class="value"
+                            id="network-mode"
+                            style="color: var(--text-secondary)"
+                        >
+                            AP
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">MAC-адрес</div>
+                        <div
+                            class="value"
+                            id="mac-address"
+                            style="color: var(--text-secondary)"
+                        >
+                            AA:BB:CC:DD:11:22:33:44
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">STA IP</div>
+                        <div
+                            class="value"
+                            id="sta-ip"
+                            style="color: var(--text-secondary)"
+                        >
+                            нет подключения
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">AP IP</div>
+                        <div
+                            class="value"
+                            id="ap-ip"
+                            style="color: var(--text-secondary)"
+                        >
+                            192.168.4.1
+                        </div>
+                    </div>
+                    <div class="row ota-row">
+                        <div class="label">HTTP OTA</div>
+                        <div class="value ota-panel">
+                            <input
+                                id="ota-file"
+                                class="ota-file-input"
+                                type="file"
+                                accept=".bin"
+                            />
+                            <div class="ota-file-name" id="ota-file-name">
+                                Файл не выбран
+                            </div>
+                            <div class="ota-actions">
+                                <button
+                                    type="button"
+                                    id="button-ota-select"
+                                    class="btn _secondary"
+                                >
+                                    Выбрать .bin
+                                </button>
+                                <button
+                                    type="button"
+                                    id="button-ota-upload"
+                                    class="btn"
+                                >
+                                    Загрузить
+                                </button>
+                            </div>
+                            <div class="ota-status" id="ota-status">
+                                Выберите .bin из
+                                .pio/build/&lt;env&gt;/firmware.bin и загрузите
+                                его в устройство.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row desk-calibration-row">
+                        <div class="label">Калибровка высоты</div>
+                        <div class="value desk-calibration-panel">
+                            <div class="desk-calibration-actions">
+                                <button
+                                    type="button"
+                                    id="button-desk-calibration"
+                                    class="btn _secondary"
+                                >
+                                    Запустить
+                                </button>
+                            </div>
+                            <div
+                                class="desk-calibration-status"
+                                id="desk-calibration-status"
+                            >
+                                Калибровка ещё не запускалась.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Подсказка</div>
+                        <div class="value" style="color: var(--text-secondary)">
+                            Удерживайте кнопку GPIO0 около 3 секунд, чтобы
+                            включить или выключить режим настройки.
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <script type="module" src="/src/main.ts"></script>
+    </body>
+</html>

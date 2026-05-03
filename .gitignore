@@ -1,6 +1,12 @@
+# Editor configurations
+.vscode
+.cursor
+.zed
+.clangd
+
+# Artifacts
 .pio
-.vscode/
-include/config.h
-src/config.yaml
-src/controllers/mqtt/topics/config_data.cc
-src/controllers/mqtt/topics/config_data.h
+.cache
+.DS_Store
+src/provisioning_page.*
+compile_commands.json

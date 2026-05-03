@@ -1,55 +1,30 @@
-BOARD_TTY = /dev/cu.usbmodem11301
-BAUD_RATE = 115200
-
-.PHONY: configure
-configure:
-	@pio init --ide vscode
-	@make build
+BOARD_HOST =
+PROVISIONING_PAGE_DIR = provisioning_page
 
 .PHONY: build
-build: config
-	@pio run
+build: provisioning-page
+	pio run -e release
 
-.PHONY: deploy
-flash: config
-	@pio run -t upload -e release
+.PHONY: flash
+flash:
+	pio run -e release -t upload
 
-.PHONY: flash-debug
-flash-debug:
-	@pio run -t upload -e debug
-	@sleep 1
-	@make monitor
-
-.PHONY: ota
-ota:
-	@pio run -e release
-	@python scripts/espota.py \
-		-i 192.168.1.224 \
-		-p 2040 \
-		-f .pio/build/release/firmware.bin
-
-.PHONY: ota-debug
-ota-debug:
-	@pio run -e debug
-	@python scripts/espota.py \
-		-i 192.168.1.224 \
-		-p 2040 \
-		-f .pio/build/debug/firmware.bin
-
-.PHONY: monitor
-monitor:
-	pio device monitor -p $(BOARD_TTY) --baud $(BAUD_RATE)
+configure:
+	@cd $(PROVISIONING_PAGE_DIR); bun install
+	@pio run -t compiledb
 
 .PHONY: format
 format:
-	@astyle --project=.astylerc -n \
-		-r 'src/*.cc' \
-		-r 'src/*.h' \
-		-r 'lib/*.cc' \
-		-r 'lib/*.h' \
-		-r 'include/*.h'
+	@find \
+		lib/ \
+		src/ \
+		-iname '*.h' -o -iname '*.c' -o -iname '*.cpp' \
+		| xargs clang-format -i
 
-config: src/config.yaml
-	@python .pio/libdeps/release/MyrtIO/tools/configgen/configgen.py \
-		src/config.yaml \
-		include/config.h
+.PHONY: provisioning-page
+provisioning-page:
+	@cd $(PROVISIONING_PAGE_DIR); bun run build
+	@python3 scripts/bin2source.py \
+	    $(PROVISIONING_PAGE_DIR)/dist/index.html.gz \
+		src/provisioning_page \
+		provisioning_page

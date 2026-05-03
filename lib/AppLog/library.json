@@ -1,0 +1,7 @@
+{
+  "name": "AppLog",
+  "version": "1.0.0",
+  "description": "C-compatible logging helpers backed by Arduino Serial",
+  "frameworks": "Arduino",
+  "platforms": "*"
+}
